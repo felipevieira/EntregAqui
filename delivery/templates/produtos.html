@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% for produto in produtos %}
+    <li id="produto_{{produto.id}}" value="oi">
+    {{produto.nome}}
+    </li>
+{% endfor %}
+{% endblock %}
