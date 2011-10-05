@@ -16,7 +16,7 @@ class Endereco(models.Model):
 class Usuario(models.Model):
     nome = models.CharField(max_length=50)
     email = models.EmailField(max_length=30, unique=True)
-    cpf = models.CharField(max_length=11)
+    cpf = models.CharField(max_length=11, unique=True)
     senha = models.CharField(max_length=64)
     endereco = models.ForeignKey(Endereco)
     
@@ -24,7 +24,7 @@ class Usuario(models.Model):
         return self.email
 
 class Categoria(models.Model):
-    nome = models.CharField(max_length=20)
+    nome = models.CharField(max_length=20, unique=True)
     
     def __unicode__(self):
         return self.nome
@@ -45,7 +45,7 @@ class Catalogo(models.Model):
 
 class Produto(models.Model):
     nome = models.CharField(max_length=50)
-    descricao = models.CharField(max_length=200)
+    descricao = models.CharField(max_length=200, blank=True)
     preco = models.IntegerField()
     catalogo = models.ForeignKey(Catalogo, related_name="produtos")
     
