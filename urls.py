@@ -6,7 +6,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
+    (r'^(?P<nome_cidade>\w+)/(?P<nome_loja>\w+)/$', 'EntregAqui.delivery.views.detalhar_catalogo_produtos'),
     url(r'^$', 'delivery.views.home', name='home'),
+    
     # url(r'^EntregAqui/', include('EntregAqui.delivery.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -14,4 +16,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    
+    
 )
