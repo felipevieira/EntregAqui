@@ -143,3 +143,10 @@ LOGGING = {
         },
     }
 }
+
+#Utilizado para o envio de emails.
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'entregaqui.mailer@gmail.com'
+EMAIL_HOST_PASSWORD = '123deep!@#'
+EMAIL_PORT = 587
