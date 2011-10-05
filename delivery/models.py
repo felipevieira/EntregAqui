@@ -12,7 +12,7 @@ class Endereco(models.Model):
 
 class Usuario(models.Model):
     nome = models.CharField(max_length=50)
-    email = models.CharField(max_length=30)
+    email = models.EmailField(max_length=30)
     cpf = models.CharField(max_length=11)
     senha = models.CharField(max_length=64)
     endereco = models.ForeignKey(Endereco)

@@ -15,10 +15,16 @@
             <select id="cidades" onchange="go()">
             <option>--Escolha uma cidade--</option>
             {% for endereco in enderecos %}
-            <option value="{{ endereco.cidade }}" >{{ endereco.cidade }}</option>
+            <option value="/{{ endereco.cidade }}" >{{ endereco.cidade }}</option>
             {% endfor %}
             </select>
         </div>
+        {% endblock %}
+        
+        {% block barra_lateral %}
+        {% endblock %}
+        
+        {% block conteudo %}
         {% endblock %}
     </body>
 </html>

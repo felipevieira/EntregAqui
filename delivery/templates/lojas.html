@@ -1,0 +1,7 @@
+{% extends "categorias.html" %}
+
+{% block conteudo %}
+{% for loja in lojas %}
+<li id="loja_{{loja.id}}">{{loja.nome}}</li>
+{% endfor %}
+{% endblock %}

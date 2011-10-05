@@ -1,0 +1,9 @@
+{% extends "home.html" %}
+
+{% block barra_lateral %}
+<span id="barra_lateral">
+    {% for categoria in categorias %}
+    <li id="categoria_{{categoria.id}}"><a href="/{{cidade}}/{{categoria.nome}}">{{categoria.nome}}</li>
+    {% endfor %}
+</span>
+{% endblock %}
