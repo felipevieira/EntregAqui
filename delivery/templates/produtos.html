@@ -1,9 +1,11 @@
-{% extends "base.html" %}
+{% extends "categorias.html" %}
 
-{% block body %}
+{% block titulo %}EntregAqui - {{cidade}} - {{categoria}} - {{loja}}{% endblock %}
+
+{% block conteudo %}
 {% for produto in produtos %}
-    <li id="produto_{{produto.id}}" value="oi">
+    <a id="produto_{{produto.id}}">
     {{produto.nome}}
-    </li>
+    </a>
 {% endfor %}
 {% endblock %}

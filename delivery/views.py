@@ -21,6 +21,7 @@ def listar_lojas(request, cidade, categoria):
                 {"lojas" : lojas,
                  'cidade': cidade,
                  'categorias': Categoria.objects.all(),
+                 'categoria': categoria,
                  'enderecos': enderecos
                  })
 
@@ -30,6 +31,8 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     return render_to_response("produtos.html",
                 {"produtos" : produtos,
                  'cidade': cidade,
+                 'loja': loja,
                  'categorias': Categoria.objects.all(),
+                 'categoria': categoria,
                  'enderecos': enderecos
                  })
