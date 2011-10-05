@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
+        <script type="text/javascript">
+            function go() {
+                window.location=document.getElementById("cidades").value;
+            }
+        </script>
         <meta charset="utf-8" />
         <title>{% block titulo %}EntregAqui{% endblock %}</title>
     </head>
     <body>
+        {% block barra_topo %}
+        <div id="barra_topo">
+            <select id="cidades" onchange="go()">
+            <option>--Escolha uma cidade--</option>
+            {% for endereco in enderecos %}
+            <option value="{{ endereco.cidade }}" >{{ endereco.cidade }}</option>
+            {% endfor %}
+            </select>
+        </div>
+        {% endblock %}
     </body>
 </html>
