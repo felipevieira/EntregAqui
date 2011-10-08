@@ -2,16 +2,21 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from delivery.models import *
 
+usuario_logado="Visitante"
+
 def home(request):
     enderecos = Endereco.objects.values('cidade').annotate()
-    return render_to_response("home.html", { 'enderecos': enderecos })
+    return render_to_response("home.html", 
+                { 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado })
 
 def visualizar_categorias(request, cidade):
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("categorias.html",
                 {'cidade': cidade,
                  'categorias': Categoria.objects.all(),
-                 'enderecos': enderecos
+                 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado
                  })
 
 def listar_lojas(request, cidade, categoria):
@@ -22,7 +27,8 @@ def listar_lojas(request, cidade, categoria):
                  'cidade': cidade,
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
-                 'enderecos': enderecos
+                 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado
                  })
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
@@ -34,5 +40,6 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'loja': loja,
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
-                 'enderecos': enderecos
+                 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado
                  })
