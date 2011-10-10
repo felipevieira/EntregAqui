@@ -43,3 +43,12 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'enderecos': enderecos,
                  'usuario_logado' : usuario_logado
                  })
+
+def visualizar_painel_usuario(request):
+    return render_to_response("painel_usuario.html",
+                              {'usuario_logado' : usuario_logado})
+    
+def exibir_reclamacao(request):
+    return render_to_response("reclamar.html",
+                              {'usuario_logado' : usuario_logado})
+    
