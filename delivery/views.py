@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from delivery.models import *
+from delivery.forms import *
 
 def home(request):
     enderecos = Endereco.objects.values('cidade').annotate()
@@ -36,3 +38,13 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'categoria': categoria,
                  'enderecos': enderecos
                  })
+
+def cadastrar_usuario(request):
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            return HttpResponse('Ok')
+    else:
+        form = UsuarioForm()
+    return render_to_response('cadastro.html', { 'form' : form },
+                              context_instance=RequestContext(request))
