@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from delivery.models import *
 from delivery.forms import *
@@ -79,7 +79,17 @@ def cadastrar_usuario(request):
                               context_instance=RequestContext(request))
 
 def ativar_usuario(request, chave):
-    pass
+    if request.user.is_authenticated():
+        return HttpResponse("Logado com " + request.user.username)
+    usuario = get_object_or_404(Usuario, chave_de_ativacao=chave)
+    if usuario.usuario.is_active:
+        return HttpResponse("Conta ja ativada!")
+    if usuario.expiracao_chave < datetime.datetime.today():
+        return HttpResponse("expirou!")
+    conta = usuario.usuario
+    conta.is_active = True
+    conta.save()
+    return HttpResponse("Ok!")
 
 def visualizar_painel_usuario(request):
     return render_to_response("painel_usuario.html",
