@@ -52,3 +52,8 @@ class UsuarioForm(forms.Form):
 class EnderecoForm(ModelForm):
     class Meta:
         model = Endereco
+        
+class ReclamacaoForm(forms.Form):
+    reclamacao = forms.CharField(widget=forms.Textarea(),
+                                 initial="Digite sua reclamação aqui.",
+                                 label="")

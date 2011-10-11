@@ -7,10 +7,18 @@
             }
             
             function reclama() {
-            	var reclamacao = document.getElementById("campoReclamacao").value;
+            	var reclamacao = document.getElementById("campoReclamacao").value; 
 				alert('Reclamei! Reclamação:' + reclamacao);
 			}
         </script>
+        <!-- Mover pro arquivo .css assim que estiver pronto -->
+        <style type="text/css">
+        	#id_reclamacao {
+        		width: 800px;
+        		height: 300px;
+        		resize: none;
+        	}
+        </style>
         <meta charset="utf-8" />       
         <title>{% block titulo %}EntregAqui{% endblock %}</title>
     </head>
