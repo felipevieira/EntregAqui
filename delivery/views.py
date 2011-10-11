@@ -1,19 +1,34 @@
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from delivery.models import *
 from delivery.forms import *
+import datetime, random, sha
+
+usuario_logado = "Visitante"
+
+mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
+           "Por favor, clique no link http://127.0.0.1:8000/cadastro/%s para ativar" \
+           "a sua conta.\n\n" \
+           "Caso não ative sua conta em 48 horas, a mesma será apagada.\n\n" \
+           "Caso não consiga acessar o link, copie e cole o mesmo na barra de " \
+           "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
 
 def home(request):
     enderecos = Endereco.objects.values('cidade').annotate()
-    return render_to_response("home.html", { 'enderecos': enderecos })
+    return render_to_response("home.html", 
+                { 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado })
 
 def visualizar_categorias(request, cidade):
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("categorias.html",
                 {'cidade': cidade,
                  'categorias': Categoria.objects.all(),
-                 'enderecos': enderecos
+                 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado
                  })
 
 def listar_lojas(request, cidade, categoria):
@@ -24,7 +39,8 @@ def listar_lojas(request, cidade, categoria):
                  'cidade': cidade,
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
-                 'enderecos': enderecos
+                 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado
                  })
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
@@ -36,15 +52,39 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'loja': loja,
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
-                 'enderecos': enderecos
+                 'enderecos': enderecos,
+                 'usuario_logado' : usuario_logado
                  })
 
 def cadastrar_usuario(request):
+    print request.user
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():
+            u = form.save()
+            salt = sha.new(str(random.random())).hexdigest()[:5]
+            chave = sha.new(salt+u.username).hexdigest()
+            expira = datetime.datetime.today() + datetime.timedelta(2)
+            usuario = Usuario.objects.create(usuario=u,
+                                             cpf=form.cleaned_data['cpf'],
+                                             chave_de_ativacao=chave,
+                                             expiracao_chave=expira)
+            from django.core.mail import EmailMessage
+            email = EmailMessage("teste", mensagem_email % chave, to=[usuario.usuario.email])
+            email.send()
             return HttpResponse('Ok')
     else:
         form = UsuarioForm()
     return render_to_response('cadastro.html', { 'form' : form },
                               context_instance=RequestContext(request))
+
+def ativar_usuario(request, chave):
+    pass
+
+def visualizar_painel_usuario(request):
+    return render_to_response("painel_usuario.html",
+                              {'usuario_logado' : usuario_logado})
+    
+def exibir_reclamacao(request):
+    return render_to_response("reclamar.html",
+                              {'usuario_logado' : usuario_logado})

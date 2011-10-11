@@ -42,10 +42,10 @@ def main():
     
     for endereco in enderecos.values():
         endereco.save()
-    danilo.endereco = Endereco.objects.get(numero=550)
-    amaury.endereco = Endereco.objects.get(numero=1184)
-    danilo.save()
-    amaury.save()
+    #danilo.endereco = Endereco.objects.get(numero=550)
+    #amaury.endereco = Endereco.objects.get(numero=1184)
+    #danilo.save()
+    #amaury.save()
     alimento.save()
     lazer.save()
     pitts.categoria = Categoria.objects.get(nome="Alimentos")

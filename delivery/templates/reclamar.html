@@ -1,2 +1,12 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 
+{% block titulo %}EntregAqui - {{usuario}} - Reclamação{% endblock %}
+
+{% block barra_topo %}
+<form>
+Reclamação: 
+<input type="text" name="reclamacaoInput" value="Digite sua reclamação aqui." /><br />
+<br />
+<input type="submit" value="Enviar" />
+</form>
+{% endblock %} 
