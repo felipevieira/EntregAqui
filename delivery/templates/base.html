@@ -5,6 +5,11 @@
             function go() {
                 window.location=document.getElementById("cidades").value;
             }
+            
+            function reclama() {
+            	var reclamacao = document.getElementById("campoReclamacao").value;
+				alert('Reclamei! Reclamação:' + reclamacao);
+			}
         </script>
         <meta charset="utf-8" />       
         <title>{% block titulo %}EntregAqui{% endblock %}</title>

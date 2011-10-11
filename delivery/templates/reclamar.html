@@ -1,11 +1,15 @@
 {% extends "home.html" %}
+<head><script language="JavaScript" type="text/javascript">
 
-{% block titulo %}EntregAqui - {{usuario}} - Reclamação{% endblock %}
+</script>
+</head>
+{% block titulo %}EntregAqui - {{usuario_logado}} - Reclamação{% endblock %}
 
 {% block barra_topo %}
-<form>
-Reclamação: 
-<input type="text" name="reclamacaoInput" value="Digite sua reclamação aqui." /><br />
+<form action="javascript:reclama()">
+Reclamação:
+<br/>
+<textarea id="campoReclamacao" style="height: 300px; width: 800px; resize: none;" value="Digite sua reclamação aqui."></textarea>
 <br />
 <input type="submit" value="Enviar" />
 </form>
