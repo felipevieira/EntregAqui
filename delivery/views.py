@@ -3,8 +3,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+
 from delivery.models import *
 from delivery.forms import *
+from delivery.utils import *
+
 import datetime, random, sha
 
 usuario_logado = "Visitante"
@@ -96,5 +99,14 @@ def visualizar_painel_usuario(request):
                               {'usuario_logado' : usuario_logado})
     
 def exibir_reclamacao(request):
+    if request.method == 'POST':
+        form = ReclamacaoForm(request.POST)
+        if form.is_valid():
+            enviar_reclamacao(form.cleaned_data['reclamacao'], usuario_logado)
+            return HttpResponse('Reclamação enviada com sucesso.');
+    else:
+        form = ReclamacaoForm()
+        
     return render_to_response("reclamar.html",
-                              {'usuario_logado' : usuario_logado})
+                              {'usuario_logado' : usuario_logado,
+                               'form': form}, context_instance=RequestContext(request))
