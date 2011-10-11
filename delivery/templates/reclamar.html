@@ -1,16 +1,15 @@
 {% extends "home.html" %}
-<script language="JavaScript" type="text/javascript">
-function reclama() {
-	alert('Reclamei!');
-}
+<head><script language="JavaScript" type="text/javascript">
+
 </script>
+</head>
 {% block titulo %}EntregAqui - {{usuario_logado}} - Reclamação{% endblock %}
 
 {% block barra_topo %}
 <form action="javascript:reclama()">
 Reclamação:
 <br/>
-<textarea name="campoReclamacao" style="height: 300px; width: 800px; resize: none;" value="Digite sua reclamação aqui."></textarea>
+<textarea id="campoReclamacao" style="height: 300px; width: 800px; resize: none;" value="Digite sua reclamação aqui."></textarea>
 <br />
 <input type="submit" value="Enviar" />
 </form>
