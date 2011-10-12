@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.conf import settings
 
 from django.contrib import admin
 admin.autodiscover()
@@ -17,3 +18,11 @@ urlpatterns = patterns('',
     (r'^(?P<cidade>[\w ]+)/$', 'EntregAqui.delivery.views.visualizar_categorias'),
     
 )
+
+if settings.SERVE_STATIC_FILES:
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': settings.STATIC_ROOT, 'show_indexes': True})        
+    )
