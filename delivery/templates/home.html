@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 
 {% block barra_menu %}
-<div class="barra_info_topo" style="background-color: rgba(20, 20, 20, 0.6);height: 22px;position: relative;min-width: 1000px;">
+<div class="barra_info_topo">
     <label style="margin-left: 400px"> <b><font face="Tahoma" size="4" color="white">EntregAqui: O seu site favorito de entregas online!</font><b> </label>
     <label style="margin-left: 150px"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario_logado}}!</font><b> </label>
     <a href="#" style="margin-left: 10px"> <b><font face="Tahoma" size="2" color="white">Login</font><b> </a>
-    <a href="#" style="margin-left: 20px"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
+    <a href="#?w=500"style="margin-left: 20px" rel="popup_name" class="poplight"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
 </div>
 {% endblock %}
+
+<a href="#?w=500"style="margin-left: 20px" rel="popup_name" class="poplight"> <b><font face="Tahoma" size="2" color="white">Informe-me quando estiver disponivel na minha cidade</font><b> </a>
 
 {% block barra_topo %}
 <select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
@@ -15,4 +17,29 @@
     {% for endereco in enderecos %} <option value="/{{ endereco.cidade }}" >{{ endereco.cidade }}</option>
     {% endfor %}
 </select>
+
+<a href="#?w=500"style="margin-left: 20px" rel="popup_name2" class="poplight"> <b><font face="Tahoma" size="2" color="black">Informe-me quando estiver disponivel na minha cidade</font><b> </a>
+
+<div id="popup_name" class="popup_block">
+    <h2><b><font  face="Tahoma" size="5" color="black">Deseja se tornar parceiro do Preguica Delivery?</font><b></h2>
+    <p><font  face="Tahoma" size="4" color="black">Por favor, preencha o formulario abaixo</font></p>
+    <form>
+		<b><font  face="Tahoma" size="3" color="black">Nome da empresa</font>  <input id="campo_empresa" type="text" name="empresa" size="30" style="margin-left: 40px" /><br />
+		<b><font  face="Tahoma" size="3" color="black">Endereco de e-mail</font>  <input id="campo_email" type="text" name="email" size="45" style="margin-left: 30px" /> <br />
+		<b><font  face="Tahoma" size="3" color="black">Telefone para contato:</font>  <input id="campo_contato" type="text" name="contato" style="margin-left: 0px" /> <br />
+		<img src="icone-enviar.png" style="margin-left: 200px; margin-top: 30px" alt="Envie sua solicitacao" class="botao_enviar_parceiro" />
+	</form>
+</div>
+
+<div id="popup_name2" class="popup_block">
+    <h2><b><font  face="Tahoma" size="5" color="black">Deseja ser informado quando o Preguica Delivery estiver disponivel na sua cidade?</font><b></h2>
+    <p><font  face="Tahoma" size="4" color="black">Por favor, preencha o formulario abaixo</font></p>
+    <form>
+		<b><font  face="Tahoma" size="3" color="black">Nome</font>  <input id="campo_nome_usuario" type="text" name="nome" size="30" style="margin-left: 40px" /><br />
+		<b><font  face="Tahoma" size="3" color="black">Endereco de e-mail</font>  <input id="campo_email_usuario" type="text" name="email" size="45" style="margin-left: 30px" /> <br />
+		<b><font  face="Tahoma" size="3" color="black">Cidade:</font>  <input id="campo_cidade" type="text" name="cidade" style="margin-left: 0px" /> <br />
+		<img src="icone-enviar.png" style="margin-left: 200px; margin-top: 30px" alt="Envie sua solicitacao" class="botao_informar_cidade" />
+	</form>
+</div>
+
 {% endblock %} 
