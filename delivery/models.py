@@ -1,4 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+class Usuario(models.Model):
+    usuario = models.OneToOneField(User)
+    cpf = models.CharField(max_length=11, unique=True)
+    chave_de_ativacao = models.CharField(max_length=50)
+    expiracao_chave = models.DateTimeField()
+    
+    def __unicode__(self):
+        return self.usuario.username
 
 class Endereco(models.Model):
     logradouro = models.CharField(max_length=200)
@@ -9,19 +19,10 @@ class Endereco(models.Model):
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=50)
     referencia = models.CharField(max_length=200, blank=True)
+    usuario = models.ForeignKey(Usuario, related_name="enderecos")
     
     def __unicode__(self):
         return self.logradouro + ", N" + unicode(self.numero) + " - " + self.cidade + " - " + self.estado
-
-class Usuario(models.Model):
-    nome = models.CharField(max_length=50)
-    email = models.EmailField(max_length=30, unique=True)
-    cpf = models.CharField(max_length=11, unique=True)
-    senha = models.CharField(max_length=64)
-    endereco = models.ForeignKey(Endereco)
-    
-    def __unicode__(self):
-        return self.email
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=20, unique=True)
