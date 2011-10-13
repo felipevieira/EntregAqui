@@ -1,0 +1,13 @@
+.barra_info_topo {
+	background-color: rgba(20, 20, 20, 0.6);
+	height: 22px;
+	position: relative;
+	min-width: 1000px;
+}
+
+#id_reclamacao 
+{
+	width: 800px;
+	height: 300px;
+	resize: none;
+}
