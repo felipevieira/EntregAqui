@@ -2,12 +2,11 @@
 
 {% block barra_menu %}
 <div class="barra_info_topo">
-    <label style="margin-left: 400px"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font><b> </label>
-    <a href="#?w=500"style="margin-left: 20px; float: right" rel="popup_name" class="poplight"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
-    <a href="#" style="margin-left: 40px; float: right"> <b><font face="Tahoma" size="2" color="white">Login</font><b> </a>
-    <label style="margin-left: 50px; float: right"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario_logado}}!</font><b> </label>
-    
-    
+    <label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font><b> </label>
+    <a href="#?w=500" id="popup_parceria" rel="popup_name" class="poplight"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
+    <a href="#" class="link_cadastrar"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font><b> </a>
+    <a href="#" class="link_login"> <b><font face="Tahoma" size="2" color="white">Login</font><b> </a>
+    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario_logado}}!</font><b> </label>   
 </div>
 {% endblock %}
 

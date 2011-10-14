@@ -1,12 +1,16 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 
 {% block conteudo %}
 
 <form action="/cadastro/" method="post"> {% csrf_token %}
-    <table>
-        {{form.as_ul}}
-    </table>
-    <input type="submit" value="Continuar" />
+    <center>
+    	<b><font face="Tahoma" size="4" color="black">Preencha os dados abaixo</font><b>
+    	<table class="table_cadastro">
+        	{{form}}
+    	</table>
+    	<input type="submit" value="Continuar" />
+    </center>
+    
 </form>
 
 {% endblock %}

@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^cadastro/', 'EntregAqui.delivery.views.cadastrar_usuario'),
     url(r'^painel/', 'EntregAqui.delivery.views.visualizar_painel_usuario'),
     url(r'^reclamar/', 'EntregAqui.delivery.views.exibir_reclamacao'),
+    url(r'^ultimos_pedidos/', 'EntregAqui.delivery.views.exibir_pedidos'),
     #[\w ]+ para pegar espaco
     (r'^(?P<cidade>[\w ]+)/(?P<categoria>[\w ]+)/(?P<loja>[\w ]+)/$', 'EntregAqui.delivery.views.detalhar_catalogo_produtos'),
     (r'^(?P<cidade>[\w ]+)/(?P<categoria>[\w ]+)/$', 'EntregAqui.delivery.views.listar_lojas'),

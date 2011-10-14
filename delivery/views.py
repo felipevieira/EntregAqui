@@ -98,6 +98,10 @@ def visualizar_painel_usuario(request):
     return render_to_response("painel_usuario.html",
                               {'usuario_logado' : usuario_logado})
     
+def exibir_pedidos(request):
+    return render_to_response("ultimos_pedidos.html",
+                              {'usuario_logado' : usuario_logado})
+    
 def exibir_reclamacao(request):
     if request.method == 'POST':
         form = ReclamacaoForm(request.POST)

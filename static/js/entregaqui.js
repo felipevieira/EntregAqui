@@ -28,10 +28,18 @@ $(document).ready(function(){
 		/* TODO Salvar no banco de dados */
 		
 	});
+	
+	$(".link_cadastrar").click(function(){		
+		goToUrl("\cadastro")
+		
+	});
 
 });
 
+function goToUrl(destino) {
+	window.location = destino;
+}
 function go() {
-	window.location=document.getElementById("cidades").value;
+	goToUrl(document.getElementById("cidades").value);
 }
 

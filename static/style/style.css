@@ -11,3 +11,38 @@
 	height: 300px;
 	resize: none;
 }
+
+.label_cabecalho {
+	margin-left: 350px;
+}
+
+.link_parceria {
+	margin-left: 20px; 
+	margin-right:20px; 
+	float: right;
+}
+
+.link_login {
+	margin-left: 10px; 
+	float: right;
+}
+
+.link_cadastrar {
+	margin-left: 10px; 
+	float: right;
+}
+
+.label_logado {
+	margin-left: 30px; 
+	float: right;
+}
+
+#popup_parceria {
+	margin-left: 10px; 
+	margin-right:30px; 
+	float: right;
+}
+
+.table_cadastro {
+	margin-top: 100px;
+}
