@@ -22,7 +22,7 @@
 	float: right;
 }
 
-.link_login {
+#link_login {
 	margin-left: 10px; 
 	float: right;
 }
@@ -44,5 +44,5 @@
 }
 
 .table_cadastro {
-	margin-top: 100px;
+	margin-top: 50px;
 }

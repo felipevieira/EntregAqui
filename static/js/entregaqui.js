@@ -33,10 +33,24 @@ $(document).ready(function(){
 		goToUrl("\cadastro")
 		
 	});
+	
+	$(".botao_login").click(function(){		
+		var nomeUsuario = document.getElementById("campo_username_login").value;
+		var senha= document.getElementById("campo_senha_login").value;
+		
+		if(nomeUsuario == "" || senha == "") {
+			alert("Por favor, preencha todos os dados para completar sua solicitacao");
+			return;
+		}
+		
+		alert("Login a ser validado");
+		/* TODO Checar autenticidade no banco */
+		
+	});
 
 });
 
-function goToUrl(destino) {
+function goToUrl(destino) {	
 	window.location = destino;
 }
 function go() {
