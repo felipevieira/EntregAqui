@@ -5,12 +5,11 @@
 <form action="/cadastro/" method="post"> {% csrf_token %}
     <center>
     	<b><font face="Tahoma" size="4" color="black">Preencha os dados abaixo</font><b>
-    	<table class="table_cadastro">
+    	<table class="table_form">
         	{{form}}
     	</table>
     	<input type="submit" value="Continuar" />
     </center>
-    
 </form>
 
 {% endblock %}

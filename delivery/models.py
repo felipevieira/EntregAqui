@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Usuario(models.Model):
-    usuario = models.OneToOneField(User)
+    usuario = models.OneToOneField(User, related_name="usuario")
     cpf = models.CharField(max_length=11, unique=True)
     chave_de_ativacao = models.CharField(max_length=50)
     expiracao_chave = models.DateTimeField()

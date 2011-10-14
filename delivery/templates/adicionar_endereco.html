@@ -1,0 +1,15 @@
+{% extends "home.html" %}
+
+{% block conteudo %}
+
+<form action="/adicionar_endereco/" method="post"> {% csrf_token %}
+    <center>
+        <b><font face="Tahoma" size="4" color="black">Preencha os dados abaixo</font><b>
+        <table class="table_form">
+            {{form}}
+        </table>
+        <input type="submit" value="Adicionar" />
+    </center>
+</form>
+
+{% endblock %}

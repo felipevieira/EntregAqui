@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
@@ -60,7 +60,6 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  })
 
 def cadastrar_usuario(request):
-    print request.user
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():
@@ -83,16 +82,21 @@ def cadastrar_usuario(request):
 
 def ativar_usuario(request, chave):
     if request.user.is_authenticated():
-        return HttpResponse("Logado com " + request.user.username)
-    usuario = get_object_or_404(Usuario, chave_de_ativacao=chave)
+        return HttpResponseRedirect("/")
+    try:
+        usuario = Usuario.objects.get(chave_de_ativacao=chave)
+    except Usuario.DoesNotExist:
+        return HttpResponseRedirect("/")
     if usuario.usuario.is_active:
-        return HttpResponse("Conta ja ativada!")
+        return HttpResponseRedirect("/")
     if usuario.expiracao_chave < datetime.datetime.today():
         return HttpResponse("expirou!")
     conta = usuario.usuario
     conta.is_active = True
     conta.save()
-    return HttpResponse("Ok!")
+    usuario.chave_de_ativacao = ""
+    usuario.save()
+    return HttpResponseRedirect("/adicionar_endereco")
 
 def visualizar_painel_usuario(request):
     return render_to_response("painel_usuario.html",
@@ -114,3 +118,24 @@ def exibir_reclamacao(request):
     return render_to_response("reclamar.html",
                               {'usuario_logado' : usuario_logado,
                                'form': form}, context_instance=RequestContext(request))
+
+def adicionar_endereco(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect("/")
+    if request.method == 'POST':
+        form = EnderecoForm(request.POST)
+        if form.is_valid():
+            endereco = Endereco(logradouro=form.cleaned_data['logradouro'],
+                                numero=form.cleaned_data['numero'],
+                                complement=form.cleaned_data['complemento'],
+                                bairro=form.cleaned_data['bairro'],
+                                cep=form.cleaned_data['cep'],
+                                cidade=form.cleaned_data['cidade'],
+                                estado=form.cleaned_data['estado'],
+                                referencia=form.cleaned_data['referencia'],
+                                usuario=request.user)
+            endereco.save()
+            return HttpResponse("Endereco adicionado com sucesso!")
+    return render_to_response("adicionar_endereco.html",
+                              {'form' : EnderecoForm()},
+                              context_instance=RequestContext(request))

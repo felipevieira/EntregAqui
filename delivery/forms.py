@@ -5,6 +5,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm
 from django.db import IntegrityError
+from django.contrib.localflavor.br.forms import BRZipCodeField, BRCPFField
 
 class UsuarioForm(forms.Form):
     username = forms.CharField(max_length=30, label=u'Login')
@@ -12,7 +13,7 @@ class UsuarioForm(forms.Form):
     sobrenome = forms.CharField(max_length=50)
     email = forms.EmailField(label=u'Email')
     repetir_email=forms.EmailField(label=u'Repetir Email')
-    cpf = forms.CharField(max_length=11)
+    cpf = BRCPFField(label=u"CPF")
     senha = forms.CharField(min_length=6,
                             label=u'Senha',
                             widget=forms.PasswordInput(render_value=False))
@@ -50,6 +51,10 @@ class UsuarioForm(forms.Form):
         return usuario
 
 class EnderecoForm(ModelForm):
+    cep = BRZipCodeField(label=u'CEP')
+    usuario = forms.ModelChoiceField(queryset=Usuario.objects.all(),
+                                     widget=forms.HiddenInput())
+    
     class Meta:
         model = Endereco
         
