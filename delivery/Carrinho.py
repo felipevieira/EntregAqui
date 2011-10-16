@@ -1,6 +1,6 @@
-from delivery import models
-from delivery.models import Produto, ProdutosCarrinho, Loja
+from models import Loja, ProdutosCarrinho, Produto
 import datetime
+import models
 
 ID_CARRINHO = "ID_CARRINHO"
 
