@@ -72,7 +72,7 @@ def cadastrar_usuario(request):
                                              chave_de_ativacao=chave,
                                              expiracao_chave=expira)
             from django.core.mail import EmailMessage
-            email = EmailMessage("teste", mensagem_email % chave, to=[usuario.usuario.email])
+            email = EmailMessage("teste", mensagem_email % chave, to=[usuario.user.email])
             email.send()
             return HttpResponse('Ok')
     else:
@@ -87,11 +87,11 @@ def ativar_usuario(request, chave):
         usuario = Usuario.objects.get(chave_de_ativacao=chave)
     except Usuario.DoesNotExist:
         return HttpResponseRedirect("/")
-    if usuario.usuario.is_active:
+    if usuario.conta.is_active:
         return HttpResponseRedirect("/")
     if usuario.expiracao_chave < datetime.datetime.today():
         return HttpResponse("expirou!")
-    conta = usuario.usuario
+    conta = usuario.conta
     conta.is_active = True
     conta.save()
     usuario.chave_de_ativacao = ""
@@ -139,3 +139,9 @@ def adicionar_endereco(request):
     return render_to_response("adicionar_endereco.html",
                               {'form' : EnderecoForm()},
                               context_instance=RequestContext(request))
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            pass
