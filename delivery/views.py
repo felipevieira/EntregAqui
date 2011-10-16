@@ -20,10 +20,30 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
 
 def home(request):
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            u = form.save()
+            salt = sha.new(str(random.random())).hexdigest()[:5]
+            chave = sha.new(salt+u.username).hexdigest()
+            expira = datetime.datetime.today() + datetime.timedelta(2)
+            usuario = Usuario.objects.create(usuario=u,
+                                             cpf=form.cleaned_data['cpf'],
+                                             chave_de_ativacao=chave,
+                                             expiracao_chave=expira)
+            from django.core.mail import EmailMessage
+            email = EmailMessage("teste", mensagem_email % chave, to=[usuario.usuario.email])
+            email.send()
+            return HttpResponse('Ok')
+    else:
+        form = UsuarioForm()
+        
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
                 { 'enderecos': enderecos,
-                 'usuario_logado' : usuario_logado })
+                 'usuario_logado' : usuario_logado,
+                 'form' : form },
+)
 
 def visualizar_categorias(request, cidade):
     enderecos = Endereco.objects.values('cidade').annotate()

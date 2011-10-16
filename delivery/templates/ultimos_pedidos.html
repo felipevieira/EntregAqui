@@ -1,0 +1,65 @@
+{% extends "home.html" %}
+
+{% block titulo %}EntregAqui - Painel de {{usuario_logado}}{% endblock %}
+
+{% block barra_topo %}
+<div>
+	<br /> <br />
+	<center><a href="/reclamar">Reclamar</a> <br /></center>
+	<center><a href="/ultimos_pedidos">Ultimos pedidos</a></center>
+	<center>
+		<!-- Por enquanto ta tudo estatico, a ideia eh que quando a gente tiver um banco
+			povoado, a gente itere sobre os elementos desse banco para povoar essa tabela -->
+			
+		<table border="1" class="table_ultimos_pedidos">
+			<tr>
+				<th><b>Estabelecimento</b></th>
+				<th>Descricao do Pedido</th>
+				<th>Horario do pedido</th>
+				<th>Observacoes</th>
+				<th>Status</th>
+			</tr>
+			<tr>
+				<td>Pittsburg</td>
+				<td>
+					<li>Oferta Numero 4</li>
+					<li>Promocao ViraBig</li>
+				</td>
+				<td>15/10/2011 - 18:34</td>
+				<td>Molho barbecue</td>
+				<td><font color="green">Finalizado</font></td>
+			</tr>
+			<tr>
+				<td>Pizzaria Forno de Pizza</td>
+				<td>
+					<li>Pizza Calabresa</li>
+					<li>Coca Cola 2L</li>
+				</td>
+				<td>11/10/2011 - 20:51</td>
+				<td>Sem cebola</td>
+				<td><font color="green">Finalizado</font></td>
+			</tr>
+			<tr>
+				<td>Farmacia das Dorgas</td>
+				<td>
+					<li>Tylenol</li>
+				</td>
+				<td>02/10/2011 - 20:51</td>
+				<td></td>
+				<td><font color="red">Cancelado</font></td>
+			</tr>
+			<tr>
+				<td>Daikon Restaurante</td>
+				<td>
+					<li>Barca de Sushi</li>
+					<li>Barca de Yakissoba</li>
+					<li>Coca Cola 2L</li>
+				</td>
+				<td>03/10/2011 - 20:51</td>
+				<td>Trazer molho Shoyu</td>
+				<td><font color="blue">Em Andamento</font></td>
+			</tr>
+		</table>
+	</center>
+</div>
+{% endblock %} 
