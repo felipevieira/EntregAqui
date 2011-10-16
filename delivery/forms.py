@@ -25,7 +25,11 @@ class UsuarioForm(forms.Form):
         if (self.cleaned_data['email'] != self.cleaned_data['repetir_email']):
             raise forms.ValidationError(u'Emails não estão iguais.')
         else:
-            return self.cleaned_data['repetir_email']
+            try:
+                CustomUsuario.objects.get(conta__email=self.cleaned_data['email'])
+            except CustomUsuario.DoesNotExist:
+                return self.cleaned_data['repetir_email']
+            return forms.ValidationError(u'Email já cadastrado no sistema!')
     
     def clean_repetir_senha(self):
         if (self.cleaned_data['senha'] != self.cleaned_data['repetir_senha']):
@@ -62,3 +66,19 @@ class ReclamacaoForm(forms.Form):
     reclamacao = forms.CharField(widget=forms.Textarea(),
                                  initial="Digite sua reclamação aqui.",
                                  label="")
+
+class LoginForm(forms.Form):
+    login = forms.CharField(min_length=6, label=u'Login')
+    senha = forms.CharField(min_length=6,
+                            label=u'Senha',
+                            widget=forms.PasswordInput(render_value=False))
+    
+    def clean_senha(self):
+        try:
+            usuario = CustomUsuario.objects.get(conta__username)
+        except CustomUsuario.DoesNotExist:
+            raise forms.ValidationError(u'Login ou senha inválidos!')
+        if not usuario.conta.check_password(self.cleaned_data['senha']):
+            raise forms.ValidationError(u'Login ou senha inválidos!')
+        return self.cleaned_data['senha']
+    

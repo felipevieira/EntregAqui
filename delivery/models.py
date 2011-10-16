@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Usuario(models.Model):
-    usuario = models.OneToOneField(User, related_name="usuario")
+class CustomUsuario(models.Model):
+    conta = models.OneToOneField(User, related_name="usuario")
+
+class Usuario(CustomUsuario):
     cpf = models.CharField(max_length=11, unique=True)
     chave_de_ativacao = models.CharField(max_length=50)
     expiracao_chave = models.DateTimeField()
@@ -53,10 +55,9 @@ class Produto(models.Model):
     def __unicode__(self):
         return self.nome + " - " + self.catalogo.loja.nome
     
-class Funcionario(models.Model):
-    nome = models.CharField(max_length=30)
-    senha = models.CharField(max_length=64)
+class Funcionario(CustomUsuario):
     loja = models.ForeignKey(Loja, related_name="funcionarios")
+    cnpj = models.CharField(max_length=14)
     
     def __unicode__(self):
         return self.nome
