@@ -66,3 +66,27 @@ class Atendente(Funcionario):
 
 class Gerente(Funcionario):
     pass
+
+class Carrinho(models.Model):
+    data_criacao = models.DateTimeField()
+    loja = models.ForeignKey(Loja)
+    produtos = models.ManyToManyField(Produto, through='ProdutosCarrinho')
+    
+    def __unicode__(self):
+        result = "["
+        sep = ""
+        for produto in self.produtos.all():
+            result += sep + str(produto.nome)  
+            sep = ", "
+        
+        result += "]"
+        result = "Produtos: " + result + "; Loja: " + str(self.loja.nome)   
+        
+        
+        return result
+
+class ProdutosCarrinho(models.Model):
+    carrinho = models.ForeignKey(Carrinho)
+    produto = models.ForeignKey(Produto)
+    quantidade = models.IntegerField();
+

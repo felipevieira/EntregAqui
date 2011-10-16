@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 
+from delivery.Carrinho import Carrinho
+from delivery.forms import UsuarioForm, ReclamacaoForm, EnderecoForm
+from delivery.models import Usuario, Endereco, Categoria, Loja, Produto
+from delivery.utils import enviar_reclamacao
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+import datetime
+import delivery.Carrinho
+import random
+import sha
 
-from delivery.models import *
-from delivery.forms import *
-from delivery.utils import *
 
-import datetime, random, sha
 
 usuario_logado = "Visitante"
 
@@ -18,8 +22,15 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Caso não ative sua conta em 48 horas, a mesma será apagada.\n\n" \
            "Caso não consiga acessar o link, copie e cole o mesmo na barra de " \
            "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
+def testaFuncionamentoCarrinho(request):
+    loja_id = 1
+    produto_id = 2
+    carrinho = Carrinho(request,loja_id)
+    carrinho.adiciona(produto_id, 5)
+    print(carrinho)
 
 def home(request):
+    testaFuncionamentoCarrinho(request)
     if request.method == 'POST':
         form = UsuarioForm(request.POST)
         if form.is_valid():
