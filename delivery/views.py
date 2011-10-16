@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from delivery.Carrinho import Carrinho
-from delivery.forms import UsuarioForm, ReclamacaoForm, EnderecoForm
-from delivery.models import Usuario, Endereco, Categoria, Loja, Produto
-from delivery.utils import enviar_reclamacao
+from Carrinho import Carrinho
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from forms import UsuarioForm, ReclamacaoForm, EnderecoForm
+from models import Usuario, Endereco, Categoria, Loja, Produto
+from utils import enviar_reclamacao
 import datetime
-import delivery.Carrinho
 import random
 import sha
 

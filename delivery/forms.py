@@ -3,9 +3,10 @@
 from delivery.models import *
 from django import forms
 from django.contrib.auth.models import User
-from django.forms.models import ModelForm
-from django.db import IntegrityError
 from django.contrib.localflavor.br.forms import BRZipCodeField, BRCPFField
+from django.db import IntegrityError
+from django.forms.models import ModelForm
+from models import Usuario, Endereco
 
 class UsuarioForm(forms.Form):
     username = forms.CharField(max_length=30, label=u'Login')
