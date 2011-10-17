@@ -3,14 +3,13 @@
 {% block barra_menu %}
 <div class="barra_info_topo">
     <label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font><b> </label>
-    <a href="#?w=500" id="popup_parceria" rel="popup_name" class="poplight"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
+    <a href="#?w=500&h=400" id="popup_parceria" rel="popup_source" class="poplight" source="parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
     <a href="/cadastro" class="link_cadastrar"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font><b> </a>
-    <a href="#?w=300" id="link_login" rel="popup_name3" class="poplight"> <b><font face="Tahoma" size="2" color="white">Login</font><b> </a>
+    <a href="#?w=300&h=400" id="link_login" rel="popup_source" class="poplight" source="login/"> <b><font face="Tahoma" size="2" color="white">Login</font><b> </a>
     <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario_logado}}!</font><b> </label>   
 </div>
 {% endblock %}
 
-<a href="#?w=500"style="margin-left: 20px" rel="popup_name" class="poplight"> <b><font face="Tahoma" size="2" color="white">Informe-me quando estiver disponivel na minha cidade</font><b> </a>
 
 {% block barra_topo %}
 <select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
@@ -19,47 +18,14 @@
     {% endfor %}
 </select>
 
-<a href="#?w=500"style="margin-left: 20px" rel="popup_name2" class="poplight"> <b><font face="Tahoma" size="2" color="black">Informe-me quando estiver disponivel na minha cidade</font><b> </a>
+<a href="#?w=500&h=400" rel="popup_source" class="poplight" source="disponibilidade_cidade/"> <b><font face="Tahoma" size="2" color="black">Informe-me quando estiver disponivel na minha cidade</font><b> </a>
 
-<div id="popup_name" class="popup_block">
-    <h2><b><font  face="Tahoma" size="5" color="black">Deseja se tornar parceiro do Preguica Delivery?</font><b></h2>
-    <p><font  face="Tahoma" size="4" color="black">Por favor, preencha o formulario abaixo</font></p>
-    <form>
-    	<label> <b><font face="Tahoma" size="2" color="black">Nome da empresa</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_empresa" type="text" name="empresa" size="30" /><br />
-		<label> <b><font face="Tahoma" size="2" color="black">Endereco de e-mail</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_email" type="text" name="email" size="45" /> <br />
-		<label> <b><font face="Tahoma" size="2" color="black">Telefone para contato:</font><b> </label> <br />	
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_contato" type="text" name="contato" /> <br />
-		<img src="/static/images/icone-enviar.png" style="margin-left: 200px; margin-top: 30px" alt="Envie sua solicitacao" class="botao_enviar_parceiro" />
-	</form>
+
+<!-- Essa div eh usada nas popups, o conteudo eh carregado no javascript -->
+<div id="popup_source" class="popup_block">
+	
 </div>
 
-<div id="popup_name2" class="popup_block">
-    <h2><b><font  face="Tahoma" size="5" color="black">Deseja ser informado quando o Preguica Delivery estiver disponivel na sua cidade?</font><b></h2>
-    <p><font  face="Tahoma" size="4" color="black">Por favor, preencha o formulario abaixo</font></p>
-    <form>
-    	<label> <b><font face="Tahoma" size="2" color="black">Nome</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_nome_usuario" type="text" name="nome" size="30" /><br />
-		<label> <b><font face="Tahoma" size="2" color="black">Endereco de e-mail</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_email_usuario" type="text" name="email" size="45" /> <br />
-		<label> <b><font face="Tahoma" size="2" color="black">Cidade</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font> <input id="campo_cidade" type="text" name="cidade" size="45" /> <br />
-		<img src="/static/images/icone-enviar.png" style="margin-left: 200px; margin-top: 30px" alt="Envie sua solicitacao" class="botao_informar_cidade" />
-	</form>
-</div>
 
-<div id="popup_name3" class="popup_block">
-    <h2><b><font  face="Tahoma" size="5" color="black">Por favor, efetue login:</font><b></h2>
-    <form>
-		<label> <b><font face="Tahoma" size="2" color="black">Nome de usuario</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_username_login" type="text" name="nome" size="30" /><br />
-		<label> <b><font face="Tahoma" size="2" color="black">Senha</font><b> </label> <br />
-		<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_senha_login" type="text" name="email" size="30" /> <br /> <br />
-		<a href="#"> <b><font face="Tahoma" size="2" color="black">Cadastre-se!</font><b> </a> <br />
-		<a href="#"> <b><font face="Tahoma" size="2" color="black">Esqueceu sua senha?</font><b> </a> <br />
-		<img src="/static/images/login_image.png" style="margin-left: 100px; margin-top: 30px" alt="Login" class="botao_login" />
-	</form>
-</div>
 
 {% endblock %} 
