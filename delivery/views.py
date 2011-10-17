@@ -2,18 +2,20 @@
 
 from Carrinho import Carrinho
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
 from django.template import RequestContext
-from forms import UsuarioForm, ReclamacaoForm, EnderecoForm
+from forms import UsuarioForm, ReclamacaoForm, EnderecoForm, LoginForm
 from models import Usuario, Endereco, Categoria, Loja, Produto
 from utils import enviar_reclamacao
 import datetime
 import random
 import sha
+from django.contrib.auth import authenticate, login as authlogin
 
-
-
-usuario_logado = "Visitante"
+def nome_usuario_logado(request):
+    if request.user.is_authenticated():
+        return request.user.first_name
+    return "Visitante"
 
 mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Por favor, clique no link http://127.0.0.1:8000/cadastro/%s para ativar" \
@@ -21,6 +23,7 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Caso não ative sua conta em 48 horas, a mesma será apagada.\n\n" \
            "Caso não consiga acessar o link, copie e cole o mesmo na barra de " \
            "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
+
 def testaFuncionamentoCarrinho(request):
     loja_id = 1
     produto_id = 2
@@ -30,29 +33,11 @@ def testaFuncionamentoCarrinho(request):
 
 def home(request):
     testaFuncionamentoCarrinho(request)
-    if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            u = form.save()
-            salt = sha.new(str(random.random())).hexdigest()[:5]
-            chave = sha.new(salt+u.username).hexdigest()
-            expira = datetime.datetime.today() + datetime.timedelta(2)
-            usuario = Usuario.objects.create(usuario=u,
-                                             cpf=form.cleaned_data['cpf'],
-                                             chave_de_ativacao=chave,
-                                             expiracao_chave=expira)
-            from django.core.mail import EmailMessage
-            email = EmailMessage("teste", mensagem_email % chave, to=[usuario.usuario.email])
-            email.send()
-            return HttpResponse('Ok')
-    else:
-        form = UsuarioForm()
-        
+    print nome_usuario_logado(request)
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
                 { 'enderecos': enderecos,
-                 'usuario_logado' : usuario_logado,
-                 'form' : form },
+                 'usuario_logado' : nome_usuario_logado(request) },
 )
 
 def visualizar_categorias(request, cidade):
@@ -61,7 +46,7 @@ def visualizar_categorias(request, cidade):
                 {'cidade': cidade,
                  'categorias': Categoria.objects.all(),
                  'enderecos': enderecos,
-                 'usuario_logado' : usuario_logado
+                 'usuario_logado' : nome_usuario_logado(request)
                  })
 
 def listar_lojas(request, cidade, categoria):
@@ -73,10 +58,12 @@ def listar_lojas(request, cidade, categoria):
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
                  'enderecos': enderecos,
-                 'usuario_logado' : usuario_logado
+                 'usuario_logado' : nome_usuario_logado(request)
                  })
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
+    if request.method == 'POST':
+        pass
     enderecos = Endereco.objects.values('cidade').annotate()
     produtos = Produto.objects.filter(catalogo__loja__nome=loja, catalogo__loja__endereco__cidade=cidade, catalogo__loja__categoria__nome=categoria)
     return render_to_response("produtos.html",
@@ -86,7 +73,7 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
                  'enderecos': enderecos,
-                 'usuario_logado' : usuario_logado
+                 'usuario_logado' : nome_usuario_logado(request)
                  })
 
 def cadastrar_usuario(request):
@@ -102,7 +89,8 @@ def cadastrar_usuario(request):
                                              chave_de_ativacao=chave,
                                              expiracao_chave=expira)
             from django.core.mail import EmailMessage
-            email = EmailMessage("teste", mensagem_email % chave, to=[usuario.user.email])
+            email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
+                                 mensagem_email % chave, to=[usuario.user.email])
             email.send()
             return HttpResponse('Ok')
     else:
@@ -130,23 +118,23 @@ def ativar_usuario(request, chave):
 
 def visualizar_painel_usuario(request):
     return render_to_response("painel_usuario.html",
-                              {'usuario_logado' : usuario_logado})
+                              {'usuario_logado' : nome_usuario_logado(request)})
     
 def exibir_pedidos(request):
     return render_to_response("ultimos_pedidos.html",
-                              {'usuario_logado' : usuario_logado})
+                              {'usuario_logado' : nome_usuario_logado(request)})
     
 def exibir_reclamacao(request):
     if request.method == 'POST':
         form = ReclamacaoForm(request.POST)
         if form.is_valid():
-            enviar_reclamacao(form.cleaned_data['reclamacao'], usuario_logado)
+            enviar_reclamacao(form.cleaned_data['reclamacao'], nome_usuario_logado(request))
             return HttpResponse('Reclamação enviada com sucesso.');
     else:
         form = ReclamacaoForm()
         
     return render_to_response("reclamar.html",
-                              {'usuario_logado' : usuario_logado,
+                              {'usuario_logado' : nome_usuario_logado(request),
                                'form': form}, context_instance=RequestContext(request))
 
 def adicionar_endereco(request):
@@ -172,6 +160,8 @@ def adicionar_endereco(request):
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm()
         if form.is_valid():
-            pass
+            conta = authenticate(form.cleaned_data['login'],
+                                 form.cleaned_data['senha'])
+            authlogin(request, conta)

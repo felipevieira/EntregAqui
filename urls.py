@@ -8,6 +8,10 @@ urlpatterns = patterns('',
     url(r'^$', 'delivery.views.home', name='home'),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_ROOT, 'show_indexes': True}),
     url(r'^cadastro/(?P<chave>[\w]+)', 'EntregAqui.delivery.views.ativar_usuario'),
     url(r'^cadastro/', 'EntregAqui.delivery.views.cadastrar_usuario'),
     url(r'^adicionar_endereco', 'EntregAqui.delivery.views.adicionar_endereco'),
@@ -20,11 +24,3 @@ urlpatterns = patterns('',
     (r'^(?P<cidade>[\w ]+)/$', 'EntregAqui.delivery.views.visualizar_categorias'),
     
 )
-
-if settings.SERVE_STATIC_FILES:
-    urlpatterns += patterns('',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-        (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.STATIC_ROOT, 'show_indexes': True})        
-    )
