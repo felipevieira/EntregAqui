@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import sys
+from EntregAqui import settings
+from EntregAqui.delivery.models import *
+from delivery.models import Endereco, Categoria, Usuario, Loja, Catalogo, \
+    Produto
+from django.core.management import setup_environ
 import os
+import sys
 ## Setup to import models from Django app ##
 sys.path.append(os.path.abspath('..'))
 os.environ['DJANGO_SETTINGS_MODULE'] ='EntregAqui.settings'
 
-from django.core.management import setup_environ
-from EntregAqui import settings
-from EntregAqui.delivery.models import *
 setup_environ(settings)
 
 def main():
