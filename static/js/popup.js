@@ -3,15 +3,18 @@ $(document).ready(function(){
 				$('a.poplight[href^=#]').click(function() {
 				    var popID = $(this).attr('rel'); //Get Popup Name
 				    var popURL = $(this).attr('href'); //Get Popup href to define size
-				
+				    var source = $(this).attr('source');
+				    
 				    //Pull Query & Variables from href URL
 				    var query= popURL.split('?');
 				    var dim= query[1].split('&');
-				    var popWidth = dim[0].split('=')[1]; //Gets the first query string value
-				
+
+				    var popWidth = dim[0].split('=')[1]; 				    
+				    var popHeight = dim[1].split('=')[1];	
+				    
 				    //Fade in the Popup and add close button
-				    $('#' + popID).fadeIn().css({ 'width': Number( popWidth ) }).prepend('<a href="#" class="close"><img src="/static/images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>');
-				
+				    $('#' + popID).fadeIn().load(source).css({ 'width': Number( popWidth ), 'height' : Number( popHeight ) }).prepend('<a href="#" class="close"><img src="/static/images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>');
+					
 				    //Define margin for center alignment (vertical   horizontal) - we add 80px to the height/width to accomodate for the padding  and border width defined in the css
 				    var popMargTop = ($('#' + popID).height() + 80) / 2;
 				    var popMargLeft = ($('#' + popID).width() + 80) / 2;

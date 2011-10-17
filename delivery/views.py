@@ -139,6 +139,15 @@ def exibir_reclamacao(request):
                               {'usuario_logado' : usuario_logado,
                                'form': form}, context_instance=RequestContext(request))
 
+def exibir_login(request):
+    return render_to_response("login.html")
+
+def exibir_parceria(request):
+    return render_to_response("parceria.html")
+
+def exibir_disponibilidade(request):
+    return render_to_response("disponibilidade_cidade.html")
+    
 def adicionar_endereco(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/")
