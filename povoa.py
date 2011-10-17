@@ -15,12 +15,6 @@ setup_environ(settings)
 
 def main():
     enderecos = {}
-    enderecos["danilo"] = Endereco(logradouro=u"Rua Julio Ferreira Tavares", numero=550,
-                              cep="58411060", bairro=u"Itarar�", cidade=u"Campina Grande",
-                              estado=u"Paraiba")
-    enderecos["amaury"] = Endereco(logradouro=u"Rua Estelita Cruz", numero=1184,
-                              cep="58102587", bairro=u"Alto Branco", cidade=u"Campina Grande",
-                              estado=u"Paraiba")
     enderecos["sapore"] = Endereco(logradouro=u"Rua Santo Ant�nio", numero=74,
                               cep="58103355", bairro=u"Santo Ant�nio",
                               cidade=u"Campina Grande", estado=u"Paraiba")
@@ -31,8 +25,6 @@ def main():
     lazer = Categoria(nome="Lazer")
     danilo = Usuario(nome=u"Danilo Ara�jo de Freitas", email="dsurviver@gmail.com",
                      cpf="12345678910", senha="123")
-    amaury = Usuario(nome=u"Amaury Medeiros", email="amaurymedeiros@gmail.com",
-                     cpf="12312312312", senha="123")
     pitts = Loja(nome=u"Pittsburg")
     sapore = Loja(nome=u"Sapore DItalia")
     catalogo_sapore = Catalogo()
@@ -44,10 +36,6 @@ def main():
     
     for endereco in enderecos.values():
         endereco.save()
-    #danilo.endereco = Endereco.objects.get(numero=550)
-    #amaury.endereco = Endereco.objects.get(numero=1184)
-    #danilo.save()
-    #amaury.save()
     alimento.save()
     lazer.save()
     pitts.categoria = Categoria.objects.get(nome="Alimentos")

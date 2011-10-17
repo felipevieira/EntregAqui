@@ -10,7 +10,7 @@ class Usuario(CustomUsuario):
     expiracao_chave = models.DateTimeField()
     
     def __unicode__(self):
-        return self.usuario.username
+        return self.conta.username
 
 class Endereco(models.Model):
     logradouro = models.CharField(max_length=200)
@@ -33,9 +33,11 @@ class Categoria(models.Model):
         return self.nome
 
 class Loja(models.Model):
+    STATUS_CHOICES = (("A", "Aberta"), ("F", "Fechada"))
     nome = models.CharField(max_length=30)
     categoria = models.ForeignKey(Categoria)
     endereco = models.ForeignKey(Endereco)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     
     def __unicode__(self):
         return self.nome + " - " + unicode(self.categoria)
@@ -69,9 +71,13 @@ class Gerente(Funcionario):
     pass
 
 class Carrinho(models.Model):
+    STATUS_CHOICES = (("A", "Em Aberto"), ("R", "Recebido"), ("D", "Despachado"),
+                      ("E", "Entregue"))
+    
     data_criacao = models.DateTimeField()
     loja = models.ForeignKey(Loja)
     produtos = models.ManyToManyField(Produto, through='ProdutosCarrinho')
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES)
     
     def __unicode__(self):
         result = "["

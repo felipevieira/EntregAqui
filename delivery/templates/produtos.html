@@ -1,11 +1,16 @@
 {% extends "categorias.html" %}
 
-{% block titulo %}EntregAqui - {{cidade}} - {{categoria}} - {{loja}}{% endblock %}
+{% block titulo %}Preguica Delivery - {{cidade}} - {{categoria}} - {{loja}}{% endblock %}
 
 {% block conteudo %}
-{% for produto in produtos %}
-    <a id="produto_{{produto.id}}">
-    {{produto.nome}}
-    </a>
-{% endfor %}
+
+<form action="/{{cidade}}/{{categoria}}/{{loja}}">
+    <table>
+    {% for produto in produtos %}
+        <tr><th><label for="produto_{{produto.id}}">{{produto}}</label></th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}"/></td></tr>
+    {% endfor %}
+    </table>
+    <input type="submit" value="Comprar"/>
+</form>
+
 {% endblock %}

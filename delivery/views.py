@@ -32,7 +32,6 @@ def testaFuncionamentoCarrinho(request):
     print(carrinho)
 
 def home(request):
-    testaFuncionamentoCarrinho(request)
     print nome_usuario_logado(request)
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
@@ -84,13 +83,13 @@ def cadastrar_usuario(request):
             salt = sha.new(str(random.random())).hexdigest()[:5]
             chave = sha.new(salt+u.username).hexdigest()
             expira = datetime.datetime.today() + datetime.timedelta(2)
-            usuario = Usuario.objects.create(usuario=u,
+            usuario = Usuario.objects.create(conta=u,
                                              cpf=form.cleaned_data['cpf'],
                                              chave_de_ativacao=chave,
                                              expiracao_chave=expira)
             from django.core.mail import EmailMessage
             email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
-                                 mensagem_email % chave, to=[usuario.user.email])
+                                 mensagem_email % chave, to=[usuario.conta.email])
             email.send()
             return HttpResponse('Ok')
     else:
@@ -137,9 +136,6 @@ def exibir_reclamacao(request):
                               {'usuario_logado' : nome_usuario_logado(request),
                                'form': form}, context_instance=RequestContext(request))
 
-def exibir_login(request):
-    return render_to_response("login.html")
-
 def exibir_parceria(request):
     return render_to_response("parceria.html")
 
@@ -169,8 +165,14 @@ def adicionar_endereco(request):
 
 def login(request):
     if request.method == 'POST':
-        form = LoginForm()
+        form = LoginForm(request.POST)
         if form.is_valid():
-            conta = authenticate(form.cleaned_data['login'],
-                                 form.cleaned_data['senha'])
+            conta = authenticate(username=form.cleaned_data['login'],
+                                 password=form.cleaned_data['senha'])
             authlogin(request, conta)
+            return HttpResponse("Login efetuado com sucesso!")
+    else:
+        form = LoginForm()
+    return render_to_response("login.html",
+                              {'form' : form},
+                              context_instance=RequestContext(request))

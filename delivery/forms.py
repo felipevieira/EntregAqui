@@ -4,16 +4,16 @@ from delivery.models import *
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.localflavor.br.forms import BRZipCodeField, BRCPFField
-from django.db import IntegrityError
 from django.forms.models import ModelForm
-from models import Usuario, Endereco
+from models import Usuario, Endereco, CustomUsuario
+from django.contrib.auth import authenticate
 
 class UsuarioForm(forms.Form):
     username = forms.CharField(max_length=30, label=u'Login')
     nome = forms.CharField(max_length=20)
     sobrenome = forms.CharField(max_length=50)
     email = forms.EmailField(label=u'Email')
-    repetir_email=forms.EmailField(label=u'Repetir Email')
+    repetir_email = forms.EmailField(label=u'Repetir Email')
     cpf = BRCPFField(label=u"CPF")
     senha = forms.CharField(min_length=6,
                             label=u'Senha',
@@ -74,12 +74,20 @@ class LoginForm(forms.Form):
                             label=u'Senha',
                             widget=forms.PasswordInput(render_value=False))
     
+    def clean_login(self):
+        try:
+            usuario = CustomUsuario.objects.get(conta__username=
+                                                self.cleaned_data['login'])
+        except CustomUsuario.DoesNotExist:
+            raise forms.ValidationError(u'Login ou senha inválidos!')
+        return self.cleaned_data['login']
+    
     def clean_senha(self):
         try:
-            usuario = CustomUsuario.objects.get(conta__username)
+            usuario = CustomUsuario.objects.get(conta__username=
+                                                self.cleaned_data['login'])
         except CustomUsuario.DoesNotExist:
             raise forms.ValidationError(u'Login ou senha inválidos!')
         if not usuario.conta.check_password(self.cleaned_data['senha']):
             raise forms.ValidationError(u'Login ou senha inválidos!')
         return self.cleaned_data['senha']
-    
