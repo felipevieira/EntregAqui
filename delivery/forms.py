@@ -74,14 +74,6 @@ class LoginForm(forms.Form):
                             label=u'Senha',
                             widget=forms.PasswordInput(render_value=False))
     
-    def clean_login(self):
-        try:
-            usuario = CustomUsuario.objects.get(conta__username=
-                                                self.cleaned_data['login'])
-        except CustomUsuario.DoesNotExist:
-            raise forms.ValidationError(u'Login ou senha inválidos!')
-        return self.cleaned_data['login']
-    
     def clean_senha(self):
         try:
             usuario = CustomUsuario.objects.get(conta__username=
