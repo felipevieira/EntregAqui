@@ -22,7 +22,7 @@
 	float: right;
 }
 
-#link_login {
+#link_login, #link_logout, #link_painel {
 	margin-left: 10px; 
 	float: right;
 }
