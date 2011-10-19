@@ -71,13 +71,13 @@ class Gerente(Funcionario):
     pass
 
 class Carrinho(models.Model):
-    STATUS_CHOICES = (("A", "Em Aberto"), ("R", "Recebido"), ("D", "Despachado"),
-                      ("E", "Entregue"))
+    STATUS_CHOICES = (("ABERTO", "Em Aberto"), ("PEDIDO_REALIZADO", "Pedido Realizado"), ("DESPACHADO", "Saiu para entrega"),
+                      ("ENTREGUE", "Entregue"))
     
     data_criacao = models.DateTimeField()
     loja = models.ForeignKey(Loja)
     produtos = models.ManyToManyField(Produto, through='ProdutosCarrinho')
-    status = models.CharField(max_length=15, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES)
     
     def __unicode__(self):
         result = "["
@@ -87,9 +87,8 @@ class Carrinho(models.Model):
             sep = ", "
         
         result += "]"
-        result = "Produtos: " + result + "; Loja: " + str(self.loja.nome)   
-        
-        
+        result = "Produtos: " + result + "; Loja: " + str(self.loja.nome) + "; "   
+        result += " Status: " + self.status + "; "
         return result
 
 class ProdutosCarrinho(models.Model):

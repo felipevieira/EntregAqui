@@ -13,6 +13,7 @@ import datetime
 import random
 import sha
 from django.contrib.auth import authenticate, login as authlogin
+from pedidos_manager import PedidosManager
 
 def nome_usuario_logado(request):
     if request.user.is_authenticated():
@@ -28,13 +29,47 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
 
 def testaFuncionamentoCarrinho(request):
     loja_id = 1
-    produto_id = 2
     carrinho = Carrinho(request,loja_id)
-    carrinho.adiciona(produto_id, 5)
-    print(carrinho)
+    print carrinho
+    
+    produto_id = 1
+    quantidade = 2
+    carrinho.adiciona(request,produto_id, quantidade )
+    print "Adicionando "+ str(quantidade) + " unidades do produto de id " + str(produto_id) + "..."
+    print carrinho
+    
+    produto_id = 2
+    quantidade = 4
+    carrinho.adiciona(request, produto_id, quantidade)
+    print "Adicionando "+ str(quantidade)+ " unidades do produto de id " + str(produto_id) + "..."
+    
+    carrinho.limpa(request);
+    print "Limpando Carrinho..."
+    print carrinho
+    
+    produto_id = 2
+    quantidade = 4
+    carrinho.adiciona(request, produto_id, quantidade)
+    print "Adicionando "+ str(quantidade) + " unidades do produto de id " + str(produto_id) + "..."
+    
+    print "...Finalizando pedido..." ;
+    carrinho.realizarPedido(request);
+    print carrinho
+    
+    carrinho = Carrinho(request,loja_id)
+    print "Novo carrinho foi criado " + str(carrinho)
+    
+    
+    
+    print "Ultimas Compras realizadas na loja de id" + str(loja_id)
+    pedidosManager = PedidosManager()
+    print pedidosManager.ultimosPedidos(loja_id)
+    
 
 def home(request):
     print nome_usuario_logado(request)
+    testaFuncionamentoCarrinho(request)
+    
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
                 { 'enderecos': enderecos,
