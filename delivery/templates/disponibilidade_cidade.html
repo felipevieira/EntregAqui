@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">	
+		<head>
+	    	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />    	
+	    </head> 
 		<body>			
-			<form action="/disponibilidade_cidade/" method="post"> {% csrf_token %}
+			<form action="/disponibilidade_cidade/" method="post" id="form_cidade"> {% csrf_token %}
 			    <center>
 			    	<b><font face="Tahoma" size="4" color="black">Deseja ser informado quando o Preguica Delivery chegar na sua cidade?</font><b> <br />
 			    	<b><font face="Tahoma" size="3" color="black">Preencha os dados abaixo</font><b>

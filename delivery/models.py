@@ -100,3 +100,6 @@ class SolicitacaoCidade(models.Model):
     nomeUsuario = models.CharField(max_length=50);
     emailUsuario = models.EmailField();
     cidade = models.CharField(max_length=100);
+    
+    def __unicode__(self):
+        return self.cidade

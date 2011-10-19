@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">	
+		<head>
+	    	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />    	
+	    </head> 
 		<body>			
-			<form action="/parceria/" method="post"> {% csrf_token %}
+			<form action="/parceria/" method="post" id="form_parceria"> {% csrf_token %}
 			    <center>
 			    	<b><font face="Tahoma" size="4" color="black">Deseja se tornar parceiro do Preguica Delivery?</font><b>
 			    	<b><font face="Tahoma" size="3" color="black">Preencha os dados abaixo</font><b>

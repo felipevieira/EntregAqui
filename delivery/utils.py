@@ -3,7 +3,7 @@
 from django.core.mail import EmailMessage
 
 def enviar_reclamacao(conteudo, autor):    
-    assunto = "[Reclamação EntregAqui] Autor: " + autor
+    assunto = "[Reclamacao EntregAqui] Autor: " + autor
     email = EmailMessage(assunto, conteudo, to=['entregaqui.mailer@gmail.com'])
     email.send()
 

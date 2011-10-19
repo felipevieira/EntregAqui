@@ -17,6 +17,7 @@ from pedidos_manager import PedidosManager
 
 def nome_usuario_logado(request):
     if request.user.is_authenticated():
+        print "ta autenticado"
         return request.user.first_name
     return "Visitante"
 
@@ -68,7 +69,7 @@ def testaFuncionamentoCarrinho(request):
 
 def home(request):
     print nome_usuario_logado(request)
-    testaFuncionamentoCarrinho(request)
+    #testaFuncionamentoCarrinho(request)
     
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
@@ -165,7 +166,7 @@ def exibir_reclamacao(request):
         form = ReclamacaoForm(request.POST)
         if form.is_valid():
             utils.enviar_reclamacao(form.cleaned_data['reclamacao'], nome_usuario_logado(request))
-            return HttpResponse('Reclamação enviada com sucesso.');
+            return HttpResponse('Reclamacao enviada com sucesso.');
     else:
         form = ReclamacaoForm()
         
@@ -227,10 +228,12 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            enderecos = Endereco.objects.values('cidade').annotate()
             conta = authenticate(username=form.cleaned_data['login'],
                                  password=form.cleaned_data['senha'])           
             authlogin(request, conta)
-            return HttpResponse("Login efetuado com sucesso!")
+            return render_to_response("home.html", 
+                { 'enderecos': enderecos,'usuario_logado' : nome_usuario_logado(request) })
     else:
         form = LoginForm()
     return render_to_response("login.html",

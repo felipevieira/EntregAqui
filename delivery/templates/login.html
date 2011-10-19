@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+	<head>
+    	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />    	
+    </head>    
 	<body>			
-		<form action="/login/" method="post"> {% csrf_token %}
+		<form action="/login/" method="post" id="form_login"> {% csrf_token %}
             <center>
                 <b><font face="Tahoma" size="4" color="black">Por favor, efetue login:</font><b>
                 <table class="table_form">
