@@ -73,7 +73,7 @@ class LoginForm(forms.Form):
                             label=u'Senha',
                             widget=forms.PasswordInput(render_value=False))
     
-    def clean_senha(self):
+    def clean_login(self):
         try:
             usuario = CustomUsuario.objects.get(conta__username=
                                                 self.cleaned_data['login'])
@@ -81,7 +81,7 @@ class LoginForm(forms.Form):
             raise forms.ValidationError(u'Login ou senha inválidos!')
         if not usuario.conta.check_password(self.cleaned_data['senha']):
             raise forms.ValidationError(u'Login ou senha inválidos!')
-        return self.cleaned_data['senha']
+        return self.cleaned_data['login']
     
 class ParceriaForm(forms.Form):
     empresa = forms.CharField(max_length=100, label=u"Nome da Empresa")
