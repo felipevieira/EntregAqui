@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.contrib.localflavor.br.forms import BRZipCodeField, BRCPFField
 from django.forms.models import ModelForm
 from models import Usuario, Endereco, CustomUsuario
-from django.contrib.auth import authenticate
 
 class UsuarioForm(forms.Form):
     username = forms.CharField(max_length=30, label=u'Login')

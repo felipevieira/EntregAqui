@@ -12,7 +12,7 @@ import utils
 import datetime
 import random
 import sha
-from django.contrib.auth import authenticate, login as authlogin
+from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
 from pedidos_manager import PedidosManager
 
 def nome_usuario_logado(request):
@@ -67,13 +67,10 @@ def testaFuncionamentoCarrinho(request):
     
 
 def home(request):
-    print nome_usuario_logado(request)
-    testaFuncionamentoCarrinho(request)
-    
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
                 { 'enderecos': enderecos,
-                 'usuario_logado' : nome_usuario_logado(request) },
+                 'usuario' : request.user },
 )
 
 def visualizar_categorias(request, cidade):
@@ -82,7 +79,7 @@ def visualizar_categorias(request, cidade):
                 {'cidade': cidade,
                  'categorias': Categoria.objects.all(),
                  'enderecos': enderecos,
-                 'usuario_logado' : nome_usuario_logado(request)
+                 'usuario' : request.user
                  })
 
 def listar_lojas(request, cidade, categoria):
@@ -94,7 +91,7 @@ def listar_lojas(request, cidade, categoria):
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
                  'enderecos': enderecos,
-                 'usuario_logado' : nome_usuario_logado(request)
+                 'usuario' : request.user
                  })
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
@@ -109,7 +106,7 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'categorias': Categoria.objects.all(),
                  'categoria': categoria,
                  'enderecos': enderecos,
-                 'usuario_logado' : nome_usuario_logado(request)
+                 'usuario' : request.user
                  })
 
 def cadastrar_usuario(request):
@@ -154,11 +151,11 @@ def ativar_usuario(request, chave):
 
 def visualizar_painel_usuario(request):
     return render_to_response("painel_usuario.html",
-                              {'usuario_logado' : nome_usuario_logado(request)})
+                              {'usuario' : request.user})
     
 def exibir_pedidos(request):
     return render_to_response("ultimos_pedidos.html",
-                              {'usuario_logado' : nome_usuario_logado(request)})
+                              {'usuario' : request.user})
     
 def exibir_reclamacao(request):
     if request.method == 'POST':
@@ -170,7 +167,7 @@ def exibir_reclamacao(request):
         form = ReclamacaoForm()
         
     return render_to_response("reclamar.html",
-                              {'usuario_logado' : nome_usuario_logado(request),
+                              {'usuario' : request.user,
                                'form': form}, context_instance=RequestContext(request))
 
 def exibir_parceria(request):
@@ -230,9 +227,15 @@ def login(request):
             conta = authenticate(username=form.cleaned_data['login'],
                                  password=form.cleaned_data['senha'])           
             authlogin(request, conta)
-            return HttpResponse("Login efetuado com sucesso!")
+            return HttpResponseRedirect("/")
     else:
         form = LoginForm()
     return render_to_response("login.html",
                               {'form' : form},
                               context_instance=RequestContext(request))
+
+def logout(request):
+    print "ola"
+    print request.user
+    authlogout(request)
+    return HttpResponseRedirect("/")
