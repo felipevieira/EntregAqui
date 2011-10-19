@@ -97,3 +97,7 @@ class ProdutosCarrinho(models.Model):
     produto = models.ForeignKey(Produto)
     quantidade = models.IntegerField();
 
+class SolicitacaoCidade(models.Model):
+    nomeUsuario = models.CharField(max_length=50);
+    emailUsuario = models.EmailField();
+    cidade = models.CharField(max_length=100);

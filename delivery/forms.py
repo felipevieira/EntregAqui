@@ -91,3 +91,13 @@ class LoginForm(forms.Form):
         if not usuario.conta.check_password(self.cleaned_data['senha']):
             raise forms.ValidationError(u'Login ou senha inválidos!')
         return self.cleaned_data['senha']
+    
+class ParceriaForm(forms.Form):
+    empresa = forms.CharField(max_length=100, label=u"Nome da Empresa")
+    email = forms.EmailField(label=u"Email")
+    contato = forms.CharField(max_length=10, label=u"Telefone para Contato")
+    
+class InformarCidadeForm(forms.Form):
+    nome = forms.CharField(max_length=50, label=u"Nome")
+    email = forms.EmailField(label=u"Email")
+    cidade = forms.CharField(max_length=50, label=u"Cidade")

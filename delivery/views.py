@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from Carrinho import Carrinho
+from carrinho import Carrinho
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from forms import UsuarioForm, ReclamacaoForm, EnderecoForm, LoginForm
-from models import Usuario, Endereco, Categoria, Loja, Produto
-from utils import enviar_reclamacao
+from forms import UsuarioForm, ReclamacaoForm, EnderecoForm, LoginForm,\
+    ParceriaForm, InformarCidadeForm
+from models import Usuario, Endereco, Categoria, Loja, Produto,\
+    SolicitacaoCidade
+import utils
 import datetime
 import random
 import sha
@@ -127,7 +129,7 @@ def exibir_reclamacao(request):
     if request.method == 'POST':
         form = ReclamacaoForm(request.POST)
         if form.is_valid():
-            enviar_reclamacao(form.cleaned_data['reclamacao'], nome_usuario_logado(request))
+            utils.enviar_reclamacao(form.cleaned_data['reclamacao'], nome_usuario_logado(request))
             return HttpResponse('Reclamação enviada com sucesso.');
     else:
         form = ReclamacaoForm()
@@ -137,10 +139,33 @@ def exibir_reclamacao(request):
                                'form': form}, context_instance=RequestContext(request))
 
 def exibir_parceria(request):
-    return render_to_response("parceria.html")
-
+    if request.method == 'POST':
+        form = ParceriaForm(request.POST)
+        if form.is_valid():   
+            utils.enviar_pedido_parceria(utils.getConteudoEmailPedido(form.cleaned_data['empresa'], form.cleaned_data['email'],
+                                                                       form.cleaned_data['contato']), form.cleaned_data['empresa'])
+            return HttpResponse('Pedido enviado com sucesso.');
+    else:
+        form = ParceriaForm()
+        
+    return render_to_response("parceria.html",
+                              {'form': form}, context_instance=RequestContext(request))
+    
 def exibir_disponibilidade(request):
-    return render_to_response("disponibilidade_cidade.html")
+    if request.method == 'POST':
+        form = InformarCidadeForm((request.POST))
+        if form.is_valid():        
+            solicitacao = SolicitacaoCidade()
+            solicitacao.nomeUsuario = form.cleaned_data['nome']
+            solicitacao.emailUsuario = form.cleaned_data['email']
+            solicitacao.cidade = form.cleaned_data['cidade']
+            solicitacao.save()     
+            return HttpResponse('Solicitacao realizada com sucesso.');
+    else:
+        form = InformarCidadeForm()
+        
+    return render_to_response("disponibilidade_cidade.html",
+                              {'form': form}, context_instance=RequestContext(request))
     
 def adicionar_endereco(request):
     if not request.user.is_authenticated():
@@ -168,7 +193,7 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             conta = authenticate(username=form.cleaned_data['login'],
-                                 password=form.cleaned_data['senha'])
+                                 password=form.cleaned_data['senha'])           
             authlogin(request, conta)
             return HttpResponse("Login efetuado com sucesso!")
     else:
