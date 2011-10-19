@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">	
-		<body>
-			<center>
-					<h2><b><font  face="Tahoma" size="5" color="black">Deseja ser informado quando o Preguica Delivery estiver disponivel na sua cidade?</font><b></h2>
-				    <p><font  face="Tahoma" size="4" color="black">Por favor, preencha o formulario abaixo</font></p>
-				    <form>
-				    	<label> <b><font face="Tahoma" size="2" color="black">Nome</font><b> </label> <br />
-						<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_nome_usuario" type="text" name="nome" size="30" /><br />
-						<label> <b><font face="Tahoma" size="2" color="black">Endereco de e-mail</font><b> </label> <br />
-						<b><font  face="Tahoma" size="3" color="black"></font>  <input id="campo_email_usuario" type="text" name="email" size="45" /> <br />
-						<label> <b><font face="Tahoma" size="2" color="black">Cidade</font><b> </label> <br />
-						<b><font  face="Tahoma" size="3" color="black"></font> <input id="campo_cidade" type="text" name="cidade" size="45" /> <br />
-						<img src="/static/images/icone-enviar.png" style="margin-left: 200px; margin-top: 30px" alt="Envie sua solicitacao" class="botao_informar_cidade" />
-					</form>
-			</center>
-		</body>
+		<body>			
+			<form action="/disponibilidade_cidade/" method="post"> {% csrf_token %}
+			    <center>
+			    	<b><font face="Tahoma" size="4" color="black">Deseja ser informado quando o Preguica Delivery chegar na sua cidade?</font><b> <br />
+			    	<b><font face="Tahoma" size="3" color="black">Preencha os dados abaixo</font><b>
+			    	<table class="table_form">
+			        	{{form}}
+			    	</table> <br />
+			    	<input type="submit" value="Continuar" />
+			    </center>
+			</form>
+		</body>	
 </html>

@@ -1,3 +1,6 @@
-#Sun Oct 16 16:52:02 GMT-03:00 2011
+#Tue Oct 18 20:01:20 BRST 2011
 eclipse.preferences.version=1
+encoding//delivery/forms.py=utf-8
+encoding//delivery/utils.py=utf-8
+encoding//delivery/views.py=utf-8
 encoding/povoa.py=utf-8

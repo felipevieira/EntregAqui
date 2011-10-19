@@ -1,17 +1,17 @@
 $(document).ready(function(){
 				//When you click on a link with class of poplight and the href starts with a # 
-				$('a.poplight[href^=#]').click(function() {
+				$('a.poplight[href^=#]').click(function() {					
 				    var popID = $(this).attr('rel'); //Get Popup Name
 				    var popURL = $(this).attr('href'); //Get Popup href to define size
 				    var source = $(this).attr('source');
 				    
 				    //Pull Query & Variables from href URL
 				    var query= popURL.split('?');
-				    var dim= query[1].split('&');
+				    var dim= query[1].split('&');				    
 
 				    var popWidth = dim[0].split('=')[1]; 				    
 				    var popHeight = dim[1].split('=')[1];	
-				    
+				    				    
 				    //Fade in the Popup and add close button
 				    $('#' + popID).fadeIn().load(source).css({ 'width': Number( popWidth ), 'height' : Number( popHeight ) }).prepend('<a href="#" class="close"><img src="/static/images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>');
 					
