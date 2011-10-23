@@ -4,6 +4,6 @@
 
 {% block barra_lateral %}
     {% for categoria in categorias %}
-    <li id="categoria_{{categoria.id}}"><a href="/{{cidade}}/{{categoria.nome}}">{{categoria.nome}}</li>
+    <li id="categoria_{{categoria.id}}"><a href="/{{cidade}}/{{categoria.nome}}">{{categoria.nome}}</a></li>
     {% endfor %}
 {% endblock %}

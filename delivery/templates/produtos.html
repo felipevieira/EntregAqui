@@ -4,10 +4,11 @@
 
 {% block conteudo %}
 
-<form action="/{{cidade}}/{{categoria}}/{{loja}}">
-    <table>
+<form action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
+    <table class="table_form">
     {% for produto in produtos %}
-        <tr><th><label for="produto_{{produto.id}}">{{produto}}</label></th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}"/></td></tr>
+        <tr><th><label for="produto_{{produto.id}}">{{produto}}:</label>
+        </th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
     {% endfor %}
     </table>
     <input type="submit" value="Comprar"/>

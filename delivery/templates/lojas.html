@@ -4,6 +4,6 @@
 
 {% block conteudo %}
 {% for loja in lojas %}
-<li id="loja_{{loja.id}}"><a href="/{{cidade}}/{{categoria}}/{{loja.nome}}"/>{{loja.nome}}</li>
+<li id="loja_{{loja.id}}"><a href="/{{cidade}}/{{categoria}}/{{loja.nome}}">{{loja.nome}}</a></li>
 {% endfor %}
 {% endblock %}

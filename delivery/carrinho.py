@@ -1,6 +1,5 @@
-from models import Loja, ProdutosCarrinho, Produto
+from models import Loja, ProdutoCarrinho, Pedido, Produto
 import datetime
-import models
 
 
 ID_CARRINHO = "ID_CARRINHO"
@@ -11,34 +10,35 @@ class Carrinho:
         id_carrinho = request.session.get(ID_CARRINHO)
         if (id_carrinho):
             try:
-                carrinho = models.Carrinho.objects.get(id=id_carrinho);
+                carrinho = Pedido.objects.get(id=id_carrinho);
             except:
                 carrinho = self.new(request, loja_id)
         else:
             carrinho = self.new(request, loja_id)
             
         self.carrinho = carrinho 
-  
+
     def new(self, request, loja_id):
-        carrinho = models.Carrinho(data_criacao=datetime.datetime.now(), loja = Loja.objects.get(id=loja_id), status = "ABERTO")
+        carrinho = Pedido(data_criacao=datetime.datetime.now(),
+                          loja = Loja.objects.get(id=loja_id), status = "ABERTO")
         carrinho.save()
         request.session[ID_CARRINHO] = carrinho.id
         print "Criado novo carrinho de id "+ str(carrinho.id)
         return carrinho
-  
+
     def adiciona(self, request, produto_id, quantidade):
         try:
-            item = ProdutosCarrinho.objects.get(
+            item = ProdutoCarrinho.objects.get(
                         carrinho = self.carrinho, 
                         produto=Produto.objects.get(id=produto_id))
             item.quantidade = item.quantidade + quantidade;
             item.save()
         except:  
-            ProdutosCarrinho(carrinho=self.carrinho,produto=Produto.objects.get(id=produto_id),quantidade=quantidade).save()
+            ProdutoCarrinho(carrinho=self.carrinho,produto=Produto.objects.get(id=produto_id),quantidade=quantidade).save()
     
     def remove(self, request, produto_id, quantidade):
         try:
-            item = ProdutosCarrinho.objects.get(
+            item = ProdutoCarrinho.objects.get(
                         carrinho = self.carrinho, 
                         produto=Produto.objects.get(id=produto_id))
             item.quantidade = item.quantidade - quantidade;
@@ -51,12 +51,12 @@ class Carrinho:
         
     def total(self):
         total = 0
-        for linha in ProdutosCarrinho.objects.filter(carrinho=self.carrinho):
+        for linha in ProdutoCarrinho.objects.filter(carrinho=self.carrinho):
             total += linha.produto.preco * linha.quantidade
         return total
     
     def limpa(self, request):
-        ProdutosCarrinho.objects.filter(carrinho=self.carrinho).delete()    
+        ProdutoCarrinho.objects.filter(carrinho=self.carrinho).delete()    
     
     def realizarPedido(self, request):
         self.carrinho.status = "PEDIDO_REALIZADO"

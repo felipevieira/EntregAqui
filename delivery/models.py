@@ -20,11 +20,16 @@ class Endereco(models.Model):
     cep = models.CharField(max_length=8)
     cidade = models.CharField(max_length=50)
     estado = models.CharField(max_length=50)
-    referencia = models.CharField(max_length=200, blank=True)
-    usuario = models.ForeignKey(Usuario, related_name="enderecos")
     
     def __unicode__(self):
         return self.logradouro + ", N" + unicode(self.numero) + " - " + self.cidade + " - " + self.estado
+
+class EnderecoUsuario(Endereco):
+    usuario = models.ForeignKey(Usuario, related_name="enderecos")
+    referencia = models.CharField(max_length=200, blank=True)
+
+class EnderecoLoja(Endereco):
+    pass
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=20, unique=True)
@@ -36,8 +41,9 @@ class Loja(models.Model):
     STATUS_CHOICES = (("A", "Aberta"), ("F", "Fechada"))
     nome = models.CharField(max_length=30)
     categoria = models.ForeignKey(Categoria)
-    endereco = models.ForeignKey(Endereco)
+    endereco = models.ForeignKey(EnderecoLoja)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    cnpj = models.CharField(max_length=14)
     
     def __unicode__(self):
         return self.nome + " - " + unicode(self.categoria)
@@ -59,7 +65,6 @@ class Produto(models.Model):
     
 class Funcionario(CustomUsuario):
     loja = models.ForeignKey(Loja, related_name="funcionarios")
-    cnpj = models.CharField(max_length=14)
     
     def __unicode__(self):
         return self.nome
@@ -70,14 +75,16 @@ class Atendente(Funcionario):
 class Gerente(Funcionario):
     pass
 
-class Carrinho(models.Model):
+class Pedido(models.Model):
     STATUS_CHOICES = (("ABERTO", "Em Aberto"), ("PEDIDO_REALIZADO", "Pedido Realizado"), ("DESPACHADO", "Saiu para entrega"),
-                      ("ENTREGUE", "Entregue"))
+                      ("DESPACHADO", "Despachado"), ("ENTREGUE", "Entregue"))
     
+    comprador = models.ForeignKey(Usuario, related_name='compras')
     data_criacao = models.DateTimeField()
-    loja = models.ForeignKey(Loja)
-    produtos = models.ManyToManyField(Produto, through='ProdutosCarrinho')
+    loja = models.ForeignKey(Loja, related_name='Pedidos')
+    produtos = models.ManyToManyField(Produto, through='ProdutoCarrinho')
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
+    total_pago = models.IntegerField()
     
     def __unicode__(self):
         result = "["
@@ -91,8 +98,8 @@ class Carrinho(models.Model):
         result += " Status: " + self.status + "; "
         return result
 
-class ProdutosCarrinho(models.Model):
-    carrinho = models.ForeignKey(Carrinho)
+class ProdutoCarrinho(models.Model):
+    carrinho = models.ForeignKey(Pedido)
     produto = models.ForeignKey(Produto)
     quantidade = models.IntegerField();
 

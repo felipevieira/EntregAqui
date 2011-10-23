@@ -1,14 +1,13 @@
-from delivery.models import *
 from django.contrib import admin
-from models import Usuario, Loja, Funcionario, Catalogo, Produto, Endereco, \
-    Categoria, Atendente, Gerente, Carrinho, ProdutosCarrinho, SolicitacaoCidade
+from delivery.models import *
 
 admin.site.register(Usuario)
 admin.site.register(Loja)
 admin.site.register(Funcionario)
 admin.site.register(Catalogo)
 admin.site.register(Produto)
-admin.site.register(Endereco)
+admin.site.register(EnderecoUsuario)
+admin.site.register(EnderecoLoja)
 admin.site.register(Categoria)
 admin.site.register(Atendente)
 admin.site.register(Gerente)

@@ -6,20 +6,13 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from forms import UsuarioForm, ReclamacaoForm, EnderecoForm, LoginForm,\
     ParceriaForm, InformarCidadeForm
-from models import Usuario, Endereco, Categoria, Loja, Produto,\
-    SolicitacaoCidade
+from models import *
 import utils
 import datetime
 import random
 import sha
 from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
 from pedidos_manager import PedidosManager
-
-def nome_usuario_logado(request):
-    if request.user.is_authenticated():
-        print "ta autenticado"
-        return request.user.first_name
-    return "Visitante"
 
 mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Por favor, clique no link http://127.0.0.1:8000/cadastro/%s para ativar" \
@@ -28,7 +21,24 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Caso não consiga acessar o link, copie e cole o mesmo na barra de " \
            "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
 
-def testaFuncionamentoCarrinho(request):
+def nome_usuario_logado(request):
+    if request.user.is_authenticated():
+        print "ta autenticado"
+        return request.user.first_name
+    return "Visitante"
+
+def get_top_usuarios(loja):
+    pedidos = Loja.objects.get(nome=loja).pedidos
+    mais_compras = {}
+    for pedido in pedidos:
+        mais_compras[pedido.comprador] = mais_compras.get(pedido.comprador, 0) + 1
+    mais_pagos = {}
+    for pedido in pedidos:
+        mais_pagos[pedido.comprador] = mais_pagos.get(pedido.comprador, 0) + \
+        pedido.total_pago
+    return mais_compras, mais_pagos
+
+def testa_funcionamento_carrinho(request):
     loja_id = 1
     carrinho = Carrinho(request,loja_id)
     print carrinho
@@ -100,7 +110,7 @@ def listar_lojas(request, cidade, categoria):
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     if request.method == 'POST':
         pass
-    enderecos = Endereco.objects.values('cidade').annotate()
+    enderecos = EnderecoLoja.objects.values('cidade').annotate()
     produtos = Produto.objects.filter(catalogo__loja__nome=loja, catalogo__loja__endereco__cidade=cidade, catalogo__loja__categoria__nome=categoria)
     return render_to_response("produtos.html",
                 {"produtos" : produtos,
@@ -110,7 +120,7 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  'categoria': categoria,
                  'enderecos': enderecos,
                  'usuario' : request.user
-                 })
+                 }, context_instance=RequestContext(request))
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
@@ -152,10 +162,6 @@ def ativar_usuario(request, chave):
     usuario.save()
     return HttpResponseRedirect("/adicionar_endereco")
 
-def visualizar_painel_usuario(request):
-    return render_to_response("painel_usuario.html",
-                              {'usuario' : request.user})
-    
 def exibir_pedidos(request):
     return render_to_response("ultimos_pedidos.html",
                               {'usuario' : request.user})
@@ -239,7 +245,21 @@ def login(request):
                               context_instance=RequestContext(request))
 
 def logout(request):
-    print "ola"
-    print request.user
     authlogout(request)
     return HttpResponseRedirect("/")
+
+def painel(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/")
+    if isinstance(request.user, Usuario):
+        return render_to_response("painel_usuario.html", {'usuario': request.user},
+                                  context_instance=RequestContext(request)
+                                  )
+    if isinstance(request.user, Funcionario):
+        mais_compras, mais_pagos = get_top_usuarios(request.user.usuario.loja)
+        return render_to_response("painel_cliente.html",
+                                  {'usuario': request.user,
+                                   'mais_compras': mais_compras,
+                                   'mais_pagos': mais_pagos},
+                                  context_instance=RequestContext(request)
+                                  )
