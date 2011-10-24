@@ -23,9 +23,17 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
 
 def nome_usuario_logado(request):
     if request.user.is_authenticated():
-        print "ta autenticado"
         return request.user.first_name
     return "Visitante"
+
+def get_usuario(request):
+    if not request.user.is_authenticated():
+        return None
+    try:
+        usuario = Usuario.objects.get(conta=request.user)
+    except Usuario.DoesNotExist:
+        return None
+    return usuario
 
 def get_top_usuarios(loja):
     pedidos = Loja.objects.get(nome=loja).pedidos
@@ -78,8 +86,6 @@ def testa_funcionamento_carrinho(request):
     
 
 def home(request):
-    print nome_usuario_logado(request)
-    #testaFuncionamentoCarrinho(request)
     enderecos = Endereco.objects.values('cidade').annotate()
     return render_to_response("home.html", 
                 { 'enderecos': enderecos,
@@ -109,9 +115,45 @@ def listar_lojas(request, cidade, categoria):
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     if request.method == 'POST':
-        pass
+        usuario = get_usuario(request)
+        if not usuario:
+            return HttpResponseRedirect("/")
+        comprou = False
+        produtos = []
+        for produto, quantidade in request.POST.items():
+            try:
+                if int(quantidade) == 0:
+                    continue
+            except ValueError:
+                continue
+            if not comprou:
+                comprou = True
+                pedido = Pedido(data_criacao=datetime.datetime.now(),
+                                loja = Loja.objects.get(endereco__cidade=cidade,
+                                                        nome_curto=loja),
+                                comprador=usuario,
+                                status="ABERTO",
+                                total_pago=0)
+                pedido.save()
+            if produto.startswith("quantidade"):
+                produto_id = int(produto.split("_")[1])
+                produto_carrinho = ProdutoCarrinho(pedido=pedido,
+                                                   produto=Produto.objects.get(id=produto_id),
+                                                   quantidade=int(quantidade))
+                produto_carrinho.save()
+                produtos.append(produto_carrinho)
+        total_pago = 0
+        for produto in ProdutoCarrinho.objects.filter(pedido=pedido):
+            for i in range(produto.quantidade):
+                total_pago += produto.produto.preco
+        pedido.total_pago=total_pago
+        pedido.save()
+        return render_to_response("confirma_compra.html",
+                                  {'pedido': pedido,
+                                   'produtos': produtos},
+                                  context_instance=RequestContext(request))
     enderecos = EnderecoLoja.objects.values('cidade').annotate()
-    produtos = Produto.objects.filter(catalogo__loja__nome=loja, catalogo__loja__endereco__cidade=cidade, catalogo__loja__categoria__nome=categoria)
+    produtos = Produto.objects.filter(catalogo__loja__nome_curto=loja, catalogo__loja__endereco__cidade=cidade, catalogo__loja__categoria__nome=categoria)
     return render_to_response("produtos.html",
                 {"produtos" : produtos,
                  'cidade': cidade,
@@ -233,7 +275,6 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            enderecos = Endereco.objects.values('cidade').annotate()
             conta = authenticate(username=form.cleaned_data['login'],
                                  password=form.cleaned_data['senha'])           
             authlogin(request, conta)
@@ -251,11 +292,11 @@ def logout(request):
 def painel(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect("/")
-    if isinstance(request.user, Usuario):
+    if isinstance(request.user.usuario, Usuario):
         return render_to_response("painel_usuario.html", {'usuario': request.user},
                                   context_instance=RequestContext(request)
                                   )
-    if isinstance(request.user, Funcionario):
+    if isinstance(request.user.usuario, Funcionario):
         mais_compras, mais_pagos = get_top_usuarios(request.user.usuario.loja)
         return render_to_response("painel_cliente.html",
                                   {'usuario': request.user,
@@ -263,3 +304,4 @@ def painel(request):
                                    'mais_pagos': mais_pagos},
                                   context_instance=RequestContext(request)
                                   )
+    

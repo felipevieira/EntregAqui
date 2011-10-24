@@ -1,32 +1,30 @@
 # -*- coding: utf-8 -*-
 
-from EntregAqui import settings
-from EntregAqui.delivery.models import *
-from delivery.models import Endereco, Categoria, Usuario, Loja, Catalogo, \
-    Produto
-from django.core.management import setup_environ
 import os
 import sys
+
 ## Setup to import models from Django app ##
 sys.path.append(os.path.abspath('..'))
 os.environ['DJANGO_SETTINGS_MODULE'] ='EntregAqui.settings'
+
+from EntregAqui import settings
+from EntregAqui.delivery.models import *
+from django.core.management import setup_environ
 
 setup_environ(settings)
 
 def main():
     enderecos = {}
-    enderecos["sapore"] = Endereco(logradouro=u"Rua Santo Ant�nio", numero=74,
+    enderecos["sapore"] = EnderecoLoja(logradouro=u"Rua Santo Ant�nio", numero=74,
                               cep="58103355", bairro=u"Santo Ant�nio",
                               cidade=u"Campina Grande", estado=u"Paraiba")
-    enderecos["pitts"] = Endereco(logradouro=u"Avenida Manoel Tavares", numero=445,
+    enderecos["pitts"] = EnderecoLoja(logradouro=u"Avenida Manoel Tavares", numero=445,
                               cep="58401402", bairro=u"Alto Branco",
                               cidade=u"Campina Grande", estado=u"Paraiba")
     alimento = Categoria(nome="Alimentos")
     lazer = Categoria(nome="Lazer")
-    danilo = Usuario(nome=u"Danilo Ara�jo de Freitas", email="dsurviver@gmail.com",
-                     cpf="12345678910", senha="123")
-    pitts = Loja(nome=u"Pittsburg")
-    sapore = Loja(nome=u"Sapore DItalia")
+    pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1")
+    sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2")
     catalogo_sapore = Catalogo()
     catalogo_pitts = Catalogo()
     pizzas = [Produto(nome="Pizza Grande de Frango", descricao="", preco=3300),
@@ -39,9 +37,9 @@ def main():
     alimento.save()
     lazer.save()
     pitts.categoria = Categoria.objects.get(nome="Alimentos")
-    pitts.endereco = Endereco.objects.get(numero=445)
+    pitts.endereco = EnderecoLoja.objects.get(numero=445)
     sapore.categoria = Categoria.objects.get(nome="Alimentos")
-    sapore.endereco = Endereco.objects.get(numero=74)
+    sapore.endereco = EnderecoLoja.objects.get(numero=74)
     pitts.save()
     sapore.save()
     catalogo_sapore.loja = Loja.objects.get(nome="Sapore DItalia")

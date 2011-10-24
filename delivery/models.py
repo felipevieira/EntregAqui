@@ -39,11 +39,12 @@ class Categoria(models.Model):
 
 class Loja(models.Model):
     STATUS_CHOICES = (("A", "Aberta"), ("F", "Fechada"))
+    cnpj = models.CharField(max_length=14, unique=True)
     nome = models.CharField(max_length=30)
+    nome_curto = models.CharField(max_length=15, unique=True)
     categoria = models.ForeignKey(Categoria)
     endereco = models.ForeignKey(EnderecoLoja)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    cnpj = models.CharField(max_length=14)
     
     def __unicode__(self):
         return self.nome + " - " + unicode(self.categoria)
@@ -95,13 +96,16 @@ class Pedido(models.Model):
         
         result += "]"
         result = "Produtos: " + result + "; Loja: " + str(self.loja.nome) + "; "   
-        result += " Status: " + self.status + "; "
+        result += " Status: " + self.status + " - " + str(self.total_pago) + "; "
         return result
 
 class ProdutoCarrinho(models.Model):
-    carrinho = models.ForeignKey(Pedido)
+    pedido = models.ForeignKey(Pedido)
     produto = models.ForeignKey(Produto)
     quantidade = models.IntegerField();
+    
+    def __unicode__(self):
+        return unicode(self.pedido) + " - " + self.produto.nome + ": " + str(self.quantidade)
 
 class SolicitacaoCidade(models.Model):
     nomeUsuario = models.CharField(max_length=50);
