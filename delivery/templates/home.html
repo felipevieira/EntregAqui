@@ -2,16 +2,16 @@
 
 {% block barra_menu %}
 <div class="barra_info_topo">
-    <label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font><b> </label>
-    <a href="#?w=450&h=220" id="popup_parceria" rel="popup_source" class="poplight" source="parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font><b> </a>
+    <label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font></b> </label>
+    <a href="#?w=450&h=220" id="popup_parceria" rel="popup_source" class="poplight" source="parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font></b> </a>
     {% if usuario.is_authenticated %}
-    <a href="/painel/" id="link_painel"> <b><font face="Tahoma" size="2" color="white">Minha Conta</font><b> </a>
-    <a href="/logout/" id="link_logout"> <b><font face="Tahoma" size="2" color="white">Logout</font><b> </a>
-    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario.first_name}}!</font><b> </label>    
+    <a href="/painel/" id="link_painel"> <b><font face="Tahoma" size="2" color="white">Minha Conta</font></b> </a>
+    <a href="/logout/" id="link_logout"> <b><font face="Tahoma" size="2" color="white">Logout</font></b> </a>
+    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario.first_name}}!</font></b> </label>    
     {% else %}
-    <a href="#?w=300&h=350" id="link_cadastrar" rel="popup_source" class="poplight" source="cadastro/"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font><b> </a>
-    <a href="#?w=300&h=150" id="link_login" rel="popup_source" class="poplight" source="login/"> <b><font face="Tahoma" size="2" color="white">Login</font><b> </a>
-    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, Visitante!</font><b> </label>
+    <a href="#?w=300&h=350" id="link_cadastrar" rel="popup_source" class="poplight" source="cadastro/"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font></b> </a>
+    <a href="#?w=300&h=150" id="link_login" rel="popup_source" class="poplight" source="login/"> <b><font face="Tahoma" size="2" color="white">Login</font></b> </a>
+    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, Visitante!</font></b> </label>
    	
     {% endif %}
 </div>
@@ -25,7 +25,7 @@
     {% endfor %}
 </select>
 
-<a href="#?w=400&h=240" rel="popup_source" class="poplight" source="disponibilidade_cidade/"> <b><font face="Tahoma" size="2" color="black">Informe-me quando estiver disponivel na minha cidade</font><b> </a>
+<a href="#?w=400&h=240" rel="popup_source" class="poplight" source="disponibilidade_cidade/"> <b><font face="Tahoma" size="2" color="black">Informe-me quando estiver disponivel na minha cidade</font></b> </a>
 
 
 <!-- Essa div eh usada nas popups, o conteudo eh carregado no javascript -->
