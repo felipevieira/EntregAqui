@@ -1,8 +1,42 @@
-.barra_info_topo {
-	background-color: rgba(20, 20, 20, 0.6);
-	height: 22px;
-	position: relative;
+body {
+	background-color: #f9f9de;
+	margin: 0px;
+	padding: 0px;	
+}
+
+html {
+	font-family: Calibri;
+}
+
+.topnav {
+	float: right;
+	margin-right: 
+}
+
+.barra_menu {
+	background-image: url("/static/images/borda-topo.png");
+	background-repeat: repeat-x;
+	height: 39px;	
 	min-width: 1000px;
+	
+}
+
+.input_pesquisar { 
+	font-family: Calibri;
+	background-image: url("/static/images/pesquisa-corpo.png");
+	background-repeat: repeat-x;
+	border: none;
+	margin-left: 200px;
+}
+
+.link_fale_conosco {
+	position: absolute;
+	top: -7px;
+	margin-left: 500px;
+	font-size: 15px;
+	margin-top:10px;
+	color: white;
+	text-decoration: none;
 }
 
 #id_reclamacao 
@@ -50,3 +84,32 @@
 .table_ultimos_pedidos {
 	margin-top: 50px;
 }
+
+.label_preguica {
+	position:absolute;
+	margin-top: 50px;
+	margin-left: 600px;
+	color: #994d26;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.label_entenda {
+	position:absolute;
+	margin-top: 70px;
+	margin-left: 620px;
+	color: #808080;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#selecao_cidades {
+        opacity: 0;         
+}
+#container_cidades {
+		position:absolute;
+		margin-top: 100px;
+		margin-left: 600px;
+        background: url("/static/images/cidades_contraida.png") no-repeat;
+}
+

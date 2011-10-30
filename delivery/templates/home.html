@@ -1,17 +1,49 @@
 {% extends "base.html" %}
 
 {% block barra_menu %}
-<div class="barra_info_topo">
-    <label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font></b> </label>
-    <a href="#?w=450&h=220" id="popup_parceria" rel="popup_source" class="poplight" source="parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font></b> </a>
+<div class="barra_menu">	
+	<span>		
+		<input class="input_pesquisar" type="input" value="Pesquisar" />
+	</span>	
+	
+	<span>
+		<a href="#" class="link_fale_conosco">Fale Conosco</a>
+	</span>
+	
+  	<div id="container">
+	  <div id="topnav" class="topnav"><a href="login" class="signin"><span>Cadastro/Login</span></a> </div>
+	  <fieldset id="signin_menu">
+	    <form method="post" id="signin" action="https://twitter.com/sessions">
+	      <label for="username">Nome de usuario</label>
+	      <input id="username" name="username" value="" title="username" tabindex="4" type="text">
+	      </p>
+	      <p>
+	        <label for="password">Senha</label>
+	        <input id="password" name="password" value="" title="password" tabindex="5" type="password">
+	      </p>
+	      <p class="remember">
+	        <input id="signin_submit" value="Entre" tabindex="6" type="submit">
+	        <input id="remember" name="remember_me" value="1" tabindex="7" type="checkbox">
+	        <label for="remember">Lembre-me</label>
+	      </p>
+	      <p class="cadastrar"> <a href="#" id="cadastrar_link">Nao esta cadastrado?  Cadastre-se!</a> </p>
+	      <p class="forgot"> <a href="#" id="resend_password_link">Esqueceu a senha?</a> </p>
+	      <p class="forgot-username"> <A id=forgot_username_link 
+	title="If you remember your password, try logging in with your email" 
+	href="#">Esqueceu seu nome de usuario?</A> </p>
+	    </form>
+	  </fieldset>
+	</div>
+    <!--label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font></b> </label>
+    <a href="#?w=450&h=220" id="popup_parceria" rel="popup_source" class="poplight" source="/parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font></b> </a>
     {% if usuario.is_authenticated %}
     <a href="/painel/" id="link_painel"> <b><font face="Tahoma" size="2" color="white">Minha Conta</font></b> </a>
     <a href="/logout/" id="link_logout"> <b><font face="Tahoma" size="2" color="white">Logout</font></b> </a>
     <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario.first_name}}!</font></b> </label>    
     {% else %}
-    <a href="#?w=300&h=350" id="link_cadastrar" rel="popup_source" class="poplight" source="cadastro/"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font></b> </a>
-    <a href="#?w=300&h=150" id="link_login" rel="popup_source" class="poplight" source="login/"> <b><font face="Tahoma" size="2" color="white">Login</font></b> </a>
-    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, Visitante!</font></b> </label>
+    <a href="#?w=300&h=350" id="link_cadastrar" rel="popup_source" class="poplight" source="/cadastro/"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font></b> </a>
+    <a href="#?w=300&h=150" id="link_login" rel="popup_source" class="poplight" source="/login/"> <b><font face="Tahoma" size="2" color="white">Login</font></b> </a>
+    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, Visitante!</font></b> </label-->
    	
     {% endif %}
 </div>
@@ -19,7 +51,10 @@
 
 
 {% block barra_topo %}
-<select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
+<label class="label_preguica">PREGUICA DELIVERY</label>
+<a class="label_entenda" href="#" >Entenda a Preguica</a>
+
+<!--select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
     <option>--Escolha uma cidade--</option>
     {% for endereco in enderecos %} <option value="/{{ endereco.cidade }}" >{{ endereco.cidade }}</option>
     {% endfor %}
