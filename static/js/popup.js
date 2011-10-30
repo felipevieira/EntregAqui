@@ -1,5 +1,5 @@
 $(document).ready(function(){
-$('a#link_cadastrar[href^=#]').click(function() {                 
+$('a.poplight[href^=#]').click(function() {                 
         var popID = $(this).attr('rel'); //Get Popup Name
         var popURL = $(this).attr('href'); //Get Popup href to define size
         var source = $(this).attr('source');
