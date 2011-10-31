@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	
+	pesquisaTemConteudo = false;
+	
 	$(".botao_enviar_parceiro").click(function(){		
 		var nomeEmpresa = document.getElementById("campo_empresa").value;
 		var emailEmpresa = document.getElementById("campo_email").value;
@@ -47,6 +50,37 @@ $(document).ready(function(){
 		/* TODO Checar autenticidade no banco */
 		
 	});
+	
+	$(".input_pesquisar").mousedown(function(){
+		if (!pesquisaTemConteudo) {
+			$(".input_pesquisar").attr('value', "");
+		}
+	});
+	
+	$(".input_pesquisar").blur(function(){
+		if ($(".input_pesquisar").attr('value') != "") {
+			pesquisaTemConteudo = true;
+		}
+		
+		else {
+			pesquisaTemConteudo = false;
+			$(".input_pesquisar").attr('value',"Pesquisar");
+		}
+	});
+	
+	$(".mais_cidades").click(function(){
+		$(".table_cidades").fadeOut();
+		$(".descricao_sistema").fadeOut();
+		sleep(400);
+		$(".table_cidades_expandida").fadeIn();
+	});
+	
+	$(".menos_cidades").click(function(){
+		$(".table_cidades_expandida").fadeOut();
+		sleep(400);
+		$(".table_cidades").fadeIn();
+		$(".descricao_sistema").fadeIn();
+	});
 
 });
 
@@ -55,5 +89,14 @@ function goToUrl(destino) {
 }
 function go() {
 	goToUrl(document.getElementById("cidades").value);
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 

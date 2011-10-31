@@ -1,9 +1,9 @@
 #container {
-    width:100px;
+    width:200px;
     position: relative;
     float: right;
 	margin-right: 250px;
-	bottom: 0px;
+	bottom: 3px;
 }
 
 #content {
@@ -22,9 +22,7 @@
 	color: white;
 }
 #topnav a.signin:hover {
-    background:#59B;
-    *background:transparent url("images/signin-nav-bg-hover-ie.png") no-repeat 0 0;
-    *padding:4px 12px 6px;
+    color:black;
 }
 #topnav a.signin, #topnav a.signin:hover {
     *background-position:0 3px!important;
@@ -32,29 +30,14 @@
 
 a.signin {
     position:relative;
-    margin-left:3px;
 }
-a.signin span {
-    background-image:url("images/toggle_down_light.png");
-    background-repeat:no-repeat;
-    background-position:100% 50%;
-    padding:4px 16px 6px 0;
-}
-#topnav a.menu-open {
-    background:#ddeef6!important;
-    color:#666!important;
-    outline:none;
-}
+
 #small_signup {
     display:inline;
     float:none;
     line-height:23px;
     margin:25px 0 0;
     width:170px;
-}
-a.signin.menu-open span {
-    background-image:url("images/toggle_up_dark.png");
-    color:#789;
 }
 
 #signin_menu {
@@ -70,11 +53,11 @@ a.signin.menu-open span {
     width:240px;
     z-index:100;
     border:#008000;
-    border: 20px;
+    border: 40px;
     text-align:left;
     padding:12px;
     top: 24.5px; 
-    right: 0px; 
+    margin-left:850px;
     margin-top:5px;
     margin-right: 0px;
     *margin-right: -1px;

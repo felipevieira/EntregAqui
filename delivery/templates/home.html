@@ -2,16 +2,29 @@
 
 {% block barra_menu %}
 <div class="barra_menu">	
-	<span>		
+	<span style="padding: 5px;">		
+		<input type="image" src="/static/images/pesquisa-imagem.png" style="height: 22px; margin-left: 200px;" />
 		<input class="input_pesquisar" type="input" value="Pesquisar" />
 	</span>	
 	
 	<span>
-		<a href="#" class="link_fale_conosco">Fale Conosco</a>
+		<a href="#" class="link_fale_conosco">
+			<span>
+				<span style="vertical-align: 40%;">Fale Conosco</span> 
+				<img src="/static/images/icone_fale_conosco.png" />
+			</span>
+		</a>
 	</span>
 	
   	<div id="container">
-	  <div id="topnav" class="topnav"><a href="login" class="signin"><span>Cadastro/Login</span></a> </div>
+	  <span id="topnav" class="topnav">
+	  	<a href="login" class="signin">
+	  		<span style="vertical-align: 40%;">Cadastro/Login</span> 
+	  		<img src="/static/images/icone_login.png" />
+	  	</a> 
+	  </div>	  	
+	 </div>
+
 	  <fieldset id="signin_menu">
 	    <form method="post" id="signin" action="https://twitter.com/sessions">
 	      <label for="username">Nome de usuario</label>
@@ -51,8 +64,49 @@
 
 
 {% block barra_topo %}
-<label class="label_preguica">PREGUICA DELIVERY</label>
-<a class="label_entenda" href="#" >Entenda a Preguica</a>
+<center><img src="/static/images/logo_temp.jpg" / style="margin-top: 20px;"> <br />
+	<label class="label_preguica">PREGUICA DELIVERY</label> <br />
+	<a class="label_entenda" href="#" >Entenda a Preguica</a>
+	
+	<table border="0" class="table_cidades" cellpadding="10">
+		<tr>
+			<td>
+				<a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
+				<img class="mais_cidades" src="/static/images/mais_cidades.png"  style="margin-top: 3px;"/>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="table_cidades_expandida" >
+		<tr>
+			<td colspan="4" style="text-decoration: none; text-align: center">
+				<a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
+				<img class="menos_cidades" src="/static/images/menos_cidades.png"  style="margin-top: 3px;"/>
+			</td>	
+		</tr>	
+				<tr>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Joao Pessoa</a>
+			</td>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Recife</a>
+			</td>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Natal</a>
+			</td>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Maceio</a>
+			</td>
+		</tr>
+	</table>
+	
+	<div class="descricao_sistema">
+		Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. 
+		Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
+	</div>
+	
+</center>
+
 
 <!--select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
     <option>--Escolha uma cidade--</option>
