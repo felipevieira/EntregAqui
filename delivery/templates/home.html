@@ -1,17 +1,62 @@
 {% extends "base.html" %}
 
 {% block barra_menu %}
-<div class="barra_info_topo">
-    <label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font></b> </label>
-    <a href="#?w=450&h=220" id="popup_parceria" rel="popup_source" class="poplight" source="parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font></b> </a>
+<div class="barra_menu">	
+	<span style="padding: 5px;">		
+		<input type="image" src="/static/images/pesquisa-imagem.png" style="height: 22px; margin-left: 200px;" />
+		<input class="input_pesquisar" type="input" value="Pesquisar" />
+	</span>	
+	
+	<span>
+		<a href="#" class="link_fale_conosco">
+			<span>
+				<span style="vertical-align: 40%;">Fale Conosco</span> 
+				<img src="/static/images/icone_fale_conosco.png" />
+			</span>
+		</a>
+	</span>
+	
+  	<div id="container">
+	  <span id="topnav" class="topnav">
+	  	<a href="login" class="signin">
+	  		<span style="vertical-align: 40%;">Cadastro/Login</span> 
+	  		<img src="/static/images/icone_login.png" />
+	  	</a> 
+	  </div>	  	
+	 </div>
+
+	  <fieldset id="signin_menu">
+	    <form method="post" id="signin" action="https://twitter.com/sessions">
+	      <label for="username">Nome de usuario</label>
+	      <input id="username" name="username" value="" title="username" tabindex="4" type="text">
+	      </p>
+	      <p>
+	        <label for="password">Senha</label>
+	        <input id="password" name="password" value="" title="password" tabindex="5" type="password">
+	      </p>
+	      <p class="remember">
+	        <input id="signin_submit" value="Entre" tabindex="6" type="submit">
+	        <input id="remember" name="remember_me" value="1" tabindex="7" type="checkbox">
+	        <label for="remember">Lembre-me</label>
+	      </p>
+	      <p class="cadastrar"> <a href="#" id="cadastrar_link">Nao esta cadastrado?  Cadastre-se!</a> </p>
+	      <p class="forgot"> <a href="#" id="resend_password_link">Esqueceu a senha?</a> </p>
+	      <p class="forgot-username"> <A id=forgot_username_link 
+	title="If you remember your password, try logging in with your email" 
+	href="#">Esqueceu seu nome de usuario?</A> </p>
+	    </form>
+	  </fieldset>
+	</div>
+    <!--label class="label_cabecalho"> <b><font face="Tahoma" size="4" color="white">Preguica Delivery: O seu site favorito de entregas online!</font></b> </label>
+    <a href="#?w=450&h=220" id="popup_parceria" rel="popup_source" class="poplight" source="/parceria/"> <b><font face="Tahoma" size="2" color="white">Quero me tornar parceiro</font></b> </a>
     {% if usuario.is_authenticated %}
     <a href="/painel/" id="link_painel"> <b><font face="Tahoma" size="2" color="white">Minha Conta</font></b> </a>
     <a href="/logout/" id="link_logout"> <b><font face="Tahoma" size="2" color="white">Logout</font></b> </a>
     <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, {{usuario.first_name}}!</font></b> </label>    
     {% else %}
-    <a href="#?w=300&h=350" id="link_cadastrar" rel="popup_source" class="poplight" source="cadastro/"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font></b> </a>
-    <a href="#?w=300&h=150" id="link_login" rel="popup_source" class="poplight" source="login/"> <b><font face="Tahoma" size="2" color="white">Login</font></b> </a>
-    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, Visitante!</font></b> </label>
+    <a href="#?w=300&h=350" id="link_cadastrar" rel="popup_source" class="poplight" source="/cadastro/"> <b><font face="Tahoma" size="2" color="white">Cadastre-se!</font></b> </a>
+    <a href="#?w=300&h=150" id="link_login" rel="popup_source" class="poplight" source="/login/"> <b><font face="Tahoma" size="2" color="white">Login</font></b> </a>
+    <label class="label_logado"> <b><font face="Tahoma" size="2" color="white">Ola, Visitante!</font></b> </label-->
    	
     {% endif %}
 </div>
@@ -19,7 +64,51 @@
 
 
 {% block barra_topo %}
-<select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
+<center><img src="/static/images/logo_temp.jpg" / style="margin-top: 20px;"> <br />
+	<label class="label_preguica">PREGUICA DELIVERY</label> <br />
+	<a class="label_entenda" href="#" >Entenda a Preguica</a>
+	
+	<table border="0" class="table_cidades" cellpadding="10">
+		<tr>
+			<td>
+				<a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
+				<img class="mais_cidades" src="/static/images/mais_cidades.png"  style="margin-top: 3px;"/>
+			</td>
+		</tr>
+	</table>
+	
+	<table class="table_cidades_expandida" >
+		<tr>
+			<td colspan="4" style="text-decoration: none; text-align: center">
+				<a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
+				<img class="menos_cidades" src="/static/images/menos_cidades.png"  style="margin-top: 3px;"/>
+			</td>	
+		</tr>	
+				<tr>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Joao Pessoa</a>
+			</td>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Recife</a>
+			</td>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Natal</a>
+			</td>
+			<td>
+				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Maceio</a>
+			</td>
+		</tr>
+	</table>
+	
+	<div class="descricao_sistema">
+		Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. 
+		Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
+	</div>
+	
+</center>
+
+
+<!--select id="cidades" style="margin-left: 550px; margin-top: 30px" onchange="go()">
     <option>--Escolha uma cidade--</option>
     {% for endereco in enderecos %} <option value="/{{ endereco.cidade }}" >{{ endereco.cidade }}</option>
     {% endfor %}

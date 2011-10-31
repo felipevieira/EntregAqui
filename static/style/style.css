@@ -1,8 +1,50 @@
-.barra_info_topo {
-	background-color: rgba(20, 20, 20, 0.6);
-	height: 22px;
-	position: relative;
+body {
+	background-color: #f9f9de;
+	margin: 0px;
+	padding: 0px;	
+}
+
+html {
+	font-family: Calibri;
+}
+
+.topnav {
+	float: right;
+	margin-right: 
+}
+
+.barra_menu {
+	background-image: url("/static/images/borda-topo.png");
+	background-repeat: repeat-x;
+	height: 39px;	
 	min-width: 1000px;
+	padding: 4px;
+	
+}
+
+.input_pesquisar { 
+	font-family: Calibri;
+	background-image: url("/static/images/pesquisa-corpo.png");
+	background-repeat: repeat-x;
+	border: none;
+	height: 20px;
+	top: 10px;
+	vertical-align: top;
+	margin-left: -4px;
+	text-decoration: none;
+	border: none;
+	outline: none;
+	font-style: italic;
+}
+
+.link_fale_conosco {
+	position: absolute;
+	top: -11px;
+	margin-left: 450px;
+	font-size: 15px;
+	margin-top:10px;
+	color: white;
+	text-decoration: none;
 }
 
 #id_reclamacao 
@@ -50,3 +92,80 @@
 .table_ultimos_pedidos {
 	margin-top: 50px;
 }
+
+.label_preguica {
+	color: #994d26;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.label_entenda {
+	color: #808080;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#selecao_cidades {
+        opacity: 0;         
+}
+#container_cidades {
+		position:absolute;
+		margin-top: 100px;
+		margin-left: 600px;
+        background: url("/static/images/cidades_contraida.png") no-repeat;
+}
+
+.table_cidades {
+	-moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-left-radius:40px;
+    -webkit-border-top-right-radius:40px;
+    -webkit-border-bottom-left-radius:40px;
+    -webkit-border-bottom-right-radius:40px;
+    
+    font-family: Calibri;    
+	background-color: #4297ac;
+	border: none;
+	margin-top: 20px;
+	color: white;
+	font-size: 30px;
+	padding: 10px;
+	text-decoration: none;
+}
+
+.table_cidades_expandida {
+	 display: none;
+	-moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-left-radius:50px;
+    -webkit-border-top-right-radius:50px;
+    -webkit-border-bottom-left-radius:50px;
+    -webkit-border-bottom-right-radius:50px;
+    
+	background-color: #4297ac;
+	border: none;
+	margin-top: 20px;
+	color: white;
+	font-size: 30px;
+	padding: 10px;
+	text-decoration: none;
+}
+
+.cidade_secundaria {
+	font-size: 25px;
+}
+
+td {
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 10px;
+}
+
+.descricao_sistema {
+	width: 400px;
+	margin-top: 10px;
+	text-align: center;
+}
+
