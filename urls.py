@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^parceria/', 'EntregAqui.delivery.views.exibir_parceria'),
     url(r'^disponibilidade_cidade/', 'EntregAqui.delivery.views.exibir_disponibilidade'),
     url(r'^ultimos_pedidos/', 'EntregAqui.delivery.views.exibir_pedidos'),
+    url(r'^menu_usuario/', 'EntregAqui.delivery.views.exibir_menu_usuario'),
     #[\w ]+ para pegar espaco
     (r'^(?P<cidade>[\w ]+)/(?P<categoria>[\w ]+)/(?P<loja>[\w ]+)/$', 'EntregAqui.delivery.views.detalhar_catalogo_produtos'),
     (r'^(?P<cidade>[\w ]+)/(?P<categoria>[\w ]+)/$', 'EntregAqui.delivery.views.listar_lojas'),

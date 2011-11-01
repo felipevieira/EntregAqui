@@ -6,6 +6,10 @@ body {
 
 html {
 	font-family: Calibri;
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+	display: block;
 }
 
 .topnav {
@@ -17,7 +21,6 @@ html {
 	background-image: url("/static/images/borda-topo.png");
 	background-repeat: repeat-x;
 	height: 39px;	
-	min-width: 1000px;
 	padding: 4px;
 	
 }
@@ -38,13 +41,13 @@ html {
 }
 
 .link_fale_conosco {
-	position: absolute;
-	top: -11px;
-	margin-left: 450px;
+	position: relative;
+	margin-left: 850px;
 	font-size: 15px;
-	margin-top:10px;
 	color: white;
 	text-decoration: none;
+	float: left;
+	bottom: 30px;
 }
 
 #id_reclamacao 
@@ -168,4 +171,15 @@ td {
 	margin-top: 10px;
 	text-align: center;
 }
+
+.menu_usuario {
+	font-size: 15px;
+	text-align: left;
+}
+
+.menu_usuario a {
+	text-decoration: none;
+	color: white;
+}
+
 

@@ -69,15 +69,13 @@ $(document).ready(function(){
 	});
 	
 	$(".mais_cidades").click(function(){
-		$(".table_cidades").fadeOut();
+		$(".table_cidades").hide();
 		$(".descricao_sistema").fadeOut();
-		sleep(400);
 		$(".table_cidades_expandida").fadeIn();
 	});
 	
 	$(".menos_cidades").click(function(){
-		$(".table_cidades_expandida").fadeOut();
-		sleep(400);
+		$(".table_cidades_expandida").hide();
 		$(".table_cidades").fadeIn();
 		$(".descricao_sistema").fadeIn();
 	});

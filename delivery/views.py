@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from forms import UsuarioForm, ReclamacaoForm, EnderecoForm, LoginForm,\
-    ParceriaForm, InformarCidadeForm
+    ParceriaForm, InformarCidadeForm, DivErrorList
 from models import *
 import utils
 import datetime
@@ -20,7 +20,7 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Caso não ative sua conta em 48 horas, a mesma será apagada.\n\n" \
            "Caso não consiga acessar o link, copie e cole o mesmo na barra de " \
            "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
-
+           
 def nome_usuario_logado(request):
     if request.user.is_authenticated():
         return request.user.first_name
@@ -166,9 +166,9 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
+        form = UsuarioForm(request.POST, auto_id=False,error_class=DivErrorList)
         if form.is_valid():
-            u = form.save()
+            u = form.setDadosPessoais()
             salt = sha.new(str(random.random())).hexdigest()[:5]
             chave = sha.new(salt+u.username).hexdigest()
             expira = datetime.datetime.today() + datetime.timedelta(2)
@@ -176,14 +176,16 @@ def cadastrar_usuario(request):
                                              cpf=form.cleaned_data['cpf'],
                                              chave_de_ativacao=chave,
                                              expiracao_chave=expira)
-            from django.core.mail import EmailMessage
-            email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
-                                 mensagem_email % chave, to=[usuario.conta.email])
-            email.send()
-            return HttpResponse('Ok')
+            ##from django.core.mail import EmailMessage
+            #email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
+            #                     mensagem_email % chave, to=[usuario.conta.email])
+            #email.send()
+            form = EnderecoForm()            
+            return render_to_response('cadastro.html', { 'form' : form, 'passo': 2, 'usuario':usuario },
+                              context_instance=RequestContext(request))
     else:
         form = UsuarioForm()
-    return render_to_response('cadastro.html', { 'form' : form },
+    return render_to_response('cadastro.html', { 'form' : form, 'passo': 1 },
                               context_instance=RequestContext(request))
 
 def ativar_usuario(request, chave):
@@ -250,6 +252,9 @@ def exibir_disponibilidade(request):
     return render_to_response("disponibilidade_cidade.html",
                               {'form': form}, context_instance=RequestContext(request))
     
+def exibir_menu_usuario(request):
+    return render_to_response("menu_usuario.html")
+    
 def adicionar_endereco(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/")
@@ -279,6 +284,12 @@ def login(request):
                                  password=form.cleaned_data['senha'])           
             authlogin(request, conta)
             return HttpResponseRedirect("/")
+        else:
+            print "mimimi"
+            return render_to_response("loginErro.html",
+                              {'form' : form},
+                              context_instance=RequestContext(request))
+            
     else:
         form = LoginForm()
     return render_to_response("login.html",

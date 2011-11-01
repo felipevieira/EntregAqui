@@ -1,10 +1,14 @@
+{% extends "home.html" %}
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
-    	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />    	
+    	 	
     </head>    
-	<body>			
-			<form method="post" id="signin" action="/login/"> {% csrf_token %}
+	<body>		<br />
+		{% block barra_topo %}	
+			<form method="post" action="/loginError/"> {% csrf_token %}
 		      	<table>
 			        	{% for field in form %}
 			        	<tr>
@@ -26,5 +30,6 @@
 			title="If you remember your password, try logging in with your email" 
 			href="#">Esqueceu seu nome de usuario?</A> </p -->
 	    	</form>
+	    {%endblock%}
 	</body>	
 </html>
