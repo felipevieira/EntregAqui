@@ -38,13 +38,12 @@ html {
 }
 
 #link_fale_conosco {
-	position: absolute;
-	top: -11px;
-	margin-left: 200px;
 	font-size: 15px;
-	margin-top:10px;
 	color: white;
 	text-decoration: none;
+	margin-left: 600px;
+	position:relative;
+	bottom: 2px;
 }
 
 #id_reclamacao 
@@ -198,4 +197,18 @@ td {
 	width: 400px;
 	margin-top: 10px;
 	text-align: center;
+}
+
+.box_menu {
+	margin-left: 800px;
+	float: left;
+}
+
+.menu_usuario {
+	font-size: 15px;
+}
+
+.menu_usuario a {
+	text-decoration: none;
+	color: white;
 }
