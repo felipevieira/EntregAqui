@@ -7,6 +7,15 @@ def enviar_reclamacao(conteudo, autor):
     email = EmailMessage(assunto, conteudo, to=['entregaqui.mailer@gmail.com'])
     email.send()
 
+def enviar_contato(nome, email, assunto, telefone, texto):
+    assunto = "[Preguica Delivery - " + assunto + "]"
+    conteudo = "Autor: " + nome + "\n"
+    conteudo += "Email: " + email + "\n"
+    conteudo += "Telefone: " + telefone + "\n\n"
+    conteudo += texto
+    email = EmailMessage(assunto, conteudo, to=['entregaqui.mailer@gmail.com'])
+    email.send()
+    
 def enviar_email_confirmacao(usuario):
     pass
 

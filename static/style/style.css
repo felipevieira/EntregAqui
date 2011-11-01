@@ -37,10 +37,10 @@ html {
 	font-style: italic;
 }
 
-.link_fale_conosco {
+#link_fale_conosco {
 	position: absolute;
 	top: -11px;
-	margin-left: 450px;
+	margin-left: 200px;
 	font-size: 15px;
 	margin-top:10px;
 	color: white;
@@ -52,6 +52,37 @@ html {
 	width: 800px;
 	height: 300px;
 	resize: none;
+}
+
+#div_form_fc {
+	background-color: #4297ac;
+	font-family:Calibri, sans-serif;
+	color:white;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#campo_texto_fc
+{
+	width: 350px;
+	height: 100px;
+	resize: none;
+}
+
+#button_submit_fc
+{
+	margin-left: 175px;
+	background: #994d26;
+	border-radius: 7px;
+	color:white;
+	font-weight: bold;
+	font-size: 12px;
+	height: 30px;
+}
+
+#campo_texto_fc
+{
+	margin-left: 20px;
 }
 
 .label_cabecalho {

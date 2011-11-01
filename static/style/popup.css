@@ -8,7 +8,7 @@
 }
 .popup_block{
 	display: none; /*--hidden by default--*/
-	background: #fff;
+	background: #4297ac;
 	padding: 20px;
 	border: 20px solid #ddd;
 	float: left;

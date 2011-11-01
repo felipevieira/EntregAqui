@@ -113,6 +113,16 @@ def listar_lojas(request, cidade, categoria):
                  'usuario' : request.user
                  })
 
+def exibir_painel_fale_conosco(request):
+    if request.method == 'POST':
+        nome = request.POST['campo_nome_fc']
+        email = request.POST['campo_email_fc']
+        assunto = request.POST['campo_assunto_fc']
+        telefone = request.POST['campo_telefone_fc']
+        texto = request.POST['campo_texto_fc']
+        utils.enviar_contato(nome, email, assunto, telefone, texto)
+    return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
+
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     if request.method == 'POST':
         usuario = get_usuario(request)
