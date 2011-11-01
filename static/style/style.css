@@ -6,10 +6,6 @@ body {
 
 html {
 	font-family: Calibri;
-	overflow: auto;
-	margin: 0;
-	padding: 0;
-	display: block;
 }
 
 .topnav {
@@ -21,6 +17,7 @@ html {
 	background-image: url("/static/images/borda-topo.png");
 	background-repeat: repeat-x;
 	height: 39px;	
+	min-width: 1000px;
 	padding: 4px;
 	
 }
@@ -40,14 +37,14 @@ html {
 	font-style: italic;
 }
 
-.link_fale_conosco {
-	position: relative;
-	margin-left: 850px;
+#link_fale_conosco {
+	position: absolute;
+	top: -11px;
+	margin-left: 200px;
 	font-size: 15px;
+	margin-top:10px;
 	color: white;
 	text-decoration: none;
-	float: left;
-	bottom: 30px;
 }
 
 #id_reclamacao 
@@ -55,6 +52,37 @@ html {
 	width: 800px;
 	height: 300px;
 	resize: none;
+}
+
+#div_form_fc {
+	background-color: #4297ac;
+	font-family:Calibri, sans-serif;
+	color:white;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#campo_texto_fc
+{
+	width: 350px;
+	height: 100px;
+	resize: none;
+}
+
+#button_submit_fc
+{
+	margin-left: 175px;
+	background: #994d26;
+	border-radius: 7px;
+	color:white;
+	font-weight: bold;
+	font-size: 12px;
+	height: 30px;
+}
+
+#campo_texto_fc
+{
+	margin-left: 20px;
 }
 
 .label_cabecalho {
@@ -171,15 +199,3 @@ td {
 	margin-top: 10px;
 	text-align: center;
 }
-
-.menu_usuario {
-	font-size: 15px;
-	text-align: left;
-}
-
-.menu_usuario a {
-	text-decoration: none;
-	color: white;
-}
-
-
