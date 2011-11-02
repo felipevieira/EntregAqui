@@ -13,6 +13,7 @@ import random
 import sha
 from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
 from pedidos_manager import PedidosManager
+from urllib2 import request_host
 
 mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Por favor, clique no link http://127.0.0.1:8000/cadastro/%s para ativar" \
@@ -114,6 +115,9 @@ def listar_lojas(request, cidade, categoria):
                  })
 
 def exibir_painel_fale_conosco(request):
+    return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
+
+def confirmar_fale_conosco(request):
     if request.method == 'POST':
         nome = request.POST['campo_nome_fc']
         email = request.POST['campo_email_fc']
@@ -121,7 +125,11 @@ def exibir_painel_fale_conosco(request):
         telefone = request.POST['campo_telefone_fc']
         texto = request.POST['campo_texto_fc']
         utils.enviar_contato(nome, email, assunto, telefone, texto)
-    return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
+        #arq = open("home.html", "r")
+        #linhas = arq.readlines()
+        #arq.close()
+        #print linhas 
+    return HttpResponse("opa")
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     if request.method == 'POST':
