@@ -178,7 +178,7 @@ def cadastrar_usuario(request):
     if request.method == 'POST':
         form = UsuarioForm(request.POST, auto_id=False,error_class=DivErrorList)
         if form.is_valid():
-            u = form.setDadosPessoais()
+            u = form.save()
             salt = sha.new(str(random.random())).hexdigest()[:5]
             chave = sha.new(salt+u.username).hexdigest()
             expira = datetime.datetime.today() + datetime.timedelta(2)

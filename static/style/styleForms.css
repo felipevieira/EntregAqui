@@ -9,7 +9,8 @@
 }
 
 .table_form {
-	color: black;
+	color: #808080;
+	font-weight: bolder;
 	font-size: 15px;
 }
 
@@ -27,6 +28,8 @@
 	color: white;
 	font-weight: bolder;
 	font-size: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 ul {
@@ -39,10 +42,17 @@ tr, td {
 	padding: 6px;
 }
 label {
-	color#878787 !important; 
+	color#878787; 
 }
 
 .id_username{
 	margin-left: 400px;
+}
+
+input[type=text],input[type=password] {
+	border-color: #00586d;
+	border-width: 1pt;
+	background-image: url("/static/images/input_bg.png");
+	background-repeat: repeat-x;
 }
 

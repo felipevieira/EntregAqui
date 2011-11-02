@@ -25,10 +25,10 @@ class UsuarioForm(forms.Form):
     username = forms.CharField(max_length=30, label=u'Login desejado', error_messages={'required':'Por favor, digite o username desejado'})
     nome = forms.CharField(max_length=20, label=u"Nome")
     sobrenome = forms.CharField(max_length=50, label=u"Sobrenome")
-    cpf = BRCPFField(label=u"CPF")
+    cpf = BRCPFField(label=u"CPF (8 digitos)")
     sexo = forms.ComboField(label=u"Sexo") #nao funciona =/
-    data_aniversario = forms.DateField(label=u"Data de Aniversario")
-    telefone_contato = BRPhoneNumberField(label=u"Telefone para Contato", error_messages={'invalid':'O telefone deve estar no formato XX-XXXX-XXXX'})
+    data_aniversario = forms.DateField(label=u"Data de Aniversario (DD-MM-AAAA)")
+    telefone_contato = BRPhoneNumberField(label=u"Telefone para Contato (XX-XXXX-XXXX)", error_messages={'invalid':'O telefone deve estar no formato XX-XXXX-XXXX'})
     email = forms.EmailField(label=u'Email')
     repetir_email = forms.EmailField(label=u'Repetir Email')    
     senha = forms.CharField(min_length=6,
