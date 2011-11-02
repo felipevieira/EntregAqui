@@ -1,4 +1,4 @@
-from models import Loja, ProdutoCarrinho, Pedido, Produto
+from models import Loja, ProdutosCarrinho, Pedido, Produto
 import datetime
 
 
@@ -28,17 +28,17 @@ class Carrinho:
 
     def adiciona(self, request, produto_id, quantidade):
         try:
-            item = ProdutoCarrinho.objects.get(
+            item = ProdutosCarrinho.objects.get(
                         carrinho = self.carrinho, 
                         produto=Produto.objects.get(id=produto_id))
             item.quantidade = item.quantidade + quantidade;
             item.save()
         except:  
-            ProdutoCarrinho(carrinho=self.carrinho,produto=Produto.objects.get(id=produto_id),quantidade=quantidade).save()
+            ProdutosCarrinho(carrinho=self.carrinho,produto=Produto.objects.get(id=produto_id),quantidade=quantidade).save()
     
     def remove(self, request, produto_id, quantidade):
         try:
-            item = ProdutoCarrinho.objects.get(
+            item = ProdutosCarrinho.objects.get(
                         carrinho = self.carrinho, 
                         produto=Produto.objects.get(id=produto_id))
             item.quantidade = item.quantidade - quantidade;
@@ -51,12 +51,12 @@ class Carrinho:
         
     def total(self):
         total = 0
-        for linha in ProdutoCarrinho.objects.filter(carrinho=self.carrinho):
+        for linha in ProdutosCarrinho.objects.filter(carrinho=self.carrinho):
             total += linha.produto.preco * linha.quantidade
         return total
     
     def limpa(self, request):
-        ProdutoCarrinho.objects.filter(carrinho=self.carrinho).delete()    
+        ProdutosCarrinho.objects.filter(carrinho=self.carrinho).delete()    
     
     def realizarPedido(self, request):
         self.carrinho.status = "PEDIDO_REALIZADO"

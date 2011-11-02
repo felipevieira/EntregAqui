@@ -3,3 +3,56 @@
 	font-family: "Tahoma";
 	font-size: 15px;
 }
+
+.form_cadastro {
+	background-color: #f9f9de;
+}
+
+.table_form {
+	color: #808080;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+.botao_proximo_passo {
+	-moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-left-radius:10px;
+    -webkit-border-top-right-radius:10px;
+    -webkit-border-bottom-left-radius:10px;
+    -webkit-border-bottom-right-radius:10px;
+	background-color: #994d26;
+	border: none;
+	height: 40px;
+	color: white;
+	font-weight: bolder;
+	font-size: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+tr, td {
+	margin: 0px;
+	padding: 6px;
+}
+label {
+	color#878787; 
+}
+
+.id_username{
+	margin-left: 400px;
+}
+
+input[type=text],input[type=password] {
+	border-color: #00586d;
+	border-width: 1pt;
+	background-image: url("/static/images/input_bg.png");
+	background-repeat: repeat-x;
+}
+

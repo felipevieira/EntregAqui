@@ -1,9 +1,6 @@
 #container {
-    width:200px;
     position: relative;
-    float: right;
-	margin-right: 250px;
-	bottom: 3px;
+    bottom: 2px;
 }
 
 #content {
@@ -16,14 +13,15 @@
     text-align:right;
 }
 
-#topnav a.signin {
+#topnav a.signin, a.logout {
 	font-size: 15px;
 	text-decoration: none;
 	color: white;
 }
-#topnav a.signin:hover {
+#topnav a.signin:hover, a.logout:hover {
     color:black;
 }
+
 #topnav a.signin, #topnav a.signin:hover {
     *background-position:0 3px!important;
 }
@@ -44,9 +42,10 @@ a.signin {
     -moz-border-radius-topleft:5px;
     -moz-border-radius-bottomleft:5px;
     -moz-border-radius-bottomright:5px;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
+    -webkit-border-top-right-radius:35px;
+    -webkit-border-top-left-radius:35px;
+    -webkit-border-bottom-left-radius:35px;
+    -webkit-border-bottom-right-radius:35px;
     display:none;
     background-color:#4297ac;
     position:absolute;
@@ -57,8 +56,32 @@ a.signin {
     text-align:left;
     padding:12px;
     top: 24.5px; 
-    margin-left:850px;
-    margin-top:5px;
+    margin-left:930px;
+    margin-right: 0px;
+    *margin-right: -1px;
+    color:white;
+    font-size:11px;
+}
+
+#logout_menu {
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    display:none;
+    background-color:#4297ac;
+    position:absolute;
+    width:100px;
+    z-index:100;
+    border:#008000;
+    border: 40px;
+    text-align:left;
+    padding:12px;
+    top: 24.5px; 
+    margin-left:1000px;
+    margin-top: 3px;
     margin-right: 0px;
     *margin-right: -1px;
     color:white;
@@ -94,7 +117,11 @@ a.signin {
     font-size: 12px;
 }
 #signin_menu p.cadastrar {
-	font-size: 15px;	
+	font-size: 20px;	
+}
+
+#signin_menu p.cadastrar a {
+	text-decoration: none;
 }
 
 #signin_menu p a {

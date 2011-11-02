@@ -2,7 +2,7 @@
 
 {% block titulo %}EntregAqui - {{cidade}}{% endblock %}
 
-{% block barra_lateral %}
+{% block barra_lateral_esquerda %}
     {% for categoria in categorias %}
     <li id="categoria_{{categoria.id}}"><a href="/{{cidade}}/{{categoria.nome}}">{{categoria.nome}}</a></li>
     {% endfor %}

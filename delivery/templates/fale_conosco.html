@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Fale Conosco</title>
+<link rel="stylesheet" type="text/css" href="/static/style/style.css" />  
+</head>
+
+<body>
+<div id="div_form_fc">
+<form id="form_fale_conosco" name="form_fale_conosco" method="post" action="/fale_conosco/">{% csrf_token %}
+  <p>
+    <label>Nome
+      <input type="text" name="campo_nome_fc" id="campo_nome_fc" />
+    </label>
+    <label for="email">Email</label>
+    <input type="text" name="campo_email_fc" id="campo_email_fc" />
+  </p>
+  <p>
+    <label for="assunto">Assunto</label>
+    <select name="campo_assunto_fc" id="campo_assunto_fc">
+      <option>Reclamacao</option>
+      <option>Sugestao</option>
+      <option>Outro</option>
+    </select>
+     <label>Telefone
+      <input type="text" name="campo_telefone_fc" id="campo_telefone_fc" />
+    </label>
+  </p>
+  <p>
+    <label id="label_texto_fc"> 
+      <textarea name="campo_texto_fc" id="campo_texto_fc" cols="45" rows="5">Digite sua mensagem aqui.</textarea>
+    </label>
+  </p>
+  <p>
+    <input type="submit" name="button_submit_fc" id="button_submit_fc" value="Enviar" />
+  </p>
+</form>
+</div>
+<p>&nbsp;</p>
+</body>
+</html>

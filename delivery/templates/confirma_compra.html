@@ -2,6 +2,15 @@
 
 {% block conteudo %}
 
-
+<div>
+    <form action="/finaliza_compra"></form>
+    <table class="table_form">
+    {% for produto in carrinho.produtos_carrinho.all %}
+        <tr><th><label for="produto_{{produto.produto.id}}">{{produto.produto}}:</label>
+        </th><td><input id="produto_{{produto.produto.id}}" type="number" name="quantidade_{{produto.produto.id}}" value="{{produto.quantidade}}" min="0" max="99" size="1"/></td></tr>
+    {% endfor %}
+    </table>
+    <input type="submit" value="Finalizar"/>
+</div>
 
 {% endblock %}

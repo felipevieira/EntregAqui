@@ -3,17 +3,34 @@
 from delivery.models import *
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.localflavor.br.forms import BRZipCodeField, BRCPFField
+from django.contrib.localflavor.br.forms import BRZipCodeField, BRCPFField,\
+    BRPhoneNumberField
 from django.forms.models import ModelForm
 from models import Usuario, Endereco, CustomUsuario
+from models import *
+from datetime import *
+from django.forms.widgets import Media
+from django.forms.util import ErrorList
+
+class DivErrorList(ErrorList):
+    def __unicode__(self):
+        return self.as_divs()
+    def as_divs(self):
+        if not self: 
+            return u''
+        return u'<div class="errorlist">%s</div>' % ''.join([u'<div class="error">%s</div>' % e for e in self])
+
 
 class UsuarioForm(forms.Form):
-    username = forms.CharField(max_length=30, label=u'Login')
-    nome = forms.CharField(max_length=20)
-    sobrenome = forms.CharField(max_length=50)
+    username = forms.CharField(max_length=30, label=u'Login desejado', error_messages={'required':'Por favor, digite o username desejado'})
+    nome = forms.CharField(max_length=20, label=u"Nome")
+    sobrenome = forms.CharField(max_length=50, label=u"Sobrenome")
+    cpf = BRCPFField(label=u"CPF (8 digitos)")
+    sexo = forms.ComboField(label=u"Sexo") #nao funciona =/
+    data_aniversario = forms.DateField(label=u"Data de Aniversario (DD-MM-AAAA)")
+    telefone_contato = BRPhoneNumberField(label=u"Telefone para Contato (XX-XXXX-XXXX)", error_messages={'invalid':'O telefone deve estar no formato XX-XXXX-XXXX'})
     email = forms.EmailField(label=u'Email')
-    repetir_email = forms.EmailField(label=u'Repetir Email')
-    cpf = BRCPFField(label=u"CPF")
+    repetir_email = forms.EmailField(label=u'Repetir Email')    
     senha = forms.CharField(min_length=6,
                             label=u'Senha',
                             widget=forms.PasswordInput(render_value=False))
@@ -30,7 +47,7 @@ class UsuarioForm(forms.Form):
                 CustomUsuario.objects.get(conta__email=self.cleaned_data['email'])
             except CustomUsuario.DoesNotExist:
                 return self.cleaned_data['repetir_email']
-            return forms.ValidationError(u'Email já cadastrado no sistema!')
+            raise forms.ValidationError(u'Email já cadastrado no sistema!')
     
     def clean_repetir_senha(self):
         if (self.cleaned_data['senha'] != self.cleaned_data['repetir_senha']):
@@ -45,6 +62,13 @@ class UsuarioForm(forms.Form):
             return self.cleaned_data['username']
         raise forms.ValidationError(u'Login já existe!')
     
+    def clean_cpf(self):
+        try:
+            User.objects.get(username=self.cleaned_data['cpf'])
+        except User.DoesNotExist:
+            return self.cleaned_data['cpf']
+        raise forms.ValidationError(u'CPF ja cadastrado!')
+    
     def save(self):
         usuario = User.objects.create_user(self.cleaned_data['username'],
                                            self.cleaned_data['email'],
@@ -54,6 +78,10 @@ class UsuarioForm(forms.Form):
         usuario.is_active = False
         usuario.save()
         return usuario
+    
+    class Media:
+        css = { 'all' : '/static/style/styleForms.css'
+        }
 
 class EnderecoForm(ModelForm):
     cep = BRZipCodeField(label=u'CEP')

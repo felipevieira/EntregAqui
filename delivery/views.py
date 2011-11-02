@@ -5,10 +5,11 @@ from django.contrib.auth import authenticate, login as authlogin, \
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from forms import UsuarioForm, ReclamacaoForm, ParceriaForm, InformarCidadeForm, \
-    EnderecoForm, LoginForm
-from models import Usuario, Loja, Endereco, Categoria, ProdutosCarrinho, Produto, \
-    EnderecoLoja, SolicitacaoCidade, Funcionario, Pedido, ProdutosPedido, Carrinho
+from forms import UsuarioForm, DivErrorList, EnderecoForm, ReclamacaoForm, \
+    ParceriaForm, InformarCidadeForm, LoginForm
+from models import Usuario, Loja, Carrinho, Endereco, Categoria, \
+    ProdutosCarrinho, Produto, EnderecoLoja, SolicitacaoCidade, Funcionario, Pedido, \
+    ProdutosPedido
 from pedidos_manager import PedidosManager
 import datetime
 import random
@@ -138,6 +139,16 @@ def listar_lojas(request, cidade, categoria):
                  'usuario' : request.user
                  })
 
+def exibir_painel_fale_conosco(request):
+    if request.method == 'POST':
+        nome = request.POST['campo_nome_fc']
+        email = request.POST['campo_email_fc']
+        assunto = request.POST['campo_assunto_fc']
+        telefone = request.POST['campo_telefone_fc']
+        texto = request.POST['campo_texto_fc']
+        utils.enviar_contato(nome, email, assunto, telefone, texto)
+    return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
+
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     request.session['cidade'] = cidade
     request.session['categoria'] = categoria
@@ -196,7 +207,7 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
 
 def cadastrar_usuario(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
+        form = UsuarioForm(request.POST, auto_id=False,error_class=DivErrorList)
         if form.is_valid():
             u = form.save()
             salt = sha.new(str(random.random())).hexdigest()[:5]
@@ -206,14 +217,16 @@ def cadastrar_usuario(request):
                                              cpf=form.cleaned_data['cpf'],
                                              chave_de_ativacao=chave,
                                              expiracao_chave=expira)
-            from django.core.mail import EmailMessage
-            email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
-                                 mensagem_email % chave, to=[usuario.conta.email])
-            email.send()
-            return HttpResponse('Ok')
+            ##from django.core.mail import EmailMessage
+            #email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
+            #                     mensagem_email % chave, to=[usuario.conta.email])
+            #email.send()
+            form = EnderecoForm()            
+            return render_to_response('cadastro.html', { 'form' : form, 'passo': 2, 'usuario':usuario },
+                              context_instance=RequestContext(request))
     else:
         form = UsuarioForm()
-    return render_to_response('cadastro.html', { 'form' : form },
+    return render_to_response('cadastro.html', { 'form' : form, 'passo': 1 },
                               context_instance=RequestContext(request))
 
 def ativar_usuario(request, chave):
@@ -279,7 +292,10 @@ def exibir_disponibilidade(request):
         
     return render_to_response("disponibilidade_cidade.html",
                               {'form': form}, context_instance=RequestContext(request))
-
+    
+def exibir_menu_usuario(request):
+    return render_to_response("menu_usuario.html")
+    
 def adicionar_endereco(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect("/")
@@ -309,6 +325,12 @@ def login(request):
                                  password=form.cleaned_data['senha'])           
             authlogin(request, conta)
             return HttpResponseRedirect("/")
+        else:
+            print "mimimi"
+            return render_to_response("loginErro.html",
+                              {'form' : form},
+                              context_instance=RequestContext(request))
+            
     else:
         form = LoginForm()
     return render_to_response("login.html",

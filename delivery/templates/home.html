@@ -2,13 +2,13 @@
 
 {% block barra_menu %}
 <div class="barra_menu">	
-	<span style="padding: 5px;">		
+	<span style="float: left">		
 		<input type="image" src="/static/images/pesquisa-imagem.png" style="height: 22px; margin-left: 200px;" />
 		<input class="input_pesquisar" type="input" value="Pesquisar" />
 	</span>	
 	
-	<span>
-		<a href="#" class="link_fale_conosco">
+	<span style="float:left">
+		<a href="#?w=450&h=270" id="link_fale_conosco" rel="popup_source" class="poplight" source="/fale_conosco/">
 			<span>
 				<span style="vertical-align: 40%;">Fale Conosco</span> 
 				<img src="/static/images/icone_fale_conosco.png" />
@@ -16,15 +16,24 @@
 		</a>
 	</span>
 	
-  	<div id="container">
-	  <span id="topnav" class="topnav">
-	  	<a href="login" class="signin">
-	  		<span style="vertical-align: 40%;">Cadastro/Login</span> 
-	  		<img src="/static/images/icone_login.png" />
-	  	</a> 
-	  </div>	  	
-	 </div>
-
+	<div style="float:left">
+		  <div id="container">
+		  	<div id="topnav" class="topnav">
+			  	{%if usuario.is_authenticated %}
+			  	<a href="" class="logout">
+			  		<span style="vertical-align: 40%;">Oi, {{usuario}}</span> 
+			  		<img src="/static/images/icone_login.png" />
+			  	</a> 
+			  	{% else %}
+			  	<a href="login" class="signin">
+			  		<span style="vertical-align: 40%;">Cadastro/Login</span> 
+			  		<img src="/static/images/icone_login.png" />
+			  	</a> 
+			  	{% endif %}
+		  </div>
+		  </div>	  	
+    </div>
+    
 	  <fieldset id="signin_menu">
 	    <form method="post" id="signin">
 	      <label for="username">Nome de usuario</label>

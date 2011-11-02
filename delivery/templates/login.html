@@ -4,14 +4,28 @@
     	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />    	
     </head>    
 	<body>			
-		<form action="/login/" method="post" id="form_login"> {% csrf_token %}
-            <center>
-                <b><font face="Tahoma" size="4" color="black">Por favor, efetue login:</font><b>
-                <table class="table_form">
-                    {{form}}
-                </table>
-                <input type="submit" value="Continuar" />
-            </center>
-        </form>
+			<form method="post" id="signin" action="/login/"> {% csrf_token %}
+		      	<table>
+			        	{% for field in form %}
+			        	<tr>
+			        		<td>
+			        			<label al>{{ field.label_tag }}</label>
+			        			{{ field }} {% for error in field.errors %} {{error}} {% endfor %}
+			        		</td>
+			        	</tr>
+    					{% endfor %}
+	    		</table> <br />
+		      <p class="remember">
+		        <input id="signin_submit" value="Entre" type="submit" tabindex="6" style="width: 50px;">
+		        <input id="remember" name="remember_me" value="1" tabindex="7" type="checkbox">
+		        <label for="remember">Lembre-me</label>
+		      </p>
+	      <center><p class="cadastrar"> <a href="/cadastro/" id="cadastrar_link">Nao esta cadastrado?  Cadastre-se!</a> </p></center>
+	      <!-- NAO EH MVP
+	      <p class="forgot"> <a href="#" id="resend_password_link">Esqueceu a senha?</a> </p>
+	      <p class="forgot-username"> <A id=forgot_username_link 
+			title="If you remember your password, try logging in with your email" 
+			href="#">Esqueceu seu nome de usuario?</A> </p -->
+	    	</form>
 	</body>	
 </html>
