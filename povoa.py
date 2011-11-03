@@ -21,8 +21,8 @@ def main():
     enderecos["pitts"] = EnderecoLoja(logradouro=u"Avenida Manoel Tavares", numero=445,
                               cep="58401402", bairro=u"Alto Branco",
                               cidade=u"Campina Grande", estado=u"Paraiba")
-    alimento = Categoria(nome="Alimentos")
-    lazer = Categoria(nome="Lazer")
+    alimento = Categoria(nome="Alimentos", descricao="Aqui estao todos os restaurantes da cidade" ,imagem="/static/images/categorias_alimentos.jpg")
+    lazer = Categoria(nome="Lazer", descricao= "Aqui estao todos os estabelecimentos de lazer da cidade", imagem="/static/images/categorias_lazer.jpg")
     pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1")
     sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2")
     catalogo_sapore = Catalogo()
