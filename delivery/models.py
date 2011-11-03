@@ -83,11 +83,46 @@ class Pedido(models.Model):
     STATUS_CHOICES = (("ABERTO", "Em Aberto"), ("PEDIDO_REALIZADO", "Pedido Realizado"), ("DESPACHADO", "Saiu para entrega"),
                       ("DESPACHADO", "Despachado"), ("ENTREGUE", "Entregue"))
     
-    comprador = models.ForeignKey(Usuario, related_name='compras')
+    comprador = models.ForeignKey(Usuario, related_name='pedidos')
     data_criacao = models.DateTimeField()
     loja = models.ForeignKey(Loja, related_name='Pedidos')
-    produtos = models.ManyToManyField(Produto, through='ProdutoCarrinho')
+    produtos = models.ManyToManyField(Produto, through='ProdutosPedido')
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
+    total_pago = models.IntegerField(default=0)
+    
+    def __unicode__(self):
+        result = "["
+        sep = ""
+        for produto in self.produtos.all():
+            result += sep + str(produto.nome)  
+            sep = ", "
+        
+        result += "]"
+        result = "Produtos: " + result + "; Loja: " + str(self.loja.nome) + "; "   
+        result += " Status: " + self.status + " - " + str(self.total_pago) + "; "
+        return result
+
+class ProdutosPedido(models.Model):
+    pedido = models.ForeignKey(Pedido, related_name="produtos_pedido")
+    produto = models.ForeignKey(Produto, related_name="produtos_pedido")
+    quantidade = models.IntegerField();
+    
+    def __unicode__(self):
+        return unicode(self.pedido) + " - " + self.produto.nome + ": " + str(self.quantidade)
+
+class SolicitacaoCidade(models.Model):
+    nomeUsuario = models.CharField(max_length=50);
+    emailUsuario = models.EmailField();
+    cidade = models.CharField(max_length=100);
+    
+    def __unicode__(self):
+        return self.cidade
+
+class Carrinho(models.Model):
+    comprador = models.ForeignKey(Usuario, related_name='carrinho')
+    loja = models.ForeignKey(Loja)
+    produtos = models.ManyToManyField(Produto, through='ProdutosCarrinho')
+    status = models.CharField(max_length=30)
     total_pago = models.IntegerField()
     
     def __unicode__(self):
@@ -102,18 +137,10 @@ class Pedido(models.Model):
         result += " Status: " + self.status + " - " + str(self.total_pago) + "; "
         return result
 
-class ProdutoCarrinho(models.Model):
-    pedido = models.ForeignKey(Pedido)
-    produto = models.ForeignKey(Produto)
+class ProdutosCarrinho(models.Model):
+    carrinho = models.ForeignKey(Carrinho, related_name="produtos_carrinho")
+    produto = models.ForeignKey(Produto, related_name="produtos_carrinho")
     quantidade = models.IntegerField();
     
     def __unicode__(self):
         return unicode(self.pedido) + " - " + self.produto.nome + ": " + str(self.quantidade)
-
-class SolicitacaoCidade(models.Model):
-    nomeUsuario = models.CharField(max_length=50);
-    emailUsuario = models.EmailField();
-    cidade = models.CharField(max_length=100);
-    
-    def __unicode__(self):
-        return self.cidade
