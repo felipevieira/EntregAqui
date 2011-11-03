@@ -1,0 +1,29 @@
+{% extends "home.html" %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+    })
+</script>
+
+{% block barra_lateral_esquerda %}
+
+<div id="barra_lateral" align="left" >
+    <div id="div_logo">
+        <div align="center"><img src="/static/images/logo_temp.jpg" alt="Logo" width="100" align="middle"/>
+        PreguicaDelivery
+        </div>
+    </div>
+    
+  <ul class="menu_esquerdo">
+      {% for categoria in categorias %}
+        <li id="categoria_{{categoria.id}}"class="categoria"><a href="#">{{categoria.nome}}</a></li>
+        <ul class="sub_menu">
+        </ul>
+      {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}
+
+{% block conteudo %}
+{% endblock %}

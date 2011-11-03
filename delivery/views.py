@@ -50,44 +50,12 @@ def get_top_usuarios(loja):
         pedido.total_pago
     return mais_compras, mais_pagos
 
-def testa_funcionamento_carrinho(request):
-    loja_id = 1
-    carrinho = Carrinho(request,loja_id)
-    print carrinho
+def template_data(request):
+    dados = {}
+    dados['categorias'] = Categoria.objects.all().order_by('nome')
+    dados['usuario'] = get_usuario(request)
+    return dados
     
-    produto_id = 1
-    quantidade = 2
-    carrinho.adiciona(request,produto_id, quantidade )
-    print "Adicionando "+ str(quantidade) + " unidades do produto de id " + str(produto_id) + "..."
-    print carrinho
-    
-    produto_id = 2
-    quantidade = 4
-    carrinho.adiciona(request, produto_id, quantidade)
-    print "Adicionando "+ str(quantidade)+ " unidades do produto de id " + str(produto_id) + "..."
-    
-    carrinho.limpa(request);
-    print "Limpando Carrinho..."
-    print carrinho
-    
-    produto_id = 2
-    quantidade = 4
-    carrinho.adiciona(request, produto_id, quantidade)
-    print "Adicionando "+ str(quantidade) + " unidades do produto de id " + str(produto_id) + "..."
-    
-    print "...Finalizando pedido..." ;
-    carrinho.realizarPedido(request);
-    print carrinho
-    
-    carrinho = Carrinho(request,loja_id)
-    print "Novo carrinho foi criado " + str(carrinho)
-    
-    
-    
-    print "Ultimas Compras realizadas na loja de id" + str(loja_id)
-    pedidosManager = PedidosManager()
-    print pedidosManager.ultimosPedidos(loja_id)
-
 def redireciona_usuario(request):
     try:
         cidade = request.session['cidade']
@@ -106,10 +74,15 @@ def redireciona_usuario(request):
 ### Callbacks ###
 
 def home(request):
+    if request.user.is_authenticated():
+        home = "home_logado.html"
+    else:
+        home = "home.html"
     enderecos = Endereco.objects.values('cidade').annotate()
-    return render_to_response("home.html", 
-                { 'enderecos': enderecos,
-                 'usuario' : request.user },
+    dados = template_data(request)
+    dados['enderecos'] = enderecos
+    return render_to_response(home, dados,
+                              context_instance=RequestContext(request)
                 )
 
 def home_redirect(request):
@@ -118,12 +91,13 @@ def home_redirect(request):
 def visualizar_categorias(request, cidade):
     enderecos = Endereco.objects.values('cidade').annotate()
     request.session['cidade'] = cidade
+    dados = template_data(request)
     return render_to_response("categorias.html",
                 {'cidade': cidade,
-                 'categorias': Categoria.objects.all(),
+                 'categorias': Categoria.objects.all().order_by('nome'),
                  'enderecos': enderecos,
                  'usuario' : request.user
-                 })
+                 }, context_instance=RequestContext(request))
 
 def listar_lojas(request, cidade, categoria):
     request.session['cidade'] = cidade
@@ -133,11 +107,11 @@ def listar_lojas(request, cidade, categoria):
     return render_to_response("lojas.html",
                 {"lojas" : lojas,
                  'cidade': cidade,
-                 'categorias': Categoria.objects.all(),
+                 'categorias': Categoria.objects.all().order_by('nome'),
                  'categoria': categoria,
                  'enderecos': enderecos,
                  'usuario' : request.user
-                 })
+                 }, context_instance=RequestContext(request))
 
 def exibir_painel_fale_conosco(request):
     if request.method == 'POST':
@@ -326,7 +300,6 @@ def login(request):
             authlogin(request, conta)
             return HttpResponseRedirect("/")
         else:
-            print "mimimi"
             return render_to_response("loginErro.html",
                               {'form' : form},
                               context_instance=RequestContext(request))

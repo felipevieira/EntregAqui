@@ -1,0 +1,37 @@
+ul, ol, dl {
+    padding: 0;
+    margin: 0;
+}
+
+#barra_lateral {
+    width: 200px;
+    border-left: 1px solid #666;
+    margin-left:20px;
+}
+#div_logo {
+    height: 150px;
+    border-bottom: 1px solid #666;
+}
+ul.menu_esquerdo li.categoria {
+    list-style-type: none;
+    padding-left:10px;
+    border: 1px solid #666;
+    border-left:none;
+    display:block;
+}
+
+ul.sub_menu li.loja {
+    list-style-type: none;
+    border-left: 1px solid #666;
+    padding-left:5px;
+    display:block;
+    margin-left:15px;
+}
+
+ul.menu_esquerdo a, ul.menu_esquerdo a:visited {
+    text-decoration: none;
+    color:#000000;
+}
+ul.menu_esquerdo a:hover, ul.menu_esquerdo a:active, ul.menu_esquerdo a:focus {
+    color:#000;
+}
