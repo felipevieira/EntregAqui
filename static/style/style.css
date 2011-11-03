@@ -1,7 +1,7 @@
 body {
 	background-color: #f9f9de;
 	margin: 0px;
-	padding: 0px;	
+	padding: 0px;
 }
 
 html {
@@ -79,6 +79,7 @@ html {
 
 #button_submit_fc
 {
+    cursor: pointer;
 	margin-left: 175px;
 	background: #994d26;
 	border-radius: 7px;
