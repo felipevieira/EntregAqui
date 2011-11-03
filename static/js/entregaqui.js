@@ -116,3 +116,28 @@ function sleep(milliseconds) {
   }
 }
 
+function enviar_sugestao() {
+	var nome = $("#campo_nome_fc").attr("value");
+	var email = $("#campo_email_fc").attr("value");
+	var assunto = $("#campo_assunto_fc").attr("value");
+	var telefone = $("#campo_telefone_fc").attr("value");
+	var texto = $("#campo_texto_fc").val();
+	
+	$.ajax({
+		url: "/obrigado_fale_conosco/",
+		type: "POST",
+		data: {'nome' : nome,
+				'email' : email,
+				'assunto' : assunto,
+				'telefone' : telefone,
+				'texto' : texto,
+				'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()},
+		success: function(data) {
+			$("#popup_source").html(data);
+			$("#popup_source").prepend('<a href="#" class="close"><img src="/static/images/close_pop2.png" class="btn_close" title="Close Window" alt="Close" /></a>');
+		},
+		error: function(xhr) {
+			console.log("status: " + xhr.status);
+		}
+	});
+}
