@@ -17,19 +17,21 @@
         <title>{% block titulo %}Preguica Delivery{% endblock %}</title>
     </head>
     <body>
-        {% block barra_menu %}
-        {% endblock %}        
-        <div id="barra_topo">
-        {% block barra_topo %}
-        {% endblock %}
-        </div>        
         <div>
-        {% block barra_lateral %}
-        {% endblock %}
-        </div>
-        <div>
-        {% block conteudo %}
-        {% endblock %}
+        	{% block barra_menu %}
+	        {% endblock %}        
+	        <div id="barra_topo">
+	        {% block barra_topo %}
+	        {% endblock %}
+	        </div>        
+	        <div>
+	        {% block barra_lateral %}
+	        {% endblock %}
+	        </div>
+	        <div>
+	        {% block conteudo %}
+	        {% endblock %}
+	        </div>
         </div>
     </body>
 </html>
