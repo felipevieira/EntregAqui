@@ -55,6 +55,10 @@ def template_data(request):
     dados = {}
     dados['categorias'] = Categoria.objects.all().order_by('nome')
     dados['usuario'] = request.user
+    dados['lojas_categoria'] = {}
+    for loja in Loja.objects.filter(endereco__cidade=request.session['cidade']):
+        dados['lojas_categoria'][loja.categoria] = \
+        dados['lojas_categoria'].get(loja.categoria, []) + [loja]
     return dados
     
 def redireciona_usuario(request):
@@ -75,6 +79,7 @@ def redireciona_usuario(request):
 ### Callbacks ###
 
 def home(request):
+    request.session['cidade'] = "Campina Grande"
     if request.user.is_authenticated():
         home = "home_logado.html"
     else:
@@ -82,7 +87,6 @@ def home(request):
     enderecos = Endereco.objects.values('cidade').annotate()
     dados = template_data(request)
     dados['enderecos'] = enderecos
-    print dados
     return render_to_response(home, dados,
                               context_instance=RequestContext(request)
                 )
