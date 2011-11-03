@@ -9,7 +9,7 @@
 
 <body>
 <div id="div_form_fc">
-<form id="form_fale_conosco" name="form_fale_conosco" method="post" action="/confirmar_fale_conosco/">{% csrf_token %}
+<form id="form_fale_conosco" name="form_fale_conosco" method="post" action="#"> {% csrf_token %}
   <p>
     <label>Nome
       <input type="text" name="campo_nome_fc" id="campo_nome_fc" />
@@ -34,7 +34,7 @@
     </label>
   </p>
   <p>
-    <input type="submit" name="button_submit_fc" id="button_submit_fc" value="Enviar" />
+    <input type="submit" name="button_submit_fc" id="button_submit_fc" value="Enviar" onclick="javascript:enviar_sugestao(); return false;" />
   </p>
 </form>
 </div>
