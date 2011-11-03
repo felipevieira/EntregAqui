@@ -54,7 +54,7 @@ def get_top_usuarios(loja):
 def template_data(request):
     dados = {}
     dados['categorias'] = Categoria.objects.all().order_by('nome')
-    dados['usuario'] = get_usuario(request)
+    dados['usuario'] = request.user
     return dados
     
 def redireciona_usuario(request):
@@ -82,6 +82,7 @@ def home(request):
     enderecos = Endereco.objects.values('cidade').annotate()
     dados = template_data(request)
     dados['enderecos'] = enderecos
+    print dados
     return render_to_response(home, dados,
                               context_instance=RequestContext(request)
                 )
