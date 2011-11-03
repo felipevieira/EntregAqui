@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from carrinho import Carrinho
+from django.contrib.auth import authenticate, login as authlogin, \
+    logout as authlogout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from forms import UsuarioForm, ReclamacaoForm, EnderecoForm, LoginForm,\
-    ParceriaForm, InformarCidadeForm, DivErrorList
-from models import *
-import utils
+from forms import UsuarioForm, DivErrorList, EnderecoForm, ReclamacaoForm, \
+    ParceriaForm, InformarCidadeForm, LoginForm
+from models import Usuario, Loja, Carrinho, Endereco, Categoria, \
+    ProdutosCarrinho, Produto, EnderecoLoja, SolicitacaoCidade, Funcionario, Pedido, \
+    ProdutosPedido
+from pedidos_manager import PedidosManager
 import datetime
 import random
 import sha
-from django.contrib.auth import authenticate, login as authlogin, logout as authlogout
-from pedidos_manager import PedidosManager
+import utils
 from urllib2 import request_host
 
 mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
@@ -21,7 +23,9 @@ mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Caso não ative sua conta em 48 horas, a mesma será apagada.\n\n" \
            "Caso não consiga acessar o link, copie e cole o mesmo na barra de " \
            "endereço do seu navegador.\n\nObrigado.\n\n Equipe PreguiçaDelivery"
-           
+
+### Utils ###
+
 def nome_usuario_logado(request):
     if request.user.is_authenticated():
         return request.user.first_name
@@ -47,72 +51,69 @@ def get_top_usuarios(loja):
         pedido.total_pago
     return mais_compras, mais_pagos
 
-def testa_funcionamento_carrinho(request):
-    loja_id = 1
-    carrinho = Carrinho(request,loja_id)
-    print carrinho
+def template_data(request):
+    dados = {}
+    dados['categorias'] = Categoria.objects.all().order_by('nome')
+    dados['usuario'] = request.user
+    return dados
     
-    produto_id = 1
-    quantidade = 2
-    carrinho.adiciona(request,produto_id, quantidade )
-    print "Adicionando "+ str(quantidade) + " unidades do produto de id " + str(produto_id) + "..."
-    print carrinho
-    
-    produto_id = 2
-    quantidade = 4
-    carrinho.adiciona(request, produto_id, quantidade)
-    print "Adicionando "+ str(quantidade)+ " unidades do produto de id " + str(produto_id) + "..."
-    
-    carrinho.limpa(request);
-    print "Limpando Carrinho..."
-    print carrinho
-    
-    produto_id = 2
-    quantidade = 4
-    carrinho.adiciona(request, produto_id, quantidade)
-    print "Adicionando "+ str(quantidade) + " unidades do produto de id " + str(produto_id) + "..."
-    
-    print "...Finalizando pedido..." ;
-    carrinho.realizarPedido(request);
-    print carrinho
-    
-    carrinho = Carrinho(request,loja_id)
-    print "Novo carrinho foi criado " + str(carrinho)
-    
-    
-    
-    print "Ultimas Compras realizadas na loja de id" + str(loja_id)
-    pedidosManager = PedidosManager()
-    print pedidosManager.ultimosPedidos(loja_id)
-    
+def redireciona_usuario(request):
+    try:
+        cidade = request.session['cidade']
+    except:
+        return HttpResponseRedirect("/")
+    try:
+        categoria = request.session['categoria']
+    except:
+        return visualizar_categorias(request, cidade)
+    try:
+        loja = request.session['loja'].nome_curto
+    except:
+        return listar_lojas(request, cidade, categoria)
+    return detalhar_catalogo_produtos(request, cidade, categoria, loja)
+ 
+### Callbacks ###
 
 def home(request):
+    if request.user.is_authenticated():
+        home = "home_logado.html"
+    else:
+        home = "home.html"
     enderecos = Endereco.objects.values('cidade').annotate()
-    return render_to_response("home.html", 
-                { 'enderecos': enderecos,
-                 'usuario' : request.user },
-)
+    dados = template_data(request)
+    dados['enderecos'] = enderecos
+    print dados
+    return render_to_response(home, dados,
+                              context_instance=RequestContext(request)
+                )
+
+def home_redirect(request):
+    return HttpResponseRedirect("/")
 
 def visualizar_categorias(request, cidade):
     enderecos = Endereco.objects.values('cidade').annotate()
+    request.session['cidade'] = cidade
+    dados = template_data(request)
     return render_to_response("categorias.html",
                 {'cidade': cidade,
-                 'categorias': Categoria.objects.all(),
+                 'categorias': Categoria.objects.all().order_by('nome'),
                  'enderecos': enderecos,
                  'usuario' : request.user
-                 })
+                 }, context_instance=RequestContext(request))
 
 def listar_lojas(request, cidade, categoria):
+    request.session['cidade'] = cidade
+    request.session['categoria'] = categoria
     enderecos = Endereco.objects.values('cidade').annotate()
     lojas = Loja.objects.filter(endereco__cidade=cidade, categoria__nome=categoria)
     return render_to_response("lojas.html",
                 {"lojas" : lojas,
                  'cidade': cidade,
-                 'categorias': Categoria.objects.all(),
+                 'categorias': Categoria.objects.all().order_by('nome'),
                  'categoria': categoria,
                  'enderecos': enderecos,
                  'usuario' : request.user
-                 })
+                 }, context_instance=RequestContext(request))
 
 def exibir_painel_fale_conosco(request):
     return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
@@ -129,6 +130,10 @@ def exibir_obrigado_fale_conosco(request):
     return render_to_response("obrigado_fale_conosco.html", context_instance=RequestContext(request))
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
+    request.session['cidade'] = cidade
+    request.session['categoria'] = categoria
+    request.session['loja'] = Loja.objects.get(nome_curto=loja,
+                                               endereco__cidade=cidade)
     if request.method == 'POST':
         usuario = get_usuario(request)
         if not usuario:
@@ -143,29 +148,30 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                 continue
             if not comprou:
                 comprou = True
-                pedido = Pedido(data_criacao=datetime.datetime.now(),
-                                loja = Loja.objects.get(endereco__cidade=cidade,
-                                                        nome_curto=loja),
-                                comprador=usuario,
-                                status="ABERTO",
-                                total_pago=0)
-                pedido.save()
+                carrinho, criado = Carrinho.objects.\
+                get_or_create(Loja.objects.get(endereco__cidade=cidade,
+                                               nome_curto=loja),
+                              comprador=usuario,
+                              total_pago=0)
+                if criado:
+                    carrinho.save()
             if produto.startswith("quantidade"):
                 produto_id = int(produto.split("_")[1])
-                produto_carrinho = ProdutoCarrinho(pedido=pedido,
+                produto_carrinho = ProdutosCarrinho(carrinho=carrinho,
                                                    produto=Produto.objects.get(id=produto_id),
                                                    quantidade=int(quantidade))
                 produto_carrinho.save()
                 produtos.append(produto_carrinho)
         total_pago = 0
-        for produto in ProdutoCarrinho.objects.filter(pedido=pedido):
+        for produto in ProdutosCarrinho.objects.filter(carrinho=carrinho):
             for i in range(produto.quantidade):
                 total_pago += produto.produto.preco
-        pedido.total_pago=total_pago
-        pedido.save()
+        carrinho.total_pago = total_pago
+        carrinho.save()
         return render_to_response("confirma_compra.html",
-                                  {'pedido': pedido,
-                                   'produtos': produtos},
+                                  {'carrinho': carrinho,
+                                   'produtos': produtos,
+                                   'usuario': request.user},
                                   context_instance=RequestContext(request))
     enderecos = EnderecoLoja.objects.values('cidade').annotate()
     produtos = Produto.objects.filter(catalogo__loja__nome_curto=loja, catalogo__loja__endereco__cidade=cidade, catalogo__loja__categoria__nome=categoria)
@@ -246,7 +252,7 @@ def exibir_disponibilidade(request):
             solicitacao.nomeUsuario = form.cleaned_data['nome']
             solicitacao.emailUsuario = form.cleaned_data['email']
             solicitacao.cidade = form.cleaned_data['cidade']
-            solicitacao.save()     
+            solicitacao.save()
             return HttpResponse('Solicitacao realizada com sucesso.');
     else:
         form = InformarCidadeForm()
@@ -287,7 +293,6 @@ def login(request):
             authlogin(request, conta)
             return HttpResponseRedirect("/")
         else:
-            print "mimimi"
             return render_to_response("loginErro.html",
                               {'form' : form},
                               context_instance=RequestContext(request))
@@ -317,4 +322,29 @@ def painel(request):
                                    'mais_pagos': mais_pagos},
                                   context_instance=RequestContext(request)
                                   )
-    
+
+def finaliza_compra(request):
+    usuario = get_usuario(request)
+    if usuario is None:
+        return HttpResponseRedirect("/")
+    if request.method == 'POST':
+        try:
+            carrinho = Carrinho.objects.get(comprador=usuario)
+        except Carrinho.DoesNotExist:
+            return redireciona_usuario(request)
+        pedido = Pedido(comprador=usuario,
+                        loja=request.session['loja'],
+                        data_criacao=datetime.datetime.now(),
+                        status="ABERTO",
+                        total_pago=carrinho.total_pago)
+        pedido.save()
+        for produto_carrinho in carrinho.produtos_carrinho.all():
+            produto = ProdutosPedido(pedido=pedido,
+                                     produto=produto_carrinho.produto,
+                                     quantidade=produto_carrinho.quantidade)
+            produto.save()
+        return render_to_response("painel_usuario.html",
+                                  {'usuario' : request.user,
+                                   'comprou' : True},
+                                  context_instance=RequestContext(request))
+    return redireciona_usuario(request)

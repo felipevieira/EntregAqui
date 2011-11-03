@@ -37,6 +37,7 @@ class UsuarioForm(forms.Form):
     repetir_senha = forms.CharField(min_length=6,
                                     label=u'Repetir senha',
                                     widget=forms.PasswordInput(render_value=False))
+    aniversario = forms.DateField(input_formats='%m/%d/%Y')
     
     def clean_repetir_email(self):
         if (self.cleaned_data['email'] != self.cleaned_data['repetir_email']):

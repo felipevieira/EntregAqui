@@ -1,103 +1,93 @@
 {% extends "base.html" %}
 
 {% block barra_menu %}
-<div class="barra_menu">	
-	<span style="float: left">		
-		<input type="image" src="/static/images/pesquisa-imagem.png" style="height: 22px; margin-left: 200px;" />
-		<input class="input_pesquisar" type="input" value="Pesquisar" />
-	</span>	
-	
-	<span style="float:left">
-		<a href="#?w=450&h=270" id="link_fale_conosco" rel="popup_source" class="poplight" source="/fale_conosco/">
-			<span>
-				<span style="vertical-align: 40%;">Fale Conosco</span> 
-				<img src="/static/images/icone_fale_conosco.png" />
-			</span>
-		</a>
-	</span>
-	
-	<div style="display: none;">
-	<span style="float:left">
-		<a href="#?w=450&h=270" id="link_obrigado_fc" rel="popup_source" class="poplight" source="/fale_conosco/">
-			<span>
-				<span style="vertical-align: 40%;">Fale Conosco</span> 
-			</span>
-		</a>
-	</span>
-	</div>
-	
-	<div style="float:left">
-		  <div id="container">
-		  	<div id="topnav" class="topnav">
-			  	{% if usuario.is_authenticated %}
-			  	<a href="" class="logout">
-			  		<span style="vertical-align: 40%;">Oi, {{usuario}}</span> 
-			  		<img src="/static/images/icone_login.png" />
-			  	</a> 
-			  	{% else %}
-			  	<a href="login" class="signin">
-			  		<span style="vertical-align: 40%;">Cadastro/Login</span> 
-			  		<img src="/static/images/icone_login.png" />
-			  	</a> 
-			  	{% endif %}
-		  </div>
-		  </div>	  	
+<div class="barra_menu">    
+    <span style="float: left">      
+        <input type="image" src="/static/images/pesquisa-imagem.png" style="height: 22px; margin-left: 200px;" />
+        <input class="input_pesquisar" type="input" value="Pesquisar" />
+    </span> 
+    
+    <span style="float:left">
+        <a href="#?w=450&h=270" id="link_fale_conosco" rel="popup_source" class="poplight" source="/fale_conosco/">
+            <span>
+                <span style="vertical-align: 40%;">Fale Conosco</span> 
+                <img src="/static/images/icone_fale_conosco.png" />
+            </span>
+        </a>
+    </span>
+    
+    <div style="float:left">
+          <div id="container">
+            <div id="topnav" class="topnav">
+                {%if usuario.is_authenticated %}
+                <a href="" class="logout">
+                    <span style="vertical-align: 40%;">Oi, {{usuario}}</span> 
+                    <img src="/static/images/icone_login.png" />
+                </a> 
+                {% else %}
+                <a href="login" class="signin">
+                    <span style="vertical-align: 40%;">Cadastro/Login</span> 
+                    <img src="/static/images/icone_login.png" />
+                </a> 
+                {% endif %}
+          </div>
+          </div>        
     </div>
     
     <fieldset id="signin_menu">
-	    
-	</fieldset>
-	
-	<fieldset id="logout_menu">
-	    
-	</fieldset>
+        
+    </fieldset>
+    
+    <fieldset id="logout_menu">
+        
+    </fieldset>
 
 </div>
 {% endblock %}
 
 
-{% block barra_topo %}
+{% block conteudo %}
 <center><img src="/static/images/logo_temp.jpg" / style="margin-top: 20px;"> <br />
-	<label class="label_preguica">PREGUICA DELIVERY</label> <br />
-	<a class="label_entenda" href="#" >Entenda a Preguica</a>
-	
-	<table border="0" class="table_cidades" cellpadding="10">
-		<tr>
-			<td>
-				<a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
-				<img class="mais_cidades" src="/static/images/mais_cidades.png"  style="margin-top: 3px;"/>
-			</td>
-		</tr>
-	</table>
-	
-	<table class="table_cidades_expandida" >
-		<tr>
-			<td colspan="4" style="text-decoration: none; text-align: center">
-				<a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
-				<img class="menos_cidades" src="/static/images/menos_cidades.png"  style="margin-top: 3px;"/>
-			</td>	
-		</tr>	
-				<tr>
-			<td>
-				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Joao Pessoa</a>
-			</td>
-			<td>
-				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Recife</a>
-			</td>
-			<td>
-				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Natal</a>
-			</td>
-			<td>
-				<a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Maceio</a>
-			</td>
-		</tr>
-	</table>
-	
-	<div class="descricao_sistema">
-		Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. 
-		Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
-	</div>
-	
+    <label class="label_preguica">PREGUICA DELIVERY</label> <br />
+    <a class="label_entenda" href="#" >Entenda a Preguica</a>
+    
+    <table border="0" class="table_cidades" cellpadding="10">
+        <tr>
+            <td>
+                <a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
+                <img class="mais_cidades" src="/static/images/mais_cidades.png"  style="margin-top: 3px;"/>
+            </td>
+        </tr>
+    </table>
+    
+    <table class="table_cidades_expandida" >
+        <tr>
+            <td colspan="4" style="text-decoration: none; text-align: center">
+                <a href="#" style="text-decoration: none; color: white;">Campina Grande</a>
+                <img class="menos_cidades" src="/static/images/menos_cidades.png"  style="margin-top: 3px;"/>
+            </td>   
+        </tr>   
+                <tr>
+            <td>
+                <a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Joao Pessoa</a>
+            </td>
+            <td>
+                <a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Recife</a>
+            </td>
+            <td>
+                <a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Natal</a>
+            </td>
+            <td>
+                <a class="cidade_secundaria" href="#" style="text-decoration: none; color: white;">Maceio</a>
+            </td>
+        </tr>
+    </table>
+    
+    <div class="descricao_sistema">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. 
+        Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
+    </div>
+    
 </center>
 
 
@@ -113,8 +103,7 @@
 {% block popup %}
 <!-- Essa div eh usada nas popups, o conteudo eh carregado no javascript -->
 <div id="popup_source" class="popup_block">
-	
+    
 </div>
+
 {% endblock %}
-
-

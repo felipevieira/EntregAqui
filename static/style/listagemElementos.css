@@ -1,0 +1,51 @@
+@CHARSET "ISO-8859-1";
+
+
+.oferta {
+    float: left;
+    height: 185px;
+    margin: 10px;
+    width: 485px;
+}
+
+.topoOferta {
+	background: url("/static/images/borda-topo.png") repeat-x scroll 0 0 transparent;
+	color: #FFFFFF;
+	float: left;
+	font-family: Arial;
+	font-size: 24px;
+	font-weight: bold;
+	height: 40px;
+	line-height: 42px;
+	text-align: center;
+	text-shadow: 1px 1px #726856;
+	text-transform: uppercase;
+	width: 485px;
+}
+
+
+.divimagem {
+    background: none repeat scroll 0 0 #000000;
+    float: left;
+    height: 135px;
+    margin: 5px;
+    overflow: hidden;
+    width: 180px;
+}
+
+.divimagem .imagemOferta {
+    margin: 0;
+}
+
+
+.textoOferta {
+	color: #994D26;
+	float: left;
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	height: 95px;
+	margin-top: 5px;
+	text-align: justify;
+	width: 290px;
+}
