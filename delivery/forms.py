@@ -22,12 +22,13 @@ class DivErrorList(ErrorList):
 
 
 class UsuarioForm(forms.Form):
+    sexo_choices = (("M", "Masculino"), ("F", "Feminino"))
     username = forms.CharField(max_length=30, label=u'Login desejado', error_messages={'required':'Por favor, digite o username desejado'})
     nome = forms.CharField(max_length=20, label=u"Nome")
     sobrenome = forms.CharField(max_length=50, label=u"Sobrenome")
-    cpf = BRCPFField(label=u"CPF (8 digitos)")
-    sexo = forms.ComboField(label=u"Sexo") #nao funciona =/
-    data_aniversario = forms.DateField(label=u"Data de Aniversario (DD-MM-AAAA)")
+    cpf = BRCPFField(label=u"CPF")
+    sexo = forms.ChoiceField(label=u"Sexo", choices=sexo_choices)
+    aniversario = forms.DateField(label=u'Aniversário', input_formats=['%d/%m/%Y'])
     telefone_contato = BRPhoneNumberField(label=u"Telefone para Contato (XX-XXXX-XXXX)", error_messages={'invalid':'O telefone deve estar no formato XX-XXXX-XXXX'})
     email = forms.EmailField(label=u'Email')
     repetir_email = forms.EmailField(label=u'Repetir Email')    
@@ -37,7 +38,6 @@ class UsuarioForm(forms.Form):
     repetir_senha = forms.CharField(min_length=6,
                                     label=u'Repetir senha',
                                     widget=forms.PasswordInput(render_value=False))
-    aniversario = forms.DateField(input_formats='%m/%d/%Y')
     
     def clean_repetir_email(self):
         if (self.cleaned_data['email'] != self.cleaned_data['repetir_email']):
