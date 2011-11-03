@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	
 	pesquisaTemConteudo = false;
+	mensagemFCTemConteudo = false;
 	
 	$(".botao_enviar_parceiro").click(function(){		
 		var nomeEmpresa = document.getElementById("campo_empresa").value;
@@ -65,6 +66,23 @@ $(document).ready(function(){
 		else {
 			pesquisaTemConteudo = false;
 			$(".input_pesquisar").attr('value',"Pesquisar");
+		}
+	});
+	
+	$("#campo_texto_fc").mousedown(function(){
+		if (!mensagemFCTemConteudo) {
+			$("#campo_texto_fc").val("");
+		}
+	});
+	
+	$("#campo_texto_fc").blur(function(){
+		if ($("#campo_texto_fc").val() != "") {
+			mensagemFCTemConteudo = true;
+		}
+		
+		else {
+			mensagemFCTemConteudo = false;
+			$("#campo_texto_fc").val("Digite sua mensagem aqui.");
 		}
 	});
 	

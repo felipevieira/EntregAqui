@@ -4,11 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Fale Conosco</title>
 <link rel="stylesheet" type="text/css" href="/static/style/style.css" />  
+<script src="/static/js/entregaqui.js" type="text/javascript" /> 
 </head>
 
 <body>
 <div id="div_form_fc">
-<form id="form_fale_conosco" name="form_fale_conosco" method="post" action="/fale_conosco/">{% csrf_token %}
+<form id="form_fale_conosco" name="form_fale_conosco" method="post" action="/confirmar_fale_conosco/">{% csrf_token %}
   <p>
     <label>Nome
       <input type="text" name="campo_nome_fc" id="campo_nome_fc" />

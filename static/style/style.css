@@ -37,6 +37,15 @@ html {
 	font-style: italic;
 }
 
+#div_obrigado_fc {
+	color:white;
+	margin-top: 20px;
+}
+
+#sloth_img_fc {
+	margin-top: 30px;
+}
+
 #link_fale_conosco {
 	font-size: 15px;
 	color: white;
