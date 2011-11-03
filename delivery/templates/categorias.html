@@ -3,7 +3,8 @@
 {% block titulo %}EntregAqui - {{cidade}}{% endblock %}
 
 {% block conteudo %}
-    <div class="categorias" align="center">
+    <div>
+    		<div class="categorias" style="width: 1100px; left: 50%;margin-left: -550px;position: absolute;">
     {% for categoria in categorias %}
 	    <div class="oferta">
 	    	<a target="_blank" href="/{{cidade}}/{{categoria.nome}}" class="topoOferta" title="GROUPON - Compra Coletiva em Joao Pessoa">
@@ -18,7 +19,8 @@
 				</div>
 					
 		</div>
-    <!-- li id="categoria_{{categoria.id}}"><a href="/{{cidade}}/{{categoria.nome}}">{{categoria.nome}}</a></li -->
-    {% endfor %}
+	    <!-- li id="categoria_{{categoria.id}}"><a href="/{{cidade}}/{{categoria.nome}}">{{categoria.nome}}</a></li -->
+	    {% endfor %}
+	    </div>
     </div>
 {% endblock %}
