@@ -117,19 +117,16 @@ def listar_lojas(request, cidade, categoria):
 def exibir_painel_fale_conosco(request):
     return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
 
-def confirmar_fale_conosco(request):
+def exibir_obrigado_fale_conosco(request):
     if request.method == 'POST':
-        nome = request.POST['campo_nome_fc']
-        email = request.POST['campo_email_fc']
-        assunto = request.POST['campo_assunto_fc']
-        telefone = request.POST['campo_telefone_fc']
-        texto = request.POST['campo_texto_fc']
+        nome = request.POST['nome']
+        print nome
+        email = request.POST['email']
+        assunto = request.POST['assunto']
+        telefone = request.POST['telefone']
+        texto = request.POST['texto']
         utils.enviar_contato(nome, email, assunto, telefone, texto)
-        #arq = open("home.html", "r")
-        #linhas = arq.readlines()
-        #arq.close()
-        #print linhas 
-    return HttpResponse("opa")
+    return render_to_response("obrigado_fale_conosco.html", context_instance=RequestContext(request))
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     if request.method == 'POST':
@@ -228,19 +225,6 @@ def exibir_pedidos(request):
     return render_to_response("ultimos_pedidos.html",
                               {'usuario' : request.user})
     
-def exibir_reclamacao(request):
-    if request.method == 'POST':
-        form = ReclamacaoForm(request.POST)
-        if form.is_valid():
-            utils.enviar_reclamacao(form.cleaned_data['reclamacao'], nome_usuario_logado(request))
-            return HttpResponse('Reclamacao enviada com sucesso.');
-    else:
-        form = ReclamacaoForm()
-        
-    return render_to_response("reclamar.html",
-                              {'usuario' : request.user,
-                               'form': form}, context_instance=RequestContext(request))
-
 def exibir_parceria(request):
     if request.method == 'POST':
         form = ParceriaForm(request.POST)
