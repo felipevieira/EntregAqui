@@ -1,11 +1,17 @@
+@font-face {
+	font-family: "calibri";
+	src: url("/static/fonts/calibri.ttf") format("truetype");
+}
+
 body {
 	background-color: #f9f9de;
 	margin: 0px;
 	padding: 0px;	
+	font-family: "calibri";
 }
 
 html {
-	font-family: Calibri;
+	
 }
 
 .topnav {
@@ -23,7 +29,6 @@ html {
 }
 
 .input_pesquisar { 
-	font-family: Calibri;
 	background-image: url("/static/images/pesquisa-corpo.png");
 	background-repeat: repeat-x;
 	border: none;
@@ -64,7 +69,7 @@ html {
 
 #div_form_fc {
 	background-color: #4297ac;
-	font-family:Calibri, sans-serif;
+	font-family:"calibri", sans-serif;
 	color:white;
 	font-weight: bold;
 	font-size: 14px;
@@ -162,9 +167,7 @@ html {
     -webkit-border-top-left-radius:40px;
     -webkit-border-top-right-radius:40px;
     -webkit-border-bottom-left-radius:40px;
-    -webkit-border-bottom-right-radius:40px;
-    
-    font-family: Calibri;    
+    -webkit-border-bottom-right-radius:40px;  
 	background-color: #4297ac;
 	border: none;
 	margin-top: 20px;
@@ -198,8 +201,6 @@ html {
 }
 
 td {
-	padding-left: 30px;
-	padding-right: 30px;
 	padding-top: 10px;
 }
 
@@ -221,4 +222,9 @@ td {
 .menu_usuario a {
 	text-decoration: none;
 	color: white;
+}
+
+.box_fale_conosco {
+	vertical-align: 40%;
+	font-family: "calibri";
 }
