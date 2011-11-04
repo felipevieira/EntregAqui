@@ -2,6 +2,7 @@ $(document).ready(function(){
 	
 	pesquisaTemConteudo = false;
 	mensagemFCTemConteudo = false;
+	comboCidadeExpandida = false;
 	
 	$(".botao_enviar_parceiro").click(function(){		
 		var nomeEmpresa = document.getElementById("campo_empresa").value;
@@ -97,7 +98,31 @@ $(document).ready(function(){
 		$(".table_cidades").fadeIn();
 		$(".descricao_sistema").fadeIn();
 	});
+	
+	$("#demo").click(function(){
+		if(!comboCidadeExpandida) {
+			comboCidadeExpandida = true;
+			$(".options").fadeIn();
+		}
+		
+		else {
+			comboCidadeExpandida = false;
+			$(".options").fadeOut();
+		}
+	});
+	
+	$(".opcao_cidade").click(function(event){
+		alert(event.target.id)
+		document.getElementById("cidade_selecionada").innerHTML = "peni;";
+	});
+});
 
+$("document").ready(function(){    
+
+    $("document").ready(function(){             
+        $("#demo").jDropDown({selected: 0, callback: callback});
+    });
+    
 });
 
 function goToUrl(destino) {	
@@ -149,3 +174,8 @@ function enviar_sugestao() {
 		}
 	});
 }
+
+function callback(index, val){
+    $("#demo-data p").text("index: " + index + ", value: " + val);
+}
+
