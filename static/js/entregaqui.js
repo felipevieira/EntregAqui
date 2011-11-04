@@ -148,6 +148,14 @@ function enviar_sugestao() {
 	var telefone = $("#campo_telefone_fc").attr("value");
 	var texto = $("#campo_texto_fc").val();
 	
+	console.log('toaqui');
+	var html = '';
+	html += '<div id="loading_fc_message">'
+	html += '<p> Por favor, aguarde... </p> <br> '
+	html += '<img id="loading_img_fc" src="/static/images/loading.gif" width=64 height=64/>';
+	html += '</div>'
+	$("#inner_form_fc").html(html);
+	console.log('toaqui2');
 	$.ajax({
 		url: "/obrigado_fale_conosco/",
 		type: "POST",
