@@ -114,6 +114,15 @@ html {
 	float: right;
 }
 
+#loading_fc_message {
+	margin-top: 60px;
+	margin-left: 150px;
+}
+
+#loading_img_fc {
+	margin-left: 30px;
+}
+
 .label_logado {
 	margin-left: 30px; 
 	float: right;
