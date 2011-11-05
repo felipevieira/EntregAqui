@@ -76,7 +76,6 @@ class UsuarioForm(forms.Form):
         usuario.first_name = self.cleaned_data['nome']
         usuario.last_name = self.cleaned_data['sobrenome']
         usuario.is_active = False
-        usuario.save()
         return usuario
     
     class Media:
@@ -85,11 +84,10 @@ class UsuarioForm(forms.Form):
 
 class EnderecoForm(ModelForm):
     cep = BRZipCodeField(label=u'CEP')
-    usuario = forms.ModelChoiceField(queryset=Usuario.objects.all(),
-                                     widget=forms.HiddenInput())
     
     class Meta:
-        model = Endereco
+        model = EnderecoUsuario
+        exclude = ('usuario',)
         
 class ReclamacaoForm(forms.Form):
     reclamacao = forms.CharField(widget=forms.Textarea(),
