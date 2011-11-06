@@ -9,6 +9,8 @@ ul, ol, dl {
     border-left: 1px solid #666;
     margin-left:20px;
     background-color: #FFFFFF;
+    float: left;
+    display: block;
 }
 #div_logo {
     height: 150px;

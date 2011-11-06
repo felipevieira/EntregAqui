@@ -55,6 +55,7 @@ def template_data(request):
     dados = {}
     dados['categorias'] = Categoria.objects.all().order_by('nome')
     dados['usuario'] = request.user
+    dados['cidade'] = request.session['cidade']
     dados['lojas_categoria'] = {}
     for loja in Loja.objects.filter(endereco__cidade=request.session['cidade']):
         dados['lojas_categoria'][loja.categoria] = \
@@ -135,7 +136,7 @@ def exibir_obrigado_fale_conosco(request):
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     request.session['cidade'] = cidade
-    request.session['categoria'] = categoria
+#    request.session['categoria'] = categoria
     request.session['loja'] = Loja.objects.get(nome_curto=loja,
                                                endereco__cidade=cidade)
     if request.method == 'POST':
@@ -153,8 +154,8 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
             if not comprou:
                 comprou = True
                 carrinho, criado = Carrinho.objects.\
-                get_or_create(Loja.objects.get(endereco__cidade=cidade,
-                                               nome_curto=loja),
+                get_or_create(loja=Loja.objects.get(endereco__cidade=cidade,
+                                                    nome_curto=loja),
                               comprador=usuario,
                               total_pago=0)
                 if criado:
@@ -166,6 +167,8 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                                                    quantidade=int(quantidade))
                 produto_carrinho.save()
                 produtos.append(produto_carrinho)
+        if not comprou:
+            return HttpResponseRedirect("")
         total_pago = 0
         for produto in ProdutosCarrinho.objects.filter(carrinho=carrinho):
             for i in range(produto.quantidade):
@@ -250,7 +253,7 @@ def finalizar_cadastro(request):
             del request.session['conta']
             del request.session['usuario_cadastro']
             conta_logada = authenticate(username=conta.username,
-                                 password=conta.password)           
+                                 password=conta.password)
             authlogin(request, conta_logada)
             return HttpResponseRedirect('/')
         else:

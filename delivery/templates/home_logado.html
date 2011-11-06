@@ -16,7 +16,7 @@
             {% for cat, lojas in lojas_categoria.items %}
             {% ifequal cat categoria %}
             {% for loja in lojas %}
-            <li id="loja_{{loja.id}}" class="loja"><a href="#">{{loja.nome}}</a></li>
+            <li id="loja_{{loja.id}}" class="loja"><a href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}">{{loja.nome}}</a></li>
             {% endfor %}
             {% endifequal %}
             {% endfor %}
