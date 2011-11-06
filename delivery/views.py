@@ -136,9 +136,10 @@ def exibir_obrigado_fale_conosco(request):
 
 def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     request.session['cidade'] = cidade
-#    request.session['categoria'] = categoria
+    request.session['categoria'] = categoria
     request.session['loja'] = Loja.objects.get(nome_curto=loja,
                                                endereco__cidade=cidade)
+    dados = template_data(request)
     if request.method == 'POST':
         usuario = get_usuario(request)
         if not usuario:
@@ -175,22 +176,20 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                 total_pago += produto.produto.preco
         carrinho.total_pago = total_pago
         carrinho.save()
+        dados['carrinho'] = carrinho
+        dados['produtos'] = produtos
         return render_to_response("confirma_compra.html",
-                                  {'carrinho': carrinho,
-                                   'produtos': produtos,
-                                   'usuario': request.user},
+                                  dados,
                                   context_instance=RequestContext(request))
     enderecos = EnderecoLoja.objects.values('cidade').annotate()
-    produtos = Produto.objects.filter(catalogo__loja__nome_curto=loja, catalogo__loja__endereco__cidade=cidade, catalogo__loja__categoria__nome=categoria)
-    return render_to_response("produtos.html",
-                {"produtos" : produtos,
-                 'cidade': cidade,
-                 'loja': loja,
-                 'categorias': Categoria.objects.all(),
-                 'categoria': categoria,
-                 'enderecos': enderecos,
-                 'usuario' : request.user
-                 }, context_instance=RequestContext(request))
+    produtos = Produto.objects.filter(catalogo__loja__nome_curto=loja,
+                                      catalogo__loja__endereco__cidade=cidade,
+                                      catalogo__loja__categoria__nome=categoria)
+    dados['produtos'] = produtos
+    dados['loja'] = loja
+    dados['categoria'] = categoria
+    return render_to_response("produtos.html", dados,
+                              context_instance=RequestContext(request))
 
 def cadastrar_usuario(request):
     dados = template_data(request)
