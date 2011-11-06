@@ -9,7 +9,7 @@ from forms import UsuarioForm, DivErrorList, EnderecoForm, ReclamacaoForm, \
     ParceriaForm, InformarCidadeForm, LoginForm
 from models import Usuario, Loja, Carrinho, Endereco, Categoria, \
     ProdutosCarrinho, Produto, EnderecoLoja, SolicitacaoCidade, Funcionario, Pedido, \
-    ProdutosPedido
+    ProdutosPedido, EnderecoUsuario
 from pedidos_manager import PedidosManager
 import datetime
 import random
@@ -55,6 +55,10 @@ def template_data(request):
     dados = {}
     dados['categorias'] = Categoria.objects.all().order_by('nome')
     dados['usuario'] = request.user
+    dados['lojas_categoria'] = {}
+    for loja in Loja.objects.filter(endereco__cidade=request.session['cidade']):
+        dados['lojas_categoria'][loja.categoria] = \
+        dados['lojas_categoria'].get(loja.categoria, []) + [loja]
     return dados
     
 def redireciona_usuario(request):
@@ -75,6 +79,7 @@ def redireciona_usuario(request):
 ### Callbacks ###
 
 def home(request):
+    request.session['cidade'] = "Campina Grande"
     if request.user.is_authenticated():
         home = "home_logado.html"
     else:
@@ -82,7 +87,6 @@ def home(request):
     enderecos = Endereco.objects.values('cidade').annotate()
     dados = template_data(request)
     dados['enderecos'] = enderecos
-    print dados
     return render_to_response(home, dados,
                               context_instance=RequestContext(request)
                 )
@@ -186,28 +190,77 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                  }, context_instance=RequestContext(request))
 
 def cadastrar_usuario(request):
+    dados = template_data(request)
     if request.method == 'POST':
-        form = UsuarioForm(request.POST, auto_id=False,error_class=DivErrorList)
+        form = UsuarioForm(request.POST, auto_id=False, error_class=DivErrorList)
+        print form.is_valid()
         if form.is_valid():
             u = form.save()
             salt = sha.new(str(random.random())).hexdigest()[:5]
-            chave = sha.new(salt+u.username).hexdigest()
+            chave = sha.new(salt + u.username).hexdigest()
             expira = datetime.datetime.today() + datetime.timedelta(2)
-            usuario = Usuario.objects.create(conta=u,
-                                             cpf=form.cleaned_data['cpf'],
-                                             chave_de_ativacao=chave,
-                                             expiracao_chave=expira)
-            ##from django.core.mail import EmailMessage
-            #email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
-            #                     mensagem_email % chave, to=[usuario.conta.email])
-            #email.send()
-            form = EnderecoForm()            
-            return render_to_response('cadastro.html', { 'form' : form, 'passo': 2, 'usuario':usuario },
+            usuario = Usuario(conta=u,
+                             cpf=form.cleaned_data['cpf'],
+                             chave_de_ativacao=chave,
+                             expiracao_chave=expira)
+            form = EnderecoForm()
+            dados['form'] = form
+            request.session['conta'] = u
+            request.session['usuario_cadastro'] = usuario
+            return render_to_response('finalizar_cadastro.html', dados,
                               context_instance=RequestContext(request))
+        else:
+            dados['form'] = form
+            return render_to_response('cadastro.html', dados,
+                                      context_instance=RequestContext(request))
     else:
         form = UsuarioForm()
-    return render_to_response('cadastro.html', { 'form' : form, 'passo': 1 },
+        dados['form'] = form
+    return render_to_response('cadastro.html', dados,
                               context_instance=RequestContext(request))
+
+def finalizar_cadastro(request):
+    print request.session['usuario_cadastro']
+    try:
+        conta = request.session['conta']
+        usuario = request.session['usuario_cadastro']
+    except KeyError:
+        return HttpResponseRedirect("/cadastro/")
+    dados = template_data(request)
+    if request.method == 'POST':
+        form = EnderecoForm(request.POST, auto_id=False, error_class=DivErrorList)
+        if form.is_valid():
+            conta.save()
+            usuario.save()
+            endereco = EnderecoUsuario(logradouro=form.cleaned_data['logradouro'],
+                                       numero=form.cleaned_data['numero'],
+                                       complemento=form.cleaned_data['complemento'],
+                                       bairro=form.cleaned_data['bairro'],
+                                       cep=form.cleaned_data['cep'],
+                                       cidade=form.cleaned_data['cidade'],
+                                       estado=form.cleaned_data['estado'],
+                                       referencia=form.cleaned_data['referencia'],
+                                       usuario=usuario)
+            endereco.save()
+            from django.core.mail import EmailMessage
+            email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
+                                 mensagem_email % usuario.chave_de_ativacao,
+                                 to=[usuario.conta.email])
+            email.send()
+            del request.session['conta']
+            del request.session['usuario_cadastro']
+            conta_logada = authenticate(username=conta.username,
+                                 password=conta.password)           
+            authlogin(request, conta_logada)
+            return HttpResponseRedirect('/')
+        else:
+            dados['form'] = form
+            return render_to_response('finalizar_cadastro.html', dados,
+                              context_instance=RequestContext(request))
+    else:
+        form = EnderecoForm()
+        dados['form'] = form
+    return render_to_response('finalizar_cadastro.html', dados, context_instance=RequestContext(request))
 
 def ativar_usuario(request, chave):
     if request.user.is_authenticated():
@@ -293,7 +346,7 @@ def login(request):
             authlogin(request, conta)
             return HttpResponseRedirect("/")
         else:
-            return render_to_response("loginErro.html",
+            return render_to_response("login_erro.html",
                               {'form' : form},
                               context_instance=RequestContext(request))
             

@@ -4,6 +4,7 @@ ul, ol, dl {
 }
 
 #barra_lateral {
+    height: 100%;
     width: 200px;
     border-left: 1px solid #666;
     margin-left:20px;
@@ -17,7 +18,8 @@ ul.menu_esquerdo li.categoria {
     list-style-type: none;
     padding-left:10px;
     border: 1px solid #666;
-    border-left:none;
+    border-left: none;
+    border-right: none;
     display:block;
 }
 

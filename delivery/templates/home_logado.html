@@ -1,10 +1,5 @@
 {% extends "home.html" %}
 
-<script type="text/javascript">
-    $(document).ready(function() {
-    })
-</script>
-
 {% block barra_lateral_esquerda %}
 
 <div id="barra_lateral" align="left" >
@@ -16,9 +11,17 @@
     
   <ul class="menu_esquerdo">
       {% for categoria in categorias %}
-        <li id="categoria_{{categoria.id}}"class="categoria"><a href="#">{{categoria.nome}}</a></li>
+        <li id="categoria_{{categoria.id}}"class="categoria"><a href="#">{{categoria.nome}}</a>
         <ul class="sub_menu">
+            {% for cat, lojas in lojas_categoria.items %}
+            {% ifequal cat categoria %}
+            {% for loja in lojas %}
+            <li id="loja_{{loja.id}}" class="loja"><a href="#">{{loja.nome}}</a></li>
+            {% endfor %}
+            {% endifequal %}
+            {% endfor %}
         </ul>
+        </li>
       {% endfor %}
   </ul>
 </div>
