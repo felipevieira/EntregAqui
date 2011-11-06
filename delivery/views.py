@@ -401,3 +401,8 @@ def finaliza_compra(request):
                                    'comprou' : True},
                                   context_instance=RequestContext(request))
     return redireciona_usuario(request)
+
+
+def exibir_catalogo(request):
+    return render_to_response("catalogo.html")
+    
