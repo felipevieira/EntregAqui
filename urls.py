@@ -30,5 +30,5 @@ urlpatterns = patterns('',
     url(r'^(?P<cidade>[\w ]+)/(?P<categoria>[\w ]+)/(?P<loja>[\w ]+)/$', 'EntregAqui.delivery.views.detalhar_catalogo_produtos'),
     url(r'^(?P<cidade>[\w ]+)/(?P<categoria>[\w ]+)/$', 'EntregAqui.delivery.views.listar_lojas'),
     url(r'^(?P<cidade>[\w ]+)/$', 'EntregAqui.delivery.views.visualizar_categorias'),
-    url(r'^[\w ]*', 'EntregAqui.delivery.views.home_redirect')
+#    url(r'^[\w ]*', 'EntregAqui.delivery.views.home_redirect')
 )
