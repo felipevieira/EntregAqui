@@ -8,7 +8,7 @@
 <div class="lojas">
 {% for loja in lojas %}
 	<div class="loja_element" target="_blank" >
-		<a><img src="{{loja.imagem}}" class="foto" alt="NO IMAGE FOR {{loja.nome}}" href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}" /></a> 
+		<a href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}"><img src="{{loja.imagem}}" class="foto" alt="NO IMAGE FOR {{loja.nome}}" href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}" /></a> 
 		<br/>
 	    <label class="legenda"> {{loja.nome}}</label>  
 	</div>
