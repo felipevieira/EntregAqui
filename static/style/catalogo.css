@@ -1,0 +1,50 @@
+.logo_loja {
+	margin-left: 40px;
+	margin-top: 10px;
+	float: left;
+}
+
+.barra_pagamento {
+	float: right;
+	margin-top: 15px;
+}
+
+.barra_banners {
+	width: 10px;
+	float: left;
+}
+
+.barra_informacoes {
+	width: 1000px;
+	height: 100px;
+	border: 10px;
+	border-bottom: 1px solid black;
+}
+
+.link_fale_com_loja, .link_carrinho {
+	color: #994D26;
+	text-decoration: none;
+	position: relative;
+	bottom: 3px;
+}
+
+.box_fale_com_loja {
+	float: left;
+	margin-right: 120px;
+}
+
+.conteudo {
+	margin-left: 200px;
+}
+
+.image_cartao {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+	float: left;
+}
+
+.linha_divisoria {
+	background-image: url("/static/images/divisoria.png");
+	background-repeat: repeat-x
+}

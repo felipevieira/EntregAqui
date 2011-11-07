@@ -1,1 +1,25 @@
 {% extends "home_logado.html" %}
+
+{% block conteudo %}
+<div class="conteudo">
+	<div class="barra_informacoes">
+		<img src="/static/images/logo_sapore_temp.jpg" class="logo_loja" />
+		<div class="barra_pagamento">
+			<img class="image_cartao" src="/static/images/card-cash-unselected.png"/>
+			<img class="image_cartao" src="/static/images/card-visa-unselected.png"/>
+			<img class="image_cartao" src="/static/images/card-electron-unselected.png"/>
+			<img class="image_cartao" src="/static/images/card-hiper-unselected.png"/>
+			<img class="image_cartao" src="/static/images/card-master-unselected.png"/>
+			<img class="image_cartao" src="/static/images/card-american-unselected.png"/> <br />
+			<div class="box_fale_com_loja">
+				<a href="#" class="link_fale_com_loja">Fale com a loja</a>
+				<img src="/static/images/bt-chat2-unselected.png" />
+			</div>
+			<div class="box_carrinho">
+				<a href="#" class="link_carrinho">Carrinho</a>
+				<img src="/static/images/bt-car-unselected.png" />
+			</div>
+		</div>	
+	</div>
+</div>
+{% endblock %}
