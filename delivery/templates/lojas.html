@@ -3,7 +3,16 @@
 {% block titulo %}EntregAqui - {{cidade}} - {{categoria}}{% endblock %}
 
 {% block conteudo %}
+<h1 class="categoria_title" > {{categoria}} </h1>
+<hr>
+<div class="lojas">
 {% for loja in lojas %}
-<li id="loja_{{loja.id}}"><a href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}">{{loja.nome}}</a></li>
+	<div class="loja_element" target="_blank" >
+		<a><img src="{{loja.imagem}}" class="foto" alt="NO IMAGE FOR {{loja.nome}}" href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}" /></a> 
+		<br/>
+	    <label class="legenda"> {{loja.nome}}</label>  
+	</div>
+	<!-- <li id="loja_{{loja.id}}"><a href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}">{{loja.nome}}</a></li> -->
 {% endfor %}
+</div>
 {% endblock %}
