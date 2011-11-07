@@ -15,8 +15,8 @@
 }
 
 .barra_informacoes {
-	width: 1000px;
-	height: 100px;
+	width: 900px;
+	height: 120px;
 	border: 10px;
 	border-bottom: 1px solid black;
 }
@@ -34,7 +34,14 @@
 }
 
 .conteudo {
-	margin-left: 200px;
+	margin-left: 220px;
+}
+
+.container_produtos {
+	margin-top: 70px;
+	margin-left: 50px;
+	width: 900px;
+	
 }
 
 .image_cartao {
@@ -47,4 +54,32 @@
 .linha_divisoria {
 	background-image: url("/static/images/divisoria.png");
 	background-repeat: repeat-x
+}
+
+.button_comprar {
+	background-image: url("/static/images/bt-product-unselected.png");
+	border: 0px solid black;
+	width: 80px;
+	height: 35px;
+	font-weight: bold;
+	color: white;
+	cursor: pointer;
+}
+
+.button_comprar:hover {
+	background-image: url("/static/images/bt-product-selected.png");
+}
+
+.elemento_produto {
+	float: left;
+	margin-right: 40px;
+	margin-bottom: 30px;
+}
+
+.status_loja_label {
+	color: #994D26;
+}
+
+.status_loja {
+	color: green;
 }

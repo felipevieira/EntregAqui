@@ -3,7 +3,7 @@
 {% block conteudo %}
 <div class="conteudo">
 	<div class="barra_informacoes">
-		<img src="/static/images/logo_sapore_temp.jpg" class="logo_loja" />
+		<img src="/static/images/no_image.png" class="logo_loja" />
 		<div class="barra_pagamento">
 			<img class="image_cartao" src="/static/images/card-cash-unselected.png"/>
 			<img class="image_cartao" src="/static/images/card-visa-unselected.png"/>
@@ -19,7 +19,21 @@
 				<a href="#" class="link_carrinho">Carrinho</a>
 				<img src="/static/images/bt-car-unselected.png" />
 			</div>
+			<div class="box_horario">
+				<label class="status_loja_label">Status da Loja: </label> <label class="status_loja">Aberta </label>
+			</div>
 		</div>	
 	</div>
+	<div class="container_produtos">
+		{% for produto in produtos %}
+			<div class="elemento_produto">
+				<center><img src="/static/images/no_image.png" class="image_produto"> <br /></center>
+				<a href="#">{{produto}}</a>
+				<center><button class="button_comprar">Comprar</button></center>
+			</div>
+    	{% endfor %}
+		
+	</div>
+	
 </div>
 {% endblock %}

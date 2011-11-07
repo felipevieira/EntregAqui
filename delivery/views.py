@@ -185,10 +185,11 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
     produtos = Produto.objects.filter(catalogo__loja__nome_curto=loja,
                                       catalogo__loja__endereco__cidade=cidade,
                                       catalogo__loja__categoria__nome=categoria)
+    print produtos
     dados['produtos'] = produtos
     dados['loja'] = loja
     dados['categoria'] = categoria
-    return render_to_response("produtos.html", dados,
+    return render_to_response("catalogo.html", dados,
                               context_instance=RequestContext(request))
 
 def cadastrar_usuario(request):

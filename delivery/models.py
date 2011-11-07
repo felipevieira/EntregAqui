@@ -48,6 +48,7 @@ class Loja(models.Model):
     categoria = models.ForeignKey(Categoria)
     endereco = models.ForeignKey(EnderecoLoja)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    imagem = models.ImageField(upload_to='/static/images/')
     
     def __unicode__(self):
         return self.nome + " - " + unicode(self.categoria)

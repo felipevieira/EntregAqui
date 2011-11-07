@@ -23,8 +23,8 @@ def main():
                               cidade=u"Campina Grande", estado=u"Paraiba")
     alimento = Categoria(nome="Alimentos", descricao="Aqui estao todos os restaurantes da cidade" ,imagem="/static/images/categorias_alimentos.jpg")
     lazer = Categoria(nome="Lazer", descricao= "Aqui estao todos os estabelecimentos de lazer da cidade", imagem="/static/images/categorias_lazer.jpg")
-    pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1")
-    sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2")
+    pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1", imagem="/static/images/logo_pittsburg_temp.jpg")
+    sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2", imagem="/static/images/logo_sapore_temp.jpg")
     catalogo_sapore = Catalogo()
     catalogo_pitts = Catalogo()
     pizzas = [Produto(nome="Pizza Grande de Frango", descricao="", preco=3300),

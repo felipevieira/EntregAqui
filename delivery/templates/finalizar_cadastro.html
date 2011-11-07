@@ -1,0 +1,40 @@
+{% extends "home.html" %}
+
+<!DOCTYPE html>
+<html lang="pt-BR"> 
+        <head>
+            <link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />
+        </head>
+    
+        {% block barra_topo %}
+        {% endblock %} 
+
+        {% block conteudo%}
+   
+        <body class="form_cadastro">    
+        <div class="form_header"> <br />
+            <center>                    
+                <label class="label_preguica">PREGUICA DELIVERY</label> <br />
+                <a class="label_entenda" href="#" >Entenda a Preguica</a>
+            </center>
+        </div>      
+        <form action="/finalizar_cadastro/" method="post" id="form_endereco"> {% csrf_token %}
+                <center>
+                    <table class="table_form" cellpadding="0" cellspacing="0">
+                        {% for field in form %}
+                        <tr>
+                            <td>
+                                <label al>{{ field.label_tag }}</label>
+                                {{ field }} {% for error in field.errors %} {{error}} {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table> <br />
+                    <input type="submit" value="Finalizar cadastro" class="botao_proximo_passo" />
+                </center>
+            </form>
+        </body> 
+        
+        {% endblock %} 
+        
+</html>
