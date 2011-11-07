@@ -49,3 +49,36 @@
 	text-align: justify;
 	width: 290px;
 }
+
+
+
+#Esses elementos ai de cima vao sumir quando mudarem a parte de listagem de categorias.
+.lojas {
+	
+}
+.lojas .loja_element {
+	width:200px;
+	height:142px;
+	text-align:center;
+	float:left;
+	
+}
+.loja_element .foto{
+	width:140px;
+	height:120px;
+		
+}
+
+.loja_element .legenda{
+	font-size:16px;
+	color:#994D26; 
+	font-style:normal;
+	font-family:Verdana, Geneva, sans-serif; #Mudar para Calibri, depois;
+}
+
+.categoria_title {
+	color:#994D26; 
+	#font-family: Verdana, Geneva, sans-serif; #Mudar para Calibri, depois;
+	font-size:26px;
+	
+}
