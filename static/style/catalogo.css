@@ -56,7 +56,7 @@
 	background-repeat: repeat-x
 }
 
-.button_comprar {
+#button_comprar {
 	background-image: url("/static/images/bt-product-unselected.png");
 	border: 0px solid black;
 	width: 80px;
@@ -66,7 +66,7 @@
 	cursor: pointer;
 }
 
-.button_comprar:hover {
+#button_comprar:hover {
 	background-image: url("/static/images/bt-product-selected.png");
 }
 
@@ -82,4 +82,26 @@
 
 .status_loja {
 	color: green;
+}
+
+input[type=number] {
+	border:1px solid #994D26;
+	background-color:#994D26;
+	font-weight: bolder;
+	padding:5px;
+	font-size:12px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;	
+}
+
+.label_adicao {
+	text-align: center;
+	color:#994D26;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.confirmacao_caixa_central {
+	margin-top: 30px;
+	margin-right: 20px;
 }

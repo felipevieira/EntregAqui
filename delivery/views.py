@@ -178,14 +178,13 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
         carrinho.save()
         dados['carrinho'] = carrinho
         dados['produtos'] = produtos
-        return render_to_response("confirma_compra.html",
-                                  dados,
-                                  context_instance=RequestContext(request))
+        #return render_to_response("confirma_compra.html",
+                                  #dados,
+                                  #context_instance=RequestContext(request))
     enderecos = EnderecoLoja.objects.values('cidade').annotate()
     produtos = Produto.objects.filter(catalogo__loja__nome_curto=loja,
                                       catalogo__loja__endereco__cidade=cidade,
                                       catalogo__loja__categoria__nome=categoria)
-    print produtos
     dados['produtos'] = produtos
     dados['loja'] = loja
     dados['categoria'] = categoria
@@ -413,4 +412,10 @@ def finaliza_compra(request):
 
 def exibir_catalogo(request):
     return render_to_response("catalogo.html")
+
+def exibir_carrinho(request):
+    return render_to_response("finalizar_compra.html")
+
+def exibir_confirmacao_adicao(request):
+    return render_to_response("confirma_adicao_carrinho.html")
     

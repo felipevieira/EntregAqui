@@ -16,7 +16,7 @@
 				<img src="/static/images/bt-chat2-unselected.png" />
 			</div>
 			<div class="box_carrinho">
-				<a href="#" class="link_carrinho">Carrinho</a>
+				<a href="/carrinho" class="link_carrinho">Carrinho</a>
 				<img src="/static/images/bt-car-unselected.png" />
 			</div>
 			<div class="box_horario">
@@ -24,16 +24,19 @@
 			</div>
 		</div>	
 	</div>
-	<div class="container_produtos">
+	<form class="container_produtos" action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
 		{% for produto in produtos %}
 			<div class="elemento_produto">
 				<center><img src="/static/images/no_image.png" class="image_produto"> <br /></center>
 				<a href="#">{{produto}}</a>
-				<center><button class="button_comprar">Comprar</button></center>
+				<center>
+					</th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
+					<button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button>					
+				</center>
 			</div>
     	{% endfor %}
 		
-	</div>
+	</form>
 	
 </div>
 {% endblock %}
