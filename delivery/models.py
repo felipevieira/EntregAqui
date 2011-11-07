@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class CustomUsuario(models.Model):
-    conta = models.OneToOneField(User, related_name="usuario")
+    conta = models.OneToOneField(User, related_name="usuario", null=True)
 
 class Usuario(CustomUsuario):
     cpf = models.CharField(max_length=11, unique=True)
@@ -143,4 +143,4 @@ class ProdutosCarrinho(models.Model):
     quantidade = models.IntegerField();
     
     def __unicode__(self):
-        return unicode(self.pedido) + " - " + self.produto.nome + ": " + str(self.quantidade)
+        return unicode(self.carrinho) + " - " + self.produto.nome + ": " + str(self.quantidade)
