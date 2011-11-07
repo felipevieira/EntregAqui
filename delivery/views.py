@@ -419,3 +419,5 @@ def exibir_carrinho(request):
 def exibir_confirmacao_adicao(request):
     return render_to_response("confirma_adicao_carrinho.html")
     
+def exibir_ajuda(request):
+    return render_to_response("entenda_preguica.html")
