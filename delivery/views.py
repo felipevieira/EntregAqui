@@ -206,10 +206,11 @@ def cadastrar_usuario(request):
                              cpf=form.cleaned_data['cpf'],
                              chave_de_ativacao=chave,
                              expiracao_chave=expira)
-            form = EnderecoForm()
-            dados['form'] = form
+            request.session['pass'] = form.cleaned_data['senha']
             request.session['conta'] = u
             request.session['usuario_cadastro'] = usuario
+            form = EnderecoForm()
+            dados['form'] = form
             return render_to_response('finalizar_cadastro.html', dados,
                               context_instance=RequestContext(request))
         else:
@@ -245,16 +246,17 @@ def finalizar_cadastro(request):
                                        referencia=form.cleaned_data['referencia'],
                                        usuario=usuario)
             endereco.save()
-            from django.core.mail import EmailMessage
-            email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
-                                 mensagem_email % usuario.chave_de_ativacao,
-                                 to=[usuario.conta.email])
-            email.send()
+#            from django.core.mail import EmailMessage
+#            email = EmailMessage("Obrigado por se cadastrar no Preguiça Delivery",
+#                                 mensagem_email % usuario.chave_de_ativacao,
+#                                 to=[usuario.conta.email])
+#            email.send()
             del request.session['conta']
             del request.session['usuario_cadastro']
             conta_logada = authenticate(username=conta.username,
-                                 password=conta.password)
+                                        password=request.session['pass'])
             authlogin(request, conta_logada)
+            del request.session['pass']
             return HttpResponseRedirect('/')
         else:
             dados['form'] = form
@@ -281,6 +283,9 @@ def ativar_usuario(request, chave):
     conta.save()
     usuario.chave_de_ativacao = ""
     usuario.save()
+    conta = authenticate(username=conta.username,
+                         password=conta.password)
+    authlogin(request, conta)
     return HttpResponseRedirect("/adicionar_endereco")
 
 def exibir_pedidos(request):
@@ -345,7 +350,7 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             conta = authenticate(username=form.cleaned_data['login'],
-                                 password=form.cleaned_data['senha'])           
+                                 password=form.cleaned_data['senha'])     
             authlogin(request, conta)
             return HttpResponseRedirect("/")
         else:
