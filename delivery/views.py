@@ -99,26 +99,20 @@ def visualizar_categorias(request, cidade):
     enderecos = Endereco.objects.values('cidade').annotate()
     request.session['cidade'] = cidade
     dados = template_data(request)
-    return render_to_response("categorias.html",
-                {'cidade': cidade,
-                 'categorias': Categoria.objects.all().order_by('nome'),
-                 'enderecos': enderecos,
-                 'usuario' : request.user
-                 }, context_instance=RequestContext(request))
+    return render_to_response("categorias.html", dados,
+                              context_instance=RequestContext(request))
 
 def listar_lojas(request, cidade, categoria):
     request.session['cidade'] = cidade
     request.session['categoria'] = categoria
     enderecos = Endereco.objects.values('cidade').annotate()
     lojas = Loja.objects.filter(endereco__cidade=cidade, categoria__nome=categoria)
-    return render_to_response("lojas.html",
-                {"lojas" : lojas,
-                 'cidade': cidade,
-                 'categorias': Categoria.objects.all().order_by('nome'),
-                 'categoria': categoria,
-                 'enderecos': enderecos,
-                 'usuario' : request.user
-                 }, context_instance=RequestContext(request))
+    dados = template_data(request)
+    dados['categoria'] = categoria
+    dados['cidade'] = cidade
+    dados['lojas'] = lojas
+    return render_to_response("lojas.html", dados,
+                              context_instance=RequestContext(request))
 
 def exibir_painel_fale_conosco(request):
     return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
@@ -351,7 +345,7 @@ def login(request):
             conta = authenticate(username=form.cleaned_data['login'],
                                  password=form.cleaned_data['senha'])     
             authlogin(request, conta)
-            return HttpResponseRedirect("/")
+            return redireciona_usuario(request)
         else:
             return render_to_response("login_erro.html",
                               {'form' : form},

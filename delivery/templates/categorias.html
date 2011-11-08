@@ -7,11 +7,11 @@
     		<div class="categorias" style="width: 1100px; left: 50%;margin-left: -550px;position: absolute;">
     {% for categoria in categorias %}
 	    <div class="oferta">
-	    	<a target="_blank" href="/{{cidade}}/{{categoria.nome}}" class="topoOferta" >
+	    	<a href="/{{cidade}}/{{categoria.nome}}" class="topoOferta" >
 	  			<h2 style="display:inline;margin:0;font-size:24px"><center>{{categoria.nome}}</center></h2></a>
 				<div class="conteudoOferta">
 					<div class="divimagem">
-						<a target="_blank" class="imagemOferta" />
+						<a class="imagemOferta" />
 						<img width="176" height="131" src="{{categoria.imagem}}" alt="Deu aguia" />
 			</a>
 					</div>
