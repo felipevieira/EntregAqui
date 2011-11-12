@@ -117,6 +117,9 @@ def listar_lojas(request, cidade, categoria):
     return render_to_response("lojas.html", dados,
                               context_instance=RequestContext(request))
 
+def iniciar_pagamento(request):
+    return HttpResponse("Pagamento.")
+
 def exibir_painel_fale_conosco(request):
     return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
 
