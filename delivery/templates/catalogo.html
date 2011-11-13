@@ -1,42 +1,56 @@
 {% extends "home_logado.html" %}
 
 {% block conteudo %}
-<div class="conteudo">
-	<div class="barra_informacoes">
-		<img src="/static/images/no_image.png" class="logo_loja" />
-		<div class="barra_pagamento">
-			<img class="image_cartao" src="/static/images/card-cash-unselected.png"/>
-			<img class="image_cartao" src="/static/images/card-visa-unselected.png"/>
-			<img class="image_cartao" src="/static/images/card-electron-unselected.png"/>
-			<img class="image_cartao" src="/static/images/card-hiper-unselected.png"/>
-			<img class="image_cartao" src="/static/images/card-master-unselected.png"/>
-			<img class="image_cartao" src="/static/images/card-american-unselected.png"/> <br />
-			<div class="box_fale_com_loja">
-				<a href="#" class="link_fale_com_loja">Fale com a loja</a>
-				<img src="/static/images/bt-chat2-unselected.png" />
-			</div>
-			<div class="box_carrinho">
-				<a href="/carrinho" class="link_carrinho">Carrinho</a>
-				<img src="/static/images/bt-car-unselected.png" />
-			</div>
-			<div class="box_horario">
-				<label class="status_loja_label">Status da Loja: </label> <label class="status_loja">Aberta </label>
-			</div>
-		</div>	
-	</div>
-	<form class="container_produtos" action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
-		{% for produto in produtos %}
-			<div class="elemento_produto">
-				<center><img src="/static/images/no_image.png" class="image_produto"> <br /></center>
-				<a href="#">{{produto}}</a>
-				<center>
-					</th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
-					<button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button>					
-				</center>
-			</div>
-    	{% endfor %}
-		
-	</form>
-	
+<div>
+	<div class="conteudo">
+		<div class="barra_informacoes">
+			<img src="/static/images/no_image.png" class="logo_loja" />
+			<div class="barra_pagamento">
+				<img class="image_cartao" src="/static/images/Cards/card-cash-unselected.png"/>
+				<img class="image_cartao" src="/static/images/Cards/card-visa-unselected.png"/>
+				<img class="image_cartao" src="/static/images/Cards/card-electron-unselected.png"/>
+				<img class="image_cartao" src="/static/images/Cards/card-hiper-unselected.png"/>
+				<img class="image_cartao" src="/static/images/Cards/card-master-unselected.png"/>
+				<img class="image_cartao" src="/static/images/Cards/card-american-unselected.png"/> <br />
+				<div class="box_fale_com_loja">
+					<a href="#" class="link_fale_com_loja">Fale com a loja</a>
+					<img src="/static/images/Icons/bt-chat2-unselected.png" />
+				</div>
+				<div class="box_carrinho">
+					<a href="/carrinho" class="link_carrinho">Carrinho</a>
+					<img src="/static/images/Icons/bt-car-unselected.png" />
+				</div>
+				<div class="box_horario">
+					<label class="status_loja_label">Status da Loja: </label> <label class="status_loja">Aberta </label>
+				</div>
+			</div>	
+		</div>
+		<form class="container_produtos" action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
+			{% for produto in produtos %}
+				<div class="elemento_produto">
+					<center><img src="/static/images/no_image.png" class="image_produto"> <br /></center>
+					<a href="#">{{produto}}</a>
+					<center>
+						</th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
+						<button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button>					
+					</center>
+				</div>
+	    	{% endfor %}		
+		</form>	
+	</div>	
+	<div id="barra_lateral_direita">
+		<div class="barra_banners">
+			<a href="http://www.saporeditalia.com.br" target="_blank">
+				<img class="banner" src="/static/images/Banners/banner_sapore.jpg" />			
+			</a>
+			<a href="http://www.pittsburg.com.br" target="_blank">
+				<img class="banner" src="/static/images/Banners/banner_pittsburg.jpg" />
+			</a>
+			<a href="http://www.fornodepizza.com.br/" target="_blank">
+				<img class="banner" src="/static/images/Banners/banner_forno.png" />
+			</a>
+		</div>
+	</div>	
 </div>
+
 {% endblock %}

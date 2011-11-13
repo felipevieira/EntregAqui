@@ -31,29 +31,19 @@
 .box_fale_com_loja {
 	float: left;
 	margin-right: 120px;
+	cursor: pointer;
 }
 
-.conteudo {
-	margin-left: 220px;
+.box_carrinho {
+	cursor: pointer;
 }
+
 
 .container_produtos {
 	margin-top: 70px;
 	margin-left: 50px;
 	width: 900px;
 	
-}
-
-.image_cartao {
-	padding: 0px;
-	margin: 0px;
-	border: none;
-	float: left;
-}
-
-.linha_divisoria {
-	background-image: url("/static/images/divisoria.png");
-	background-repeat: repeat-x
 }
 
 #button_comprar {
@@ -64,6 +54,7 @@
 	font-weight: bold;
 	color: white;
 	cursor: pointer;
+	background-color: #f9f9de;
 }
 
 #button_comprar:hover {
@@ -104,4 +95,17 @@ input[type=number] {
 .confirmacao_caixa_central {
 	margin-top: 30px;
 	margin-right: 20px;
+}
+
+.barra_banners {
+	display: block;
+}
+
+.banner {
+	margin-bottom: 10px;
+}
+
+.conteudo {
+	float: left;
+	margin-left: 20px;
 }

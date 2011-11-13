@@ -7,8 +7,9 @@ ul, ol, dl {
     height: 100%;
     width: 200px;
     border-left: 1px solid #666;
+    border-right: 1px solid #666;
     margin-left:20px;
-    background-color: #FFFFFF;
+    background-color: #f9f9de;
     float: left;
     display: block;
 }
@@ -35,8 +36,19 @@ ul.sub_menu li.loja {
 
 ul.menu_esquerdo a, ul.menu_esquerdo a:visited {
     text-decoration: none;
-    color:#000000;
 }
 ul.menu_esquerdo a:hover, ul.menu_esquerdo a:active, ul.menu_esquerdo a:focus {
-    color:#000;
+
+}
+
+.link_categoria {
+	color: #994D26;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.link_loja {
+	color: #994D26;
+	font-weight: bold;
+	font-size: 15px;
 }

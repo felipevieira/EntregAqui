@@ -7,6 +7,7 @@
     	<link rel="stylesheet" type="text/css" href="/static/style/login.css" />
     	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />
     	<link rel="stylesheet" type="text/css" href="/static/style/barra_lateral_esquerda.css" />
+    	<link rel="stylesheet" type="text/css" href="/static/style/barra_lateral_direita.css" />
     	<link rel="stylesheet" type="text/css" href="/static/style/style_home.css" />
     	<link rel="stylesheet" type="text/css" href="/static/style/catalogo.css"/>
     	<link rel="stylesheet" type="text/css" href="/static/style/listagemElementos.css"/>
@@ -26,12 +27,8 @@
     <body>
         {% block barra_menu %}
         {% endblock %}        
-        <div id="barra_topo">
-        {% block barra_topo %}
-        {% endblock %}
 		{% block popup %}
         {% endblock %}
-        </div>        
         {% block barra_lateral_esquerda %}
         {% endblock %}
         {% block conteudo %}
