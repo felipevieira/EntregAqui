@@ -109,3 +109,8 @@ input[type=number] {
 	float: left;
 	margin-left: 20px;
 }
+
+.label_preco {
+	color:#994D26;
+	font-weight: bold;
+}

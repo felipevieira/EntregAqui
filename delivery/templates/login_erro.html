@@ -1,10 +1,16 @@
+{% extends "home.html"%}
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 	<head>
     	<link rel="stylesheet" type="text/css" href="/static/style/styleForms.css" />    	
-    </head>    
+    </head> 
+    
+    {% block conteudo%}   
 	<body>			
-			<form method="post" id="signin" action="/login/"> {% csrf_token %}
+			
+	      <center>
+	      	<form method="post" id="signin" action="/login/"> {% csrf_token %}
 		      	<table>
 			        	{% for field in form %}
 			        	<tr>
@@ -20,7 +26,6 @@
 		        <input id="remember" name="remember_me" value="1" tabindex="7" type="checkbox">
 		        <label for="remember">Lembre-me</label>
 		      </p>
-	      <center>
 	      	<p class="cadastrar"> <a href="/cadastro/" id="cadastrar_link">Nao esta cadastrado?  Cadastre-se!</a> </p>
 	      </center>
 	      <!-- NAO EH MVP
@@ -30,4 +35,5 @@
 			href="#">Esqueceu seu nome de usuario?</A> </p -->
 	    	</form>
 	</body>	
+	{% endblock %}
 </html>

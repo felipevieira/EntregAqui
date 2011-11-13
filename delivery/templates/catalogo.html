@@ -4,7 +4,7 @@
 <div>
 	<div class="conteudo">
 		<div class="barra_informacoes">
-			<img src="/static/images/no_image.png" class="logo_loja" />
+			<img src="{{loja.imagem}}" class="logo_loja" />
 			<div class="barra_pagamento">
 				<img class="image_cartao" src="/static/images/Cards/card-cash-unselected.png"/>
 				<img class="image_cartao" src="/static/images/Cards/card-visa-unselected.png"/>
@@ -28,8 +28,9 @@
 		<form class="container_produtos" action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
 			{% for produto in produtos %}
 				<div class="elemento_produto">
-					<center><img src="/static/images/no_image.png" class="image_produto"> <br /></center>
-					<a href="#">{{produto}}</a>
+					<center><img src="{{produto.imagem}}" class="image_produto"> <br /></center>
+					<a href="#">{{produto}}</a><br />
+					<center><label class="label_preco">Preco: R$ {{produto.preco}},00 </label></center>
 					<center>
 						</th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
 						<button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button>					
