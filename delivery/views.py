@@ -37,7 +37,10 @@ def get_usuario(request):
     try:
         usuario = Usuario.objects.get(conta=request.user)
     except Usuario.DoesNotExist:
-        return None
+        try:
+            usuario = Funcionario.objects.get(conta=request.user)
+        except Funcionario.DoesNotExist:
+            return None
     return usuario
 
 def get_top_usuarios(loja):
@@ -54,7 +57,7 @@ def get_top_usuarios(loja):
 def template_data(request):
     dados = {}
     dados['categorias'] = Categoria.objects.all().order_by('nome')
-    dados['usuario'] = request.user
+    dados['usuario'] = get_usuario(request)
     dados['cidade'] = request.session['cidade']
     dados['lojas_categoria'] = {}
     for loja in Loja.objects.filter(endereco__cidade=request.session['cidade']):
@@ -114,13 +117,15 @@ def listar_lojas(request, cidade, categoria):
     return render_to_response("lojas.html", dados,
                               context_instance=RequestContext(request))
 
+def iniciar_pagamento(request):
+    return HttpResponse("Pagamento.")
+
 def exibir_painel_fale_conosco(request):
     return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
 
 def exibir_obrigado_fale_conosco(request):
     if request.method == 'POST':
         nome = request.POST['nome']
-        print nome
         email = request.POST['email']
         assunto = request.POST['assunto']
         telefone = request.POST['telefone']
@@ -189,7 +194,6 @@ def cadastrar_usuario(request):
     dados = template_data(request)
     if request.method == 'POST':
         form = UsuarioForm(request.POST, auto_id=False, error_class=DivErrorList)
-        print form.is_valid()
         if form.is_valid():
             u = form.save()
             salt = sha.new(str(random.random())).hexdigest()[:5]
@@ -198,7 +202,9 @@ def cadastrar_usuario(request):
             usuario = Usuario(conta=u,
                              cpf=form.cleaned_data['cpf'],
                              chave_de_ativacao=chave,
-                             expiracao_chave=expira)
+                             expiracao_chave=expira,
+                             nascimento=form.cleaned_data['nascimento'],
+                             sexo=form.cleaned_data['sexo'])
             request.session['pass'] = form.cleaned_data['senha']
             request.session['conta'] = u
             request.session['usuario_cadastro'] = usuario
@@ -217,7 +223,6 @@ def cadastrar_usuario(request):
                               context_instance=RequestContext(request))
 
 def finalizar_cadastro(request):
-    print request.session['usuario_cadastro']
     try:
         conta = request.session['conta']
         usuario = request.session['usuario_cadastro']
@@ -250,9 +255,9 @@ def finalizar_cadastro(request):
                                         password=request.session['pass'])
             authlogin(request, conta_logada)
             del request.session['pass']
-            return HttpResponseRedirect('/')
+            return painel(request)
         else:
-            dados['form'] = form
+            dados['form'] = EnderecoForm()
             return render_to_response('finalizar_cadastro.html', dados,
                               context_instance=RequestContext(request))
     else:
@@ -362,13 +367,16 @@ def logout(request):
     return HttpResponseRedirect("/")
 
 def painel(request):
-    if request.user.is_authenticated():
+    usuario = get_usuario(request)
+    if usuario is None:
         return HttpResponseRedirect("/")
-    if isinstance(request.user.usuario, Usuario):
-        return render_to_response("painel_usuario.html", {'usuario': request.user},
+    if isinstance(usuario, Usuario):
+        dados = template_data(request)
+        dados['endereco'] = EnderecoUsuario.objects.get(usuario=usuario)
+        return render_to_response("painel_usuario_cadastro.html", dados,
                                   context_instance=RequestContext(request)
                                   )
-    if isinstance(request.user.usuario, Funcionario):
+    if isinstance(usuario, Funcionario):
         mais_compras, mais_pagos = get_top_usuarios(request.user.usuario.loja)
         return render_to_response("painel_cliente.html",
                                   {'usuario': request.user,
@@ -376,6 +384,7 @@ def painel(request):
                                    'mais_pagos': mais_pagos},
                                   context_instance=RequestContext(request)
                                   )
+    return HttpResponseRedirect("/")
 
 def finaliza_compra(request):
     usuario = get_usuario(request)

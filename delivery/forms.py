@@ -28,7 +28,7 @@ class UsuarioForm(forms.Form):
     sobrenome = forms.CharField(max_length=50, label=u"Sobrenome")
     cpf = BRCPFField(label=u"CPF")
     sexo = forms.ChoiceField(label=u"Sexo", choices=sexo_choices)
-    aniversario = forms.DateField(label=u'Aniversário', input_formats=['%d/%m/%Y'])
+    nascimento = forms.DateField(label=u'Data de Nascimento', input_formats=['%d/%m/%Y'])
     telefone_contato = BRPhoneNumberField(label=u"Telefone para Contato (XX-XXXX-XXXX)", error_messages={'invalid':'O telefone deve estar no formato XX-XXXX-XXXX'})
     email = forms.EmailField(label=u'Email')
     repetir_email = forms.EmailField(label=u'Repetir Email')    

@@ -5,7 +5,10 @@ class CustomUsuario(models.Model):
     conta = models.OneToOneField(User, related_name="usuario", null=True)
 
 class Usuario(CustomUsuario):
+    sexo_choices = (("M", "Masculino"), ("F", "Feminino"))
     cpf = models.CharField(max_length=11, unique=True)
+    nascimento = models.DateField()
+    sexo = models.CharField(max_length=9, choices=sexo_choices)
     chave_de_ativacao = models.CharField(max_length=50)
     expiracao_chave = models.DateTimeField()
     

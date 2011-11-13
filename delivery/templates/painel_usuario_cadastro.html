@@ -1,0 +1,62 @@
+{% extends "painel_usuario.html" %}
+
+{% block conteudo %}
+
+<div class="conteudo_painel_usuario">
+<div> <div align="left" style="float:left;">Dados Pessoais</div>
+  <div align="right"><a href="/editar_dados">Editar</a></div> </div>
+<hr />
+<table >
+  <tr>
+    <td width="120">Nome:</td>
+    <td width="120">{{usuario.conta.first_name}}</td>
+    <td width="120">Nascimento:</td>
+    <td width="120">{{usuario.nascimento}}</td>
+  </tr>
+  <tr>
+    <td>CPF:</td>
+    <td>{{usuario.usuario.cpf}}</td>
+    <td>Email:</td>
+    <td>{{usuario.conta.email}}</td>
+  </tr>
+  <tr>
+    <td>Sexo:</td>
+    <td>{{usuario.sexo}}</td>
+    <td>Telefone:</td>
+    <td>{{usuario.telefone}}</td>
+  </tr>
+</table>
+<br />
+<div> <div align="left" style="float:left;">Endereco</div>
+<div align="right"><a href="/editar_endereco">Editar</a></div> </div>
+<hr />
+<table >
+  <tr>
+    <td width="120">Rua:</td>
+    <td width="200">{{endereco.logradouro}}</td>
+    <td width="120">Bairro:</td>
+    <td width="200">{{endereco.bairro}}</td>
+  </tr>
+  <tr>
+    <td>Numero:</td>
+    <td>{{endereco.numero}}</td>
+    <td>Cidade:</td>
+    <td>{{endereco.cidade}}</td>
+  </tr>
+  <tr>
+    <td>Complemento:</td>
+    <td>{{endereco.complemento}}</td>
+    <td>Estado:</td>
+    <td>{{endereco.estado}}</td>
+  </tr>
+  <tr>
+    <td>CEP:</td>
+    <td>{{endereco.cep}}</td>
+    <td>Referencia:</td>
+    <td>{{endereco.referencia}}</td>
+  </tr>
+</table>
+</div>
+
+{% endblock %}
+
