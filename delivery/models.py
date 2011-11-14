@@ -148,4 +148,4 @@ class ProdutosCarrinho(models.Model):
     quantidade = models.IntegerField();
     
     def __unicode__(self):
-        return unicode(self.carrinho) + " - " + self.produto.nome + ": " + str(self.quantidade)
+        return self.produto.nome + ": " + str(self.quantidade)
