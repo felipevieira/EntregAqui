@@ -87,5 +87,5 @@ $('a.poplight[href^=#]').click(function() {
             $('#fade, a.close').remove();  //fade them both out
         });
         return false;
-    });
+    });    
 });

@@ -33,7 +33,8 @@
 					<center><label class="label_preco">Preco: R$ {{produto.preco}},00 </label></center>
 					<center>
 						</th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
-						<button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button>					
+						<!--button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button-->	
+						<input class="button_comprar" id="button_comprar" type="submit" value="Comprar"/>				
 					</center>
 				</div>
 	    	{% endfor %}		
@@ -52,6 +53,11 @@
 			</a>
 		</div>
 	</div>	
+</div>
+
+<!-- Essa div eh usada nas popups, o conteudo eh carregado no javascript -->
+<div id="popup_source" class="popup_block">
+    
 </div>
 
 {% endblock %}
