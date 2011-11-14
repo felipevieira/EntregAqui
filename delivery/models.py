@@ -67,6 +67,7 @@ class Produto(models.Model):
     descricao = models.CharField(max_length=200, blank=True)
     preco = models.IntegerField()
     catalogo = models.ForeignKey(Catalogo, related_name="produtos")
+    imagem = models.ImageField(upload_to='/static/images/')
     
     def __unicode__(self):
         return self.nome + " - " + self.catalogo.loja.nome

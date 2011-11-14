@@ -2,21 +2,22 @@
 
 {% block barra_lateral_esquerda %}
 
-<div id="barra_lateral" align="left" >
+<div id="barra_lateral" align="left">
     <div id="div_logo">
-        <div align="center"><img src="/static/images/logo_temp.jpg" alt="Logo" width="100" align="middle"/>
-        PreguicaDelivery
+        <div align="center">
+        	<img src="/static/images/logo_temp.jpg" alt="Logo" width="100" align="middle"/>
+        	PreguicaDelivery
         </div>
     </div>
     
   <ul class="menu_esquerdo">
       {% for categoria in categorias %}
-        <li id="categoria_{{categoria.id}}"class="categoria"><a href="#">{{categoria.nome}}</a>
+        <li id="categoria_{{categoria.id}}"class="categoria"><a class="link_categoria" href="#">{{categoria.nome}}</a>
         <ul class="sub_menu">
             {% for cat, lojas in lojas_categoria.items %}
             {% ifequal cat categoria %}
             {% for loja in lojas %}
-            <li id="loja_{{loja.id}}" class="loja"><a href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}/">{{loja.nome}}</a></li>
+            <li id="loja_{{loja.id}}" class="loja"><a class="link_loja" href="/{{cidade}}/{{categoria}}/{{loja.nome_curto}}/">{{loja.nome}}</a></li>
             {% endfor %}
             {% endifequal %}
             {% endfor %}

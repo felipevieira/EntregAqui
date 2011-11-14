@@ -16,6 +16,7 @@ import random
 import sha
 import utils
 from urllib2 import request_host
+from getpass import getuser
 
 mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Por favor, clique no link http://127.0.0.1:8000/cadastro/%s para ativar" \
@@ -416,9 +417,16 @@ def finaliza_compra(request):
 def exibir_catalogo(request):
     return render_to_response("catalogo.html")
 
-def exibir_carrinho(request):
-    return render_to_response("finalizar_compra.html")
-
 def exibir_confirmacao_adicao(request):
     return render_to_response("confirma_adicao_carrinho.html")
     
+def exibir_ajuda(request):
+    return render_to_response("entenda_preguica.html")
+
+def exibir_carrinho(request):
+    dados = template_data(request)
+    carrinho = Carrinho.objects.get(comprador = get_usuario(request))
+    dados['carrinho'] = carrinho
+    return render_to_response("confirma_compra.html",
+                                  dados,
+                                  context_instance=RequestContext(request))
