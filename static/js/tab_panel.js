@@ -135,12 +135,12 @@ function selecionaCartao(cartao)
 {
 	var cartaoEscolhido = '#' + cartao + '_button_pagamento';
 	$(cartaoEscolhido).attr('escolhido', 'true');
-	getItemObj(cartao + '_button_pagamento').style.background = 'url("/static/images/card-' + cartao+'-selected.png")';
+	getItemObj(cartao + '_button_pagamento').style.background = 'url("/static/images/Cards/card-' + cartao+'-selected.png")';
 	for (i = 0; i < 6; i++) {
 		if (cartao != cardsArray[i]) {
 			var cartaoAtual =  '#' + cardsArray[i] + '_button_pagamento';
 			$(cartaoAtual).attr('escolhido', 'false');
-			getItemObj(cardsArray[i] + '_button_pagamento').style.background = 'url("/static/images/card-' + cardsArray[i]+'-unselected.png")';
+			getItemObj(cardsArray[i] + '_button_pagamento').style.background = 'url("/static/images/Cards/card-' + cardsArray[i]+'-unselected.png")';
 		}
 	}
 }

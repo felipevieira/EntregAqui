@@ -181,7 +181,7 @@ div#tabFiller
    
  #cash_button_pagamento
  {
- 	background: url("/static/images/card-cash-unselected.png");
+ 	background: url("/static/images/Cards/card-cash-unselected.png");
 	border: none;
 	width: 56px;
 	height: 41px;
@@ -189,7 +189,7 @@ div#tabFiller
  
  #visa_button_pagamento
  {
- 	background: url("/static/images/card-visa-unselected.png");
+ 	background: url("/static/images/Cards/card-visa-unselected.png");
 	border: none;
 	width: 56px;
 	height: 41px;
@@ -197,7 +197,7 @@ div#tabFiller
  
   #electron_button_pagamento
  {
- 	background: url("/static/images/card-electron-unselected.png");
+ 	background: url("/static/images/Cards/card-electron-unselected.png");
 	border: none;
 	width: 56px;
 	height: 41px;
@@ -205,7 +205,7 @@ div#tabFiller
  
  #master_button_pagamento
  {
- 	background: url("/static/images/card-master-unselected.png");
+ 	background: url("/static/images/Cards/card-master-unselected.png");
 	border: none;
 	width: 56px;
 	height: 41px;
@@ -213,7 +213,7 @@ div#tabFiller
 
  #hiper_button_pagamento
  {
- 	background: url("/static/images/card-hiper-unselected.png");
+ 	background: url("/static/images/Cards/card-hiper-unselected.png");
 	border: none;
 	width: 56px;
 	height: 41px;
@@ -221,7 +221,7 @@ div#tabFiller
  
  #american_button_pagamento
  {
- 	background: url("/static/images/card-american-unselected.png");
+ 	background: url("/static/images/Cards/card-american-unselected.png");
 	border: none;
 	width: 56px;
 	height: 41px;
