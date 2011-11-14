@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Pagamento</title>
+<link rel="stylesheet" href="/static/style/tab_panel.css" type="text/css" />
+<script src="/static/js/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/static/js/tab_panel.js"></script> 
+</head>
+
+<body onload="bodyOnLoad();" onResize="raisePanel(currentMenuIndex);">
+
+<!-- ========================= BEGIN of tabbed-frame div ======================== -->
+
+<div id="tabFrame">
+
+<div id="tabMenuDiv">
+<div class="tabMenu" id="tabMenu0">
+    <p id="inside_tabMenu0">1 &nbsp;&nbsp; Pedido</p></div>
+<div class="tabMenu" id="tabMenu1">
+    <p id="inside_tabMenu1">2 &nbsp;&nbsp; Entrega</p></div>
+<div class="tabMenu" id="tabMenu2">
+   <p id="inside_tabMenu2">3 &nbsp;&nbsp; Pagamento</p></div>
+</div>
+
+<div class="tabPane" id="tabPane0">
+
+<div id="listaProdutosDiv">
+	<table id="tabelaProdutosComprados">
+		<tr>
+		<th>#</th>
+		<th>Item</th>
+		<th>Valor Unit&aacute;rio</th>
+		<th>Qtde</th>
+		<th>Valor</th>
+		</tr>
+		<tr>
+		<td>1</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>2</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>3</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>4</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>5</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+	</table>
+</div>
+<hr/>
+<div id="subtotal_div">
+	SUB-TOTAL R$ 00,00
+</div>
+<hr/>
+
+<div id="observacoes_div">
+	&nbsp;&nbsp;&nbsp;Observa&ccedil;&otilde;es
+	<textarea id="campo_observacoes_pagamento" cols="35" rows="5" > </textarea>
+</div>
+</div>
+
+<div class="tabPane" id="tabPane1">
+	<br/>
+	&nbsp;&nbsp;Endere&ccedil;o
+	<hr/>
+	<div id="enderecos_div"> 
+		<div id="endereco_div_1">
+			<form>
+			<input type="radio" id="endereco_checkbox_1">
+				Rua Lorem Ipsum, 123, Centro<br/>
+				Campina Grande/PB - 58123-456
+			</input>
+			</form>
+		</div>
+		
+	</div>
+	<hr/>
+	<div id="subtotal_div">
+		SUB-TOTAL R$ 00,00
+	</div>
+</div>
+
+<div class="tabPane" id="tabPane2">
+		<table id="tabelaProdutosComprados">
+		<tr>
+		<th>#</th>
+		<th>Item</th>
+		<th>Valor Unit&aacute;rio</th>
+		<th>Qtde</th>
+		<th>Valor</th>
+		</tr>
+		<tr>
+		<td>1</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>2</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>3</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>4</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+		<tr>
+		<td>5</td>
+		<td>Lorem Ipsum</td>
+		<td>R$ 00,00</td>
+		<td>2</td>
+		<td>R$ 00,00</td>
+		</tr>
+	</table>
+	<hr/>
+	<div id="valor_entrega_div">
+	ENTREGA R$ 5,00
+	</div>
+	<hr/>
+	<div id="valor_total_div">
+	TOTAL R$ 5,00
+	</div>
+	<hr/>
+	<div id="forma_de_pagamento">
+		&nbsp;&nbsp;Escolha sua forma de pagamento:<br/>
+		<br/>
+		<div id="botoes_cartoes">
+		<input type="button" id="cash_button_pagamento" onclick="selecionaCartao('cash');" escolhido="false"/>
+		<input type="button" id="visa_button_pagamento" onclick="selecionaCartao('visa');" escolhido="false"/>
+		<input type="button" id="electron_button_pagamento" onclick="selecionaCartao('electron');" escolhido="false"/>
+		<input type="button" id="hiper_button_pagamento" onclick="selecionaCartao('hiper');" escolhido="false"/>
+		<input type="button" id="master_button_pagamento" onclick="selecionaCartao('master');" escolhido="false"/>
+		<input type="button" id="american_button_pagamento" onclick="selecionaCartao('american');" escolhido="false"/>
+		</div>
+	</div>
+	
+</div>
+
+<div id="tabFiller" ></div>
+
+</div>
+<div id="botoes_voltar_avancar">
+	<input type="button" id="botao_voltar" value="Voltar" onclick="voltar();"/>
+	<input type="button" id="botao_avancar" value="Prosseguir" onclick="avancar();"/>
+</div>
+<!-- ========================= end of tabbed-frame div ======================== -->
+
+</body>
+</html>

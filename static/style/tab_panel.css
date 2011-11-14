@@ -1,0 +1,246 @@
+@font-face {
+	font-family: "calibri";
+	src: url("/static/fonts/calibri.ttf") format("truetype");
+}
+
+html {
+	font-family: Calibri;
+}
+
+/*
+ * This is used just to have a position: relative so I can then put the tabbed panels in it.
+ * it is ugly and a mess, I wonder what people where thinking when they thought about this
+ * boxing model.
+ */
+div#tabFrame
+   {
+   /*position: relative;*/
+  	width: 381px;
+   }
+
+#tabelaProdutosComprados
+{
+	margin-left: 25px;
+	border-collapse: separate;
+}
+
+td, th {
+	padding: 7px;
+	font: 10pt Calibri;
+}
+
+#subtotal_div
+{
+font: 10pt Calibri bold;
+color: #4D4D4D;	
+text-align: center;
+}
+
+#valor_total_div
+{
+font: 10pt Calibri bold;
+color: #4D4D4D;	
+text-align: center;
+}
+
+#tabPane1
+{
+font: 10pt Calibri;
+color: #4D4D4D;	
+}
+
+#valor_entrega_div
+{
+font: 10pt Calibri bold;
+color: #4D4D4D;	
+text-align: center;
+}
+
+#forma_de_pagamento
+{
+	font: 10pt Calibri;
+	color: #4D4D4D;	
+}
+
+#observacoes_div
+{
+font: 10pt Calibri;
+color: #4D4D4D;		
+}
+
+#campo_observacoes_pagamento
+{   
+    margin-left: 8px;
+	width: 350px;
+	height: 100px;
+	resize: none;
+}
+
+#botoes_voltar_avancar
+{
+	margin-left: 35px;
+}
+
+#botao_voltar
+{
+	background: url("/static/images/bt-previous-unselected.png");
+	width: 146px;
+	height: 51px;
+	border:none;
+	color:white;
+	font: 12pt Calibri bold;
+}
+
+#botao_voltar:hover
+{
+	background: url("/static/images/bt-previous-selected.png");
+}
+
+#botao_avancar
+{
+	background: url("/static/images/bt-next-unselected.png");
+	width: 146px;
+	height: 51px;
+	border:none;
+	color:white;
+	font: 12pt Calibri bold;
+}
+
+#botao_avancar:hover
+{
+	background: url("/static/images/bt-next-selected.png");
+}
+
+div#tabMenuDiv
+   {
+   /* position MUST be relative so to palce this and the TabFiller into a common z-order reference
+    * this fix the Internet Explorer crappy BUG
+    */
+	width: 381px;
+	height: 31px;
+   /*position: relative;*/
+   /* since the z-index is four this will be on top of the tabFiller border */
+   z-index: 4;
+   }
+
+/* this is used to fill the tabs with something so they do not mess up with the page
+ * This div will be used to set the size of the tabPane, the width is automatic.
+ * so, basically, the only thing to set is the height, use the em unit !
+ */
+div#tabFiller
+   {
+   /* position MUST be relative so to palce this and the TabFiller into a common z-order reference
+    * this fix the Internet Explorer crappy BUG
+    */
+	margin-top: 0px;
+   position: relative;
+   background: #E2E2E2;
+   border: 2px solid #E2E2E2;
+   height: 400px;
+   /* z-Index must be lower than the one of tabMenuDiv since this div should be below it */
+   z-index:1;
+   }
+
+/*
+ * This defines the general properties of the tabMenu something like borders, colors, etc.
+ * One important property is the z-index, it must be above the other panels.
+ */
+.tabMenu, .tabMenuActive, .tabMenuOver
+   {
+   background: url("/static/images/bt-aba.png");
+   width: 127px;
+   height: 31px;
+   text-align:center;
+   color: #BF3413;
+   }
+
+#inside_tabMenu0, #inside_tabMenu1, #inside_tabMenu2 {
+	font: 11pt Calibri bold;
+	margin: 6px;
+}
+
+.tabMenu#tabMenu0, .tabMenuActive#tabMenu0, .tabMenuOver#tabMenu0
+   {
+   float:left;
+   }
+
+.tabMenu#tabMenu1, .tabMenuActive#tabMenu1, .tabMenuOver#tabMenu1
+   {
+   float:left;
+   }
+
+.tabMenu#tabMenu2, .tabMenuActive#tabMenu2, .tabMenuOver#tabMenu2
+   {
+   float:left;
+   }
+ 
+ #botoes_cartoes
+ {
+ 	margin-left: 16px;
+ }
+   
+ #cash_button_pagamento
+ {
+ 	background: url("/static/images/card-cash-unselected.png");
+	border: none;
+	width: 56px;
+	height: 41px;
+ }
+ 
+ #visa_button_pagamento
+ {
+ 	background: url("/static/images/card-visa-unselected.png");
+	border: none;
+	width: 56px;
+	height: 41px;
+ }
+ 
+  #electron_button_pagamento
+ {
+ 	background: url("/static/images/card-electron-unselected.png");
+	border: none;
+	width: 56px;
+	height: 41px;
+ }
+ 
+ #master_button_pagamento
+ {
+ 	background: url("/static/images/card-master-unselected.png");
+	border: none;
+	width: 56px;
+	height: 41px;
+ }
+
+ #hiper_button_pagamento
+ {
+ 	background: url("/static/images/card-hiper-unselected.png");
+	border: none;
+	width: 56px;
+	height: 41px;
+ }
+ 
+ #american_button_pagamento
+ {
+ 	background: url("/static/images/card-american-unselected.png");
+	border: none;
+	width: 56px;
+	height: 41px;
+ }
+ 
+ 
+/* the various tab panels are in absolute position relative to the parent, so basically
+ * they all overlap one with the other.
+ * The problem is that their size is dependent on the content and therefore that has to be adjusted.
+ * to do this I need of javascript...
+ * If you want to define some special fonts for the tabbed pane, do it here.
+ */
+div.tabPane
+  {
+  position: absolute;
+  margin-top: 0px;
+  overflow: auto;
+  /* the background of this must be the same of tabFiller */
+  background: #E2E2E2;
+  
+
+  }
