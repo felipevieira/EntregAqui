@@ -86,15 +86,12 @@ def redireciona_usuario(request):
 def home(request):
     request.session['cidade'] = "Campina Grande"
     if request.user.is_authenticated():
-        home = "home_logado.html"
-    else:
-        home = "home.html"
+        return HttpResponseRedirect("/" + request.session['cidade'])
     enderecos = Endereco.objects.values('cidade').annotate()
     dados = template_data(request)
     dados['enderecos'] = enderecos
-    return render_to_response(home, dados,
-                              context_instance=RequestContext(request)
-                )
+    return render_to_response("home.html", dados,
+                              context_instance=RequestContext(request))
 
 def home_redirect(request):
     return HttpResponseRedirect("/")
@@ -225,11 +222,11 @@ def cadastrar_usuario(request):
             chave = sha.new(salt + u.username).hexdigest()
             expira = datetime.datetime.today() + datetime.timedelta(2)
             usuario = Usuario(conta=u,
-                             cpf=form.cleaned_data['cpf'],
-                             chave_de_ativacao=chave,
-                             expiracao_chave=expira,
-                             nascimento=form.cleaned_data['nascimento'],
-                             sexo=form.cleaned_data['sexo'])
+                              cpf=form.cleaned_data['cpf'],
+                              chave_de_ativacao=chave,
+                              expiracao_chave=expira,
+                              nascimento=form.cleaned_data['nascimento'],
+                              sexo=form.cleaned_data['sexo'])
             request.session['pass'] = form.cleaned_data['senha']
             request.session['conta'] = u
             request.session['usuario_cadastro'] = usuario
@@ -257,7 +254,9 @@ def finalizar_cadastro(request):
     if request.method == 'POST':
         form = EnderecoForm(request.POST, auto_id=False, error_class=DivErrorList)
         if form.is_valid():
+            conta.is_active = True
             conta.save()
+            usuario.conta = conta
             usuario.save()
             endereco = EnderecoUsuario(logradouro=form.cleaned_data['logradouro'],
                                        numero=form.cleaned_data['numero'],

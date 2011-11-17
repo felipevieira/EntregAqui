@@ -57,8 +57,11 @@ class UsuarioForm(forms.Form):
         
     def clean_username(self):
         try:
-            User.objects.get(username=self.cleaned_data['username'])
+            conta = User.objects.get(username=self.cleaned_data['username'])
         except User.DoesNotExist:
+            return self.cleaned_data['username']
+        if not conta.is_active:
+            conta.delete()
             return self.cleaned_data['username']
         raise forms.ValidationError(u'Login já existe!')
     
@@ -76,6 +79,7 @@ class UsuarioForm(forms.Form):
         usuario.first_name = self.cleaned_data['nome']
         usuario.last_name = self.cleaned_data['sobrenome']
         usuario.is_active = False
+        usuario.save()
         return usuario
     
     class Media:
