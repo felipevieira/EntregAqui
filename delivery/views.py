@@ -119,26 +119,18 @@ def listar_lojas(request, cidade, categoria):
                               context_instance=RequestContext(request))
 
 def iniciar_pagamento(request, cidade, categoria, loja):
-    nome_loja = request.session['loja']
+    loja = request.session['loja']
     cidade = request.session['cidade']
-    
-    loja = Loja.objects.get(nome_curto=loja,
-                                               endereco__cidade=cidade)
     
     dados = template_data(request)    
     
-    carrinho = Carrinho.objects.get(loja=nome_loja,comprador=get_usuario(request))
-    
-    total_a_pagar = 0
-    
-    for produto in carrinho.produtos.all():
-        total_a_pagar += produto.preco
-        
+    carrinho, criado = Carrinho.objects.get_or_create(loja=loja,comprador=get_usuario(request))
     
     dados['carrinho'] = carrinho
     dados['loja'] = loja
-    dados['total'] = total_a_pagar
     dados['endereco'] = EnderecoUsuario.objects.get(usuario=dados['usuario'])
+    print carrinho.total_pago
+    dados['total'] = carrinho.total_pago + carrinho.loja.preco_entrega
     
     return render_to_response("pagamento.html", dados)
 
@@ -176,11 +168,10 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
             if not comprou:
                 comprou = True
                 carrinho, criado = Carrinho.objects.\
-                get_or_create(loja=Loja.objects.get(endereco__cidade=cidade,
-                                                    nome_curto=loja),
-                              comprador=usuario,
-                              total_pago=0)
-                
+                get_or_create(loja=request.session['loja'],
+                              comprador=usuario)
+                if criado:
+                    print "CRIADO"
             if produto.startswith("quantidade"):
                 produto_id = int(produto.split("_")[1])
                 
@@ -189,12 +180,16 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                                                    produto=Produto.objects.get(id=produto_id))                    
                     quantidade_antiga = produto_desejado.quantidade
                     quantidade_nova = int(quantidade) + int(quantidade_antiga)                    
-                    ProdutosCarrinho.objects.filter(carrinho=carrinho,produto=Produto.objects.get(id=produto_id)).update(quantidade = quantidade_nova )
+                    produto_desejado.quantidade += int(quantidade)
+                    produto_desejado.valor = produto_desejado.\
+                                                           produto.preco*quantidade_nova
+                    produto_desejado.save()
                 
                 except ProdutosCarrinho.DoesNotExist:
                     produto_carrinho = ProdutosCarrinho(carrinho=carrinho,
                                                    produto=Produto.objects.get(id=produto_id),
                                                    quantidade=int(quantidade))
+                    produto_carrinho.valor = produto_carrinho.produto.preco*produto_carrinho.quantidade
                     produto_carrinho.save()
                     produtos.append(produto_carrinho)                    
                     
@@ -204,10 +199,9 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
             return HttpResponseRedirect("")
         total_pago = 0
         for produto in ProdutosCarrinho.objects.filter(carrinho=carrinho):
-            for i in range(produto.quantidade):
-                total_pago += produto.produto.preco
-        carrinho.total_pago = total_pago
-        #carrinho.save()
+            total_pago += produto.valor
+        carrinho.total_pago=total_pago
+        carrinho.save()
         dados['carrinho'] = carrinho
         dados['produtos'] = produtos
         
@@ -435,7 +429,8 @@ def finaliza_compra(request):
         for produto_carrinho in carrinho.produtos_carrinho.all():
             produto = ProdutosPedido(pedido=pedido,
                                      produto=produto_carrinho.produto,
-                                     quantidade=produto_carrinho.quantidade)
+                                     quantidade=produto_carrinho.quantidade,
+                                     valor=produto_carrinho.valor)
             produto.save()
         return render_to_response("painel_usuario.html",
                                   {'usuario' : request.user,
@@ -454,13 +449,13 @@ def exibir_ajuda(request):
     return render_to_response("entenda_preguica.html")
 
 def exibir_carrinho(request):
-    nome_loja = request.session['loja']
+    nome_loja = request.session['loja'].nome
     cidade = request.session['cidade']
     
     dados = template_data(request)    
     
-    carrinho = Carrinho.objects.get(loja=nome_loja,comprador=get_usuario(request))
-    
+    carrinho, criado = Carrinho.objects.get_or_create(loja=nome_loja,comprador=get_usuario(request))
+
     dados['carrinho'] = carrinho
     return render_to_response("confirma_compra.html",
                                   dados,

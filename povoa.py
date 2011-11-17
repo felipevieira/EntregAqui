@@ -23,26 +23,26 @@ def main():
                               cidade=u"Campina Grande", estado=u"Paraiba")
     alimento = Categoria(nome="Alimentos", descricao="Aqui estao todos os restaurantes da cidade" , imagem="/static/images/categorias_alimentos.jpg")
     lazer = Categoria(nome="Lazer", descricao="Aqui estao todos os estabelecimentos de lazer da cidade", imagem="/static/images/categorias_lazer.jpg")
-    pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1", imagem="/static/images/logo_pittsburg_temp.jpg", email="dsurviver@gmail.com")
-    sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2", imagem="/static/images/logo_sapore_temp.jpg", email="dsurviver@gmail.com")
+    pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1", imagem="/static/images/logo_pittsburg_temp.jpg", email="dsurviver@gmail.com", preco_entrega=4.00)
+    sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2", imagem="/static/images/logo_sapore_temp.jpg", email="dsurviver@gmail.com", preco_entrega=5.00)
     catalogo_sapore = Catalogo()
     catalogo_pitts = Catalogo()
-    pizzas = [Produto(nome="Pizza Grande de Frango", descricao="", preco=33, imagem="/static/images/Produtos/Pequeno/pizza_frango_p.jpg"),
-              Produto(nome="Lasanha de Frango", descricao="", preco=32, imagem="/static/images/Produtos/Pequeno/lasanha_frango_p.jpg"),
-              Produto(nome="Panqueca de Frango", descricao="", preco=29, imagem="/static/images/Produtos/Pequeno/panqueca_frango_p.jpg"),
-              Produto(nome="Lasanha Bolonhesa", descricao="", preco=21, imagem="/static/images/Produtos/Pequeno/lasanha_bolonhesa_p.jpg"),
-              Produto(nome="Fanta (Lata)", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/fanta_lata_p.jpg"),
-              Produto(nome="Coca Cola(Lata)", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/coca_lata_p.jpg"),
-              Produto(nome="Kuat (Lata)", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/kuat_lata_p.jpg"),
-              Produto(nome="Agua Mineral", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/garrafa_agua_p.jpg")]
-    sanduiches = [Produto(nome="Pitts Salada", descricao="", preco=8, imagem="/static/images/Produtos/Pequeno/pitts_salada_p.png"),
-                  Produto(nome="Pitts Cheddar", descricao="", preco=7, imagem="/static/images/Produtos/Pequeno/pitts_cheddar_p.png"),
-                  Produto(nome="Torre de Chopp", descricao="", preco=12, imagem="/static/images/Produtos/Pequeno/torre_chopp_p.jpg"),
-                  Produto(nome="Caneca de Chopp", descricao="", preco=3, imagem="/static/images/Produtos/Pequeno/caneca_chopp_p.jpg"),
-                  Produto(nome="Fanta (Lata)", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/fanta_lata_p.jpg"),
-              Produto(nome="Coca Cola(Lata)", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/coca_lata_p.jpg"),
-              Produto(nome="Kuat (Lata)", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/kuat_lata_p.jpg"),
-              Produto(nome="Agua Mineral", descricao="", preco=2, imagem="/static/images/Produtos/Pequeno/garrafa_agua_p.jpg")]
+    pizzas = [Produto(nome="Pizza Grande de Frango", descricao="", preco=33.00, imagem="/static/images/Produtos/Pequeno/pizza_frango_p.jpg"),
+              Produto(nome="Lasanha de Frango", descricao="", preco=32.00, imagem="/static/images/Produtos/Pequeno/lasanha_frango_p.jpg"),
+              Produto(nome="Panqueca de Frango", descricao="", preco=29.00, imagem="/static/images/Produtos/Pequeno/panqueca_frango_p.jpg"),
+              Produto(nome="Lasanha Bolonhesa", descricao="", preco=21.00, imagem="/static/images/Produtos/Pequeno/lasanha_bolonhesa_p.jpg"),
+              Produto(nome="Fanta (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/fanta_lata_p.jpg"),
+              Produto(nome="Coca Cola(Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/coca_lata_p.jpg"),
+              Produto(nome="Kuat (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/kuat_lata_p.jpg"),
+              Produto(nome="Agua Mineral", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/garrafa_agua_p.jpg")]
+    sanduiches = [Produto(nome="Pitts Salada", descricao="", preco=8.00, imagem="/static/images/Produtos/Pequeno/pitts_salada_p.png"),
+                  Produto(nome="Pitts Cheddar", descricao="", preco=7.00, imagem="/static/images/Produtos/Pequeno/pitts_cheddar_p.png"),
+                  Produto(nome="Torre de Chopp", descricao="", preco=12.00, imagem="/static/images/Produtos/Pequeno/torre_chopp_p.jpg"),
+                  Produto(nome="Caneca de Chopp", descricao="", preco=3.00, imagem="/static/images/Produtos/Pequeno/caneca_chopp_p.jpg"),
+                  Produto(nome="Fanta (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/fanta_lata_p.jpg"),
+              Produto(nome="Coca Cola(Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/coca_lata_p.jpg"),
+              Produto(nome="Kuat (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/kuat_lata_p.jpg"),
+              Produto(nome="Agua Mineral", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/garrafa_agua_p.jpg")]
     
     for endereco in enderecos.values():
         endereco.save()

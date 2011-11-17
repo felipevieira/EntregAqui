@@ -53,6 +53,7 @@ class Loja(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     imagem = models.ImageField(upload_to='/static/images/')
     email = models.EmailField(blank=False)
+    preco_entrega = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __unicode__(self):
         return self.nome + " - " + unicode(self.categoria)
@@ -66,7 +67,7 @@ class Catalogo(models.Model):
 class Produto(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=200, blank=True)
-    preco = models.IntegerField()
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
     catalogo = models.ForeignKey(Catalogo, related_name="produtos")
     imagem = models.ImageField(upload_to='/static/images/')
     
@@ -94,7 +95,7 @@ class Pedido(models.Model):
     loja = models.ForeignKey(Loja, related_name='Pedidos')
     produtos = models.ManyToManyField(Produto, through='ProdutosPedido')
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
-    total_pago = models.IntegerField(default=0)
+    total_pago = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __unicode__(self):
         result = "["
@@ -112,6 +113,7 @@ class ProdutosPedido(models.Model):
     pedido = models.ForeignKey(Pedido, related_name="produtos_pedido")
     produto = models.ForeignKey(Produto, related_name="produtos_pedido")
     quantidade = models.IntegerField();
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __unicode__(self):
         return unicode(self.pedido) + " - " + self.produto.nome + ": " + str(self.quantidade)
@@ -129,7 +131,7 @@ class Carrinho(models.Model):
     loja = models.ForeignKey(Loja)
     produtos = models.ManyToManyField(Produto, through='ProdutosCarrinho')
     status = models.CharField(max_length=30)
-    total_pago = models.IntegerField()
+    total_pago = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     
     def __unicode__(self):
         result = "["
@@ -147,6 +149,7 @@ class ProdutosCarrinho(models.Model):
     carrinho = models.ForeignKey(Carrinho, related_name="produtos_carrinho")
     produto = models.ForeignKey(Produto, related_name="produtos_carrinho")
     quantidade = models.IntegerField();
+    valor = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __unicode__(self):
         return self.produto.nome + ": " + str(self.quantidade)

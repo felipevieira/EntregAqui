@@ -39,11 +39,11 @@
 		
 		{% for produto in carrinho.produtos_carrinho.all %}			
 		<tr>
-		<td>1</td>
+		<td>{{forloop.counter}}</td>
 		<td>{{produto.produto}}</td>
-		<td>R${{produto.produto.preco}},00</td>
+		<td>R${{produto.produto.preco}}</td>
 		<td>{{produto.quantidade}}</td>
-		<td>R${{total}},00</td>
+		<td>R${{produto.valor}}</td>
 		</tr>	
 		{% endfor %}	
 	
@@ -51,7 +51,7 @@
 </div>
 <hr/>
 <div id="subtotal_div">
-	SUB-TOTAL R$ 00,00
+	SUB-TOTAL R$ {{carrinho.total_pago}}
 </div>
 <hr/>
 
@@ -78,7 +78,7 @@
 	</div>
 	<hr/>
 	<div id="subtotal_div">
-		SUB-TOTAL R$ 00,00
+		SUB-TOTAL R$ {{carrinho.total_pago}}
 	</div>
 </div>
 
@@ -93,22 +93,22 @@
 		</tr>
 		{% for produto in carrinho.produtos_carrinho.all %}			
 		<tr>
-		<td>1</td>
+		<td>{{forloop.counter}}</td>
 		<td>{{produto.produto}}</td>
 		<td>R${{produto.produto.preco}},00</td>
 		<td>{{produto.quantidade}}</td>
-		<td>R${{total}},00</td>
+		<td>R${{produto.valor}},00</td>
 		</tr>	
 		{% endfor %}
 
 	</table>
 	<hr/>
 	<div id="valor_entrega_div">
-	ENTREGA R$ 5,00
+	ENTREGA R$ {{carrinho.loja.preco_entrega}}
 	</div>
 	<hr/>
 	<div id="valor_total_div">
-	TOTAL R$ 5,00
+	TOTAL R$ {{total}}
 	</div>
 	<hr/>
 	<div id="forma_de_pagamento">
