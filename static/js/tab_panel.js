@@ -111,7 +111,6 @@ function raiseObject ( target, level )
 function voltar() 
 {
 	if (currentMenuIndex == 0) {
-		alert('voltar pro cardapio!!!');
 		return
 	}
 	currentMenuIndex = (currentMenuIndex - 1) % 3;
@@ -124,7 +123,7 @@ function voltar()
 function avancar()
 {
 	if (currentMenuIndex == 2) {
-		alert('Finalizar Compra!!!');
+		alert('Email enviado para a loja!');
 		return
 	}
 	currentMenuIndex = (currentMenuIndex + 1) % 3;

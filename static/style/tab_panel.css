@@ -16,17 +16,14 @@ div#tabFrame
    {
    /*position: relative;*/
   	width: 381px;
+  	margin-left: 220px;
+  	margin-top: -50px;
    }
 
 #tabelaProdutosComprados
 {
 	margin-left: 25px;
 	border-collapse: separate;
-}
-
-td, th {
-	padding: 7px;
-	font: 10pt Calibri;
 }
 
 #subtotal_div
@@ -78,7 +75,7 @@ color: #4D4D4D;
 
 #botoes_voltar_avancar
 {
-	margin-left: 35px;
+	margin-left: 260px;
 }
 
 #botao_voltar
@@ -244,3 +241,4 @@ div.tabPane
   
 
   }
+ 

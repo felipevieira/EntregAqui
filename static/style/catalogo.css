@@ -21,6 +21,14 @@
 	border-bottom: 1px solid black;
 }
 
+.barra_informacoes_pagamento {
+	width: 900px;
+	height: 120px;
+	border: 10px;
+	border-bottom: 1px solid black;
+	margin-right: 50px;
+}
+
 .link_fale_com_loja, .link_carrinho {
 	color: #994D26;
 	text-decoration: none;

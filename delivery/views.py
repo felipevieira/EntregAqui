@@ -118,8 +118,29 @@ def listar_lojas(request, cidade, categoria):
     return render_to_response("lojas.html", dados,
                               context_instance=RequestContext(request))
 
-def iniciar_pagamento(request):
-    return render_to_response("pagamento.html")
+def iniciar_pagamento(request, cidade, categoria, loja):
+    nome_loja = request.session['loja']
+    cidade = request.session['cidade']
+    
+    loja = Loja.objects.get(nome_curto=loja,
+                                               endereco__cidade=cidade)
+    
+    dados = template_data(request)    
+    
+    carrinho = Carrinho.objects.get(loja=nome_loja,comprador=get_usuario(request))
+    
+    total_a_pagar = 0
+    
+    for produto in carrinho.produtos.all():
+        total_a_pagar += produto.preco
+        
+    
+    dados['carrinho'] = carrinho
+    dados['loja'] = loja
+    dados['total'] = total_a_pagar
+    
+    
+    return render_to_response("pagamento.html", dados)
 
 def exibir_painel_fale_conosco(request):
     return render_to_response("fale_conosco.html", context_instance=RequestContext(request))
@@ -169,12 +190,14 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                     quantidade_antiga = produto_desejado.quantidade
                     quantidade_nova = int(quantidade) + int(quantidade_antiga)                    
                     ProdutosCarrinho.objects.filter(carrinho=carrinho,produto=Produto.objects.get(id=produto_id)).update(quantidade = quantidade_nova )
+                
                 except ProdutosCarrinho.DoesNotExist:
                     produto_carrinho = ProdutosCarrinho(carrinho=carrinho,
                                                    produto=Produto.objects.get(id=produto_id),
                                                    quantidade=int(quantidade))
                     produto_carrinho.save()
-                    produtos.append(produto_carrinho)
+                    produtos.append(produto_carrinho)                    
+                    
                  
                 
         if not comprou:

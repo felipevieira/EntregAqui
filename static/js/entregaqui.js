@@ -115,6 +115,7 @@ $(document).ready(function(){
 		alert(event.target.id)
 		document.getElementById("cidade_selecionada").innerHTML = "peni;";
 	});
+	
 });
 
 $("document").ready(function(){    
