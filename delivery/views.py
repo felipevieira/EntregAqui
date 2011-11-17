@@ -265,7 +265,7 @@ def finalizar_cadastro(request):
             del request.session['pass']
             return painel(request)
         else:
-            dados['form'] = EnderecoForm()
+            dados['form'] = form
             return render_to_response('finalizar_cadastro.html', dados,
                               context_instance=RequestContext(request))
     else:

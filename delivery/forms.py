@@ -88,6 +88,10 @@ class EnderecoForm(ModelForm):
     class Meta:
         model = EnderecoUsuario
         exclude = ('usuario',)
+    
+    class Media:
+        css = { 'all' : '/static/style/styleForms.css'
+        }
         
 class ReclamacaoForm(forms.Form):
     reclamacao = forms.CharField(widget=forms.Textarea(),
