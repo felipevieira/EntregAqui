@@ -138,7 +138,7 @@ def iniciar_pagamento(request, cidade, categoria, loja):
     dados['carrinho'] = carrinho
     dados['loja'] = loja
     dados['total'] = total_a_pagar
-    
+    dados['endereco'] = EnderecoUsuario.objects.get(usuario=dados['usuario'])
     
     return render_to_response("pagamento.html", dados)
 
