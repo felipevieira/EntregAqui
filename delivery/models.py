@@ -98,15 +98,12 @@ class Pedido(models.Model):
     total_pago = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __unicode__(self):
-        result = "["
+        result = ""
         sep = ""
         for produto in self.produtos.all():
             result += sep + str(produto.nome)  
             sep = ", "
         
-        result += "]"
-        result = "Produtos: " + result + "; Loja: " + str(self.loja.nome) + "; "   
-        result += " Status: " + self.status + " - " + str(self.total_pago) + "; "
         return result
 
 class ProdutosPedido(models.Model):
@@ -116,7 +113,7 @@ class ProdutosPedido(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __unicode__(self):
-        return unicode(self.pedido) + " - " + self.produto.nome + ": " + str(self.quantidade)
+        return self.produto.nome + ": " + str(self.quantidade)
 
 class SolicitacaoCidade(models.Model):
     nomeUsuario = models.CharField(max_length=50);
@@ -134,15 +131,12 @@ class Carrinho(models.Model):
     total_pago = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     
     def __unicode__(self):
-        result = "["
+        result = ""
         sep = ""
         for produto in self.produtos.all():
-            result += sep + str(produto.nome)  
+            result += sep + str(produto.nome) + "(" + str(produto.quantidade) + ")"
             sep = ", "
         
-        result += "]"
-        result = "Produtos: " + result + "; Loja: " + str(self.loja.nome) + "; "   
-        result += " Status: " + self.status + " - " + str(self.total_pago) + "; "
         return result
 
 class ProdutosCarrinho(models.Model):

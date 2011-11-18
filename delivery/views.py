@@ -432,7 +432,11 @@ def finalizar_compra(request, cidade, categoria, loja):
     utils.enviar_pedido_loja(pedido, Loja.objects.get(nome_curto=loja,
                                                       endereco__cidade=cidade))
     carrinho.delete()
-    return HttpResponseRedirect("/painel/")
+    dados = template_data(request)
+    dados['pedidos'] = Pedido.objects.filter(comprador=usuario)
+    return render_to_response("painel_usuario_historico.html",
+                              dados,
+                              context_instance=RequestContext(request))
 
 def exibir_catalogo(request):
     return render_to_response("catalogo.html")

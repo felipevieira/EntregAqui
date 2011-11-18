@@ -10,10 +10,17 @@
     <td width="50">Data</td>
     <td width="80">Status</td>
   </tr>
-  {% for pedido in pedidos}
+  {% for pedido in pedidos %}
   <tr>
-    <td>{{pedido.loja}}</td>
-    <td>{{pedido.produtos}}</td>
+    <td>{{pedido.loja.nome}}</td>
+    <td>{% for pedido in pedido.produtos_pedido.all %}
+        {{pedido.produto.nome}}: {{pedido.quantidade}}
+        {% if forloop.last %}
+        {% else %}
+        , 
+        {% endif %}
+        {% endfor %}
+    </td>
     <td>{{pedido.total_pago}}</td>
     <td>{{pedido.data_criacao}}</td>
     <td>{{pedido.status}}</td>
