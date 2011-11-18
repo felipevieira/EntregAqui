@@ -40,7 +40,7 @@
 		{% for produto in carrinho.produtos_carrinho.all %}			
 		<tr>
 		<td>{{forloop.counter}}</td>
-		<td>{{produto.produto}}</td>
+		<td>{{produto.produto.nome}}</td>
 		<td>R${{produto.produto.preco}}</td>
 		<td>{{produto.quantidade}}</td>
 		<td>R${{produto.valor}}</td>
@@ -130,8 +130,8 @@
 
 </div>
 <div id="botoes_voltar_avancar">
-	<input type="button" id="botao_voltar" value="Voltar" onclick="voltar();"/>
-	<input type="button" id="botao_avancar" value="Prosseguir" onclick="avancar();"/>
+	<input type="button" id="botao_voltar" value="Voltar" onclick="voltar('{{cidade}}', '{{loja.categoria.nome}}', '{{loja.nome_curto}}');"/>
+	<input type="button" id="botao_avancar" value="Prosseguir" onclick="avancar('{{cidade}}', '{{loja.categoria.nome}}', '{{loja.nome_curto}}');"/>
 </div>
 </div>
 
@@ -147,7 +147,7 @@
 				<img class="banner" src="/static/images/Banners/banner_forno.png" />
 			</a>
 		</div>
-	</div>	
+	</div>
 
 <!-- ========================= end of tabbed-frame div ======================== -->
 {% endblock %}

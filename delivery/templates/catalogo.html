@@ -25,19 +25,20 @@
 				</div>
 			</div>	
 		</div>
-		<form class="container_produtos" action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
-			{% for produto in produtos %}
+		{% for produto in produtos %}
+    		<form class="container_produtos" action="/{{cidade}}/{{categoria}}/{{loja}}/" method="post"> {% csrf_token %}
 				<div class="elemento_produto">
 					<center><img src="{{produto.imagem}}" class="image_produto"> <br />
-					<a href="#">{{produto}}</a><br />
+					{{produto.nome}}<br />
 					<label class="label_preco">Preco: R$ {{produto.preco}} </label>
 					<br />
 					<label class="label_quantidade">Quantidade: </label></th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
-					<!--button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button-->									
-					<input class="button_comprar" id="button_comprar" type="submit" value="Comprar"/>	</center>				
+					<!--button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button-->	
+					<br />								
+					<input class="button_comprar" id="button_comprar" type="submit" value="Adicionar ao Carrinho"/>	</center>				
 				</div>
-	    	{% endfor %}		
-		</form>
+		    </form>
+    	{% endfor %}
 	</div>	
 	<div id="barra_lateral_direita">
 		<div class="barra_banners">

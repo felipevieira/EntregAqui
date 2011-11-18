@@ -108,9 +108,10 @@ function raiseObject ( target, level )
    target.style.zIndex=level;
    }
 
-function voltar() 
+function voltar(cidade, categoria, loja) 
 {
 	if (currentMenuIndex == 0) {
+	    window.location = "/" + cidade + "/" + categoria + "/" + loja
 		return
 	}
 	currentMenuIndex = (currentMenuIndex - 1) % 3;
@@ -120,10 +121,11 @@ function voltar()
 	raisePanel(currentMenuIndex);
 }
 
-function avancar()
+function avancar(cidade, categoria, loja)
 {
 	if (currentMenuIndex == 2) {
 		alert('Email enviado para a loja!');
+		window.location = "/" + cidade + "/" + categoria + "/" + loja + "/finalizar_compra"
 		return
 	}
 	currentMenuIndex = (currentMenuIndex + 1) % 3;

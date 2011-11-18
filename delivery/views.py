@@ -126,7 +126,6 @@ def iniciar_pagamento(request, cidade, categoria, loja):
     dados['carrinho'] = carrinho
     dados['loja'] = loja
     dados['endereco'] = EnderecoUsuario.objects.get(usuario=dados['usuario'])
-    print carrinho.total_pago
     dados['total'] = carrinho.total_pago + carrinho.loja.preco_entrega
     
     return render_to_response("pagamento.html", dados)
@@ -167,8 +166,6 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
                 carrinho, criado = Carrinho.objects.\
                 get_or_create(loja=request.session['loja'],
                               comprador=usuario)
-                if criado:
-                    print "CRIADO"
             if produto.startswith("quantidade"):
                 produto_id = int(produto.split("_")[1])
                 
@@ -410,33 +407,32 @@ def painel(request):
                                   )
     return HttpResponseRedirect("/")
 
-def finaliza_compra(request):
+def finalizar_compra(request, cidade, categoria, loja):
     usuario = get_usuario(request)
     if usuario is None:
         return HttpResponseRedirect("/")
-    if request.method == 'POST':
-        try:
-            carrinho = Carrinho.objects.get(comprador=usuario)
-        except Carrinho.DoesNotExist:
-            return redireciona_usuario(request)
-        pedido = Pedido(comprador=usuario,
-                        loja=request.session['loja'],
-                        data_criacao=datetime.datetime.now(),
-                        status="ABERTO",
-                        total_pago=carrinho.total_pago)
-        pedido.save()
-        for produto_carrinho in carrinho.produtos_carrinho.all():
-            produto = ProdutosPedido(pedido=pedido,
-                                     produto=produto_carrinho.produto,
-                                     quantidade=produto_carrinho.quantidade,
-                                     valor=produto_carrinho.valor)
-            produto.save()
-        return render_to_response("painel_usuario.html",
-                                  {'usuario' : request.user,
-                                   'comprou' : True},
-                                  context_instance=RequestContext(request))
-    return redireciona_usuario(request)
-
+    try:
+        carrinho = Carrinho.objects.get(comprador=usuario,
+                                        loja=Loja.objects.get(nome_curto=loja,
+                                                              endereco__cidade=cidade))
+    except Carrinho.DoesNotExist:
+        return redireciona_usuario(request)
+    pedido = Pedido(comprador=usuario,
+                    loja=request.session['loja'],
+                    data_criacao=datetime.datetime.now(),
+                    status="ABERTO",
+                    total_pago=carrinho.total_pago)
+    pedido.save()
+    for produto_carrinho in carrinho.produtos_carrinho.all():
+        produto = ProdutosPedido(pedido=pedido,
+                                 produto=produto_carrinho.produto,
+                                 quantidade=produto_carrinho.quantidade,
+                                 valor=produto_carrinho.valor)
+        produto.save()
+    utils.enviar_pedido_loja(pedido, Loja.objects.get(nome_curto=loja,
+                                                      endereco__cidade=cidade))
+    carrinho.delete()
+    return HttpResponseRedirect("/painel/")
 
 def exibir_catalogo(request):
     return render_to_response("catalogo.html")
