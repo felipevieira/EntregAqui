@@ -55,18 +55,23 @@
 }
 
 #button_comprar {
-	background-image: url("/static/images/bt-product-unselected.png");
+	background-image: url("/static/images/bt-product-unselected-background.png");
+	background-repeat: repeat-x;
 	border: 0px solid black;
-	width: 80px;
-	height: 35px;
+	width: 150px;
+	height: 25px;
 	font-weight: bold;
 	color: white;
 	cursor: pointer;
 	background-color: #f9f9de;
+	-webkit-border-top-left-radius:10px;
+    -webkit-border-top-right-radius:10px;
+    -webkit-border-bottom-left-radius:10px;
+    -webkit-border-bottom-right-radius:10px; 
 }
 
 #button_comprar:hover {
-	background-image: url("/static/images/bt-product-selected.png");
+	background-image: url("/static/images/bt-product-selected-background.png");
 }
 
 .elemento_produto {
