@@ -24,25 +24,51 @@ def main():
     alimento = Categoria(nome="Alimentos", descricao="Aqui estao todos os restaurantes da cidade" , imagem="/static/images/categorias_alimentos.jpg")
     lazer = Categoria(nome="Lazer", descricao="Aqui estao todos os estabelecimentos de lazer da cidade", imagem="/static/images/categorias_lazer.jpg")
     pitts = Loja(nome=u"Pittsburg", nome_curto="pitts", cnpj="1", imagem="/static/images/logo_pittsburg_temp.jpg", email="dsurviver@gmail.com", preco_entrega=4.00)
-    sapore = Loja(nome=u"Sapore DItalia", nome_curto="sapore", cnpj="2", imagem="/static/images/logo_sapore_temp.jpg", email="dsurviver@gmail.com", preco_entrega=5.00)
+    sapore = Loja(nome=u"Giraffas", nome_curto="sapore", cnpj="2", imagem="/static/images/logo_sapore_temp.jpg", email="dsurviver@gmail.com", preco_entrega=5.00)
     catalogo_sapore = Catalogo()
     catalogo_pitts = Catalogo()
-    pizzas = [Produto(nome="Pizza Grande de Frango", descricao="", preco=33.00, imagem="/static/images/Produtos/Pequeno/pizza_frango_p.jpg"),
-              Produto(nome="Lasanha de Frango", descricao="", preco=32.00, imagem="/static/images/Produtos/Pequeno/lasanha_frango_p.jpg"),
-              Produto(nome="Panqueca de Frango", descricao="", preco=29.00, imagem="/static/images/Produtos/Pequeno/panqueca_frango_p.jpg"),
-              Produto(nome="Lasanha Bolonhesa", descricao="", preco=21.00, imagem="/static/images/Produtos/Pequeno/lasanha_bolonhesa_p.jpg"),
-              Produto(nome="Fanta (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/fanta_lata_p.jpg"),
-              Produto(nome="Coca Cola(Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/coca_lata_p.jpg"),
-              Produto(nome="Kuat (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/kuat_lata_p.jpg"),
-              Produto(nome="Agua Mineral", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/garrafa_agua_p.jpg")]
-    sanduiches = [Produto(nome="Pitts Salada", descricao="", preco=8.00, imagem="/static/images/Produtos/Pequeno/pitts_salada_p.png"),
-                  Produto(nome="Pitts Cheddar", descricao="", preco=7.00, imagem="/static/images/Produtos/Pequeno/pitts_cheddar_p.png"),
-                  Produto(nome="Torre de Chopp", descricao="", preco=12.00, imagem="/static/images/Produtos/Pequeno/torre_chopp_p.jpg"),
-                  Produto(nome="Caneca de Chopp", descricao="", preco=3.00, imagem="/static/images/Produtos/Pequeno/caneca_chopp_p.jpg"),
-                  Produto(nome="Fanta (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/fanta_lata_p.jpg"),
-              Produto(nome="Coca Cola(Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/coca_lata_p.jpg"),
-              Produto(nome="Kuat (Lata)", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/kuat_lata_p.jpg"),
-              Produto(nome="Agua Mineral", descricao="", preco=2.00, imagem="/static/images/Produtos/Pequeno/garrafa_agua_p.jpg")]
+    pizzas = [ Produto(nome="Brutus", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/Brutus.png"),
+              Produto(nome="Cheese", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/Cheese.png"),
+              Produto(nome="Cheese Egg", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/CheeseEgg.png"),
+              Produto(nome="Cheese Frango", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/CheeseFrango.png"),
+              Produto(nome="Cheese Salada", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/CheeseSalada.png"),
+              Produto(nome="Clone Frango", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/CloneFrango.png"),
+              Produto(nome="Clona Hamburguer", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/CloneHamburguer.png"),
+              Produto(nome="Coca Cola", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/Coca.png"),
+              Produto(nome="Fanta", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/Fanta.png"),
+              Produto(nome="Kuat", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/Kuat.png"),
+              Produto(nome="Mega Gringo", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/MegaGringo.png"),
+              Produto(nome="Milk Shake Baunilha", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/MilkBaunilha.png"),
+              Produto(nome="Milk Shake Chocolate", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/MilkChocolate.png"),
+              Produto(nome="Mousse de Chocolate", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/MousseChocolate.png"),
+              Produto(nome="Mouse de Coco", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Giraffas/MousseCoco.png")
+              ]
+    
+    sanduiches = [ Produto(nome="Pitts Bacon", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsBacon.jpg"),
+                  Produto(nome="Pitts Carne", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsCarne.jpg"),
+                  Produto(nome="Pitts Cheddar", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsCheddar.jpg"),
+                  Produto(nome="Pitts Cheese", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsCheese.jpg"),
+                  Produto(nome="Pitts Double", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsDouble.jpg"),
+                  Produto(nome="Pitts Egg", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsEgg.jpg"),
+                  Produto(nome="Pitts Especial", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsEspecial.jpg"),
+                  Produto(nome="Pitts Frango", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsFrango.jpg"),
+                  Produto(nome="Pitts Peixe", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsPeixe.jpg"),
+                  Produto(nome="Pitts Picanha", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsPicanha.jpg"),
+                  Produto(nome="Pitts Carne de Sol", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsSol.jpg"),
+                  Produto(nome="Pitts Tudo", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/PittsTudo.jpg"),
+                  Produto(nome="Prato Executivo Camarao", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoCamarao.jpg"),
+                  Produto(nome="Prato Executivo Carne de Sol", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoCarneSol.jpg"),
+                  Produto(nome="Prato Executivo File Grelhado", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoGrelhado.jpg"),
+                  Produto(nome="Prato Executivo Hamburguer", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoHamburguer.jpg"),
+                  Produto(nome="Prato Executivo Medalhao", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoMedalhao.jpg"),
+                  Produto(nome="Prato Executivo Nuggets", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoNuggets.jpg"),
+                  Produto(nome="Prato Executivo File a Parmegiana", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/ExecutivoParmegiana.jpg"),
+                  Produto(nome="Agua Mineral", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/Agua.jpg"),
+                  Produto(nome="Agua Tonica", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/AguaTonica.jpg"),
+                  Produto(nome="Coca Cola", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/CocaCola.jpg"),
+                  Produto(nome="Coca Cola Zero", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/CocaZero.jpg"),
+                  Produto(nome="Cerveja", descricao="", preco=8.50, imagem="/static/images/Produtos/Pequeno/Pittsburg/SkolLata.jpg")                  
+                  ]
     
     for endereco in enderecos.values():
         endereco.save()
@@ -54,12 +80,12 @@ def main():
     sapore.endereco = EnderecoLoja.objects.get(numero=74)
     pitts.save()
     sapore.save()
-    catalogo_sapore.loja = Loja.objects.get(nome="Sapore DItalia")
+    catalogo_sapore.loja = Loja.objects.get(nome="Giraffas")
     catalogo_pitts.loja = Loja.objects.get(nome="Pittsburg")
     catalogo_sapore.save()
     catalogo_pitts.save()
     for pizza in pizzas:
-        pizza.catalogo = Catalogo.objects.get(loja__nome="Sapore DItalia")
+        pizza.catalogo = Catalogo.objects.get(loja__nome="Giraffas")
         pizza.save()
     for sanduiche in sanduiches:
         sanduiche.catalogo = Catalogo.objects.get(loja__nome="Pittsburg")

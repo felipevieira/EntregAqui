@@ -30,7 +30,7 @@
 				<div class="elemento_produto">
 					<center><img src="{{produto.imagem}}" class="image_produto"> <br />
 					{{produto.nome}}<br />
-					<label class="label_preco">Preco: R$ {{produto.preco}} </label>
+					<label class="label_preco">Preco: R$ {{produto.preco|floatformat:2}} </label>
 					<br />
 					<label class="label_quantidade">Quantidade: </label></th><td><input id="produto_{{produto.id}}" type="number" name="quantidade_{{produto.id}}" value="0" min="0" max="99" size="1"/></td></tr>
 					<!--button href="#?w=250&h=270" rel="popup_source" class="poplight" id="button_comprar" source="/adicao_carrinho/">Comprar</button-->	

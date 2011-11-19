@@ -196,6 +196,7 @@ def detalhar_catalogo_produtos(request, cidade, categoria, loja):
             total_pago += produto.valor
         carrinho.total_pago=total_pago
         carrinho.save()
+        dados['loja'] = loja
         dados['carrinho'] = carrinho
         dados['produtos'] = produtos
         
