@@ -8,7 +8,6 @@
     <td width="300">Produtos</td>
     <td width="50">Valor</td>
     <td width="50">Data</td>
-    <td width="80">Status</td>
   </tr>
   {% for pedido in pedidos %}
   <tr>
@@ -23,7 +22,6 @@
     </td>
     <td>R${{pedido.total_pago}}</td>
     <td>{{pedido.data_criacao}}</td>
-    <td>{{pedido.status}}</td>
   </tr>
   {% endfor %}
 </table>

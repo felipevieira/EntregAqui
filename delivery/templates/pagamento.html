@@ -2,151 +2,134 @@
 
 {% block body %}
 <body onload="bodyOnLoad();" onResize="raisePanel(currentMenuIndex);">
-{% endblock %}
+    {% endblock %}
 
-{% block conteudo %}
-
-
-		
-<!-- ========================= BEGIN of tabbed-frame div ======================== -->
-
-	<div class="conteudo">
-		<div class="barra_informacoes_pagamento">
-			<img src="{{loja.imagem}}" class="logo_loja" />			
-</div>
-	<div id="tabFrame">
-
-<div id="tabMenuDiv">
-<div class="tabMenu" id="tabMenu0">
-    <p id="inside_tabMenu0">1 &nbsp;&nbsp; Pedido</p></div>
-<div class="tabMenu" id="tabMenu1">
-    <p id="inside_tabMenu1">2 &nbsp;&nbsp; Entrega</p></div>
-<div class="tabMenu" id="tabMenu2">
-   <p id="inside_tabMenu2">3 &nbsp;&nbsp; Pagamento</p></div>
-</div>
-
-<div class="tabPane" id="tabPane0">
-
-<div id="listaProdutosDiv">
-	<table id="tabelaProdutosComprados">	
-		<tr>
-		<th>#</th>
-		<th>Item</th>
-		<th>Valor Unit&aacute;rio</th>
-		<th>Qtde</th>
-		<th>Valor</th>
-		</tr>	
-		
-		{% for produto in carrinho.produtos_carrinho.all %}			
-		<tr>
-		<td>{{forloop.counter}}</td>
-		<td>{{produto.produto.nome}}</td>
-		<td>R${{produto.produto.preco|floatformat:2}}</td>
-		<td>{{produto.quantidade}}</td>
-		<td>R${{produto.valor|floatformat:2}}</td>
-		</tr>	
-		{% endfor %}	
-	
-	</table>
-</div>
-<hr/>
-<div id="subtotal_div">
-	SUB-TOTAL R$ {{carrinho.total_pago|floatformat:2}}
-</div>
-<hr/>
-
-<div id="observacoes_div">
-	&nbsp;&nbsp;&nbsp;Observa&ccedil;&otilde;es
-	<textarea id="campo_observacoes_pagamento" cols="35" rows="5" > </textarea>
-</div>
-</div>
-
-<div class="tabPane" id="tabPane1">
-	<br/>
-	&nbsp;&nbsp;Endere&ccedil;o
-	<hr/>
-	<div id="enderecos_div"> 
-		<div id="endereco_div_1">
-			{{endereco.logradouro}}, {{endereco.numero}} - {{endereco.bairro}}<br />
-			{{endereco.cidade}} - CEP: {{endereco.cep}}
-		</div>
-		
-	</div>
-	<hr/>
-	<div id="subtotal_div">
-		SUB-TOTAL R$ {{carrinho.total_pago|floatformat:2}}
-	</div>
-</div>
-
-<div class="tabPane" id="tabPane2">
-		<table id="tabelaProdutosComprados">
-		<tr>
-		<th>#</th>
-		<th>Item</th>
-		<th>Valor Unit&aacute;rio</th>
-		<th>Qtde</th>
-		<th>Valor</th>
-		</tr>
-		{% for produto in carrinho.produtos_carrinho.all %}			
-		<tr>
-		<td>{{forloop.counter}}</td>
-		<td>{{produto.produto}}</td>
-		<td>R${{produto.produto.preco|floatformat:2}}</td>
-		<td>{{produto.quantidade}}</td>
-		<td>R${{produto.valor|floatformat:2}}</td>
-		</tr>	
-		{% endfor %}
-
-	</table>
-	<hr/>
-	<div id="valor_entrega_div">
-	ENTREGA R$ {{carrinho.loja.preco_entrega|floatformat:2}}
-	</div>
-	<hr/>
-	<div id="valor_total_div">
-	TOTAL R$ {{total|floatformat:2}}
-	</div>
-	<hr/>
-	<div id="forma_de_pagamento">
-		&nbsp;&nbsp;Escolha sua forma de pagamento:<br/>
-		<br/>
-		<div id="botoes_cartoes">
-		<input type="button" id="cash_button_pagamento" onclick="selecionaCartao('cash');" escolhido="false"/>
-		<input type="button" id="visa_button_pagamento" onclick="selecionaCartao('visa');" escolhido="false"/>
-		<input type="button" id="electron_button_pagamento" onclick="selecionaCartao('electron');" escolhido="false"/>
-		<input type="button" id="hiper_button_pagamento" onclick="selecionaCartao('hiper');" escolhido="false"/>
-		<input type="button" id="master_button_pagamento" onclick="selecionaCartao('master');" escolhido="false"/>
-		<input type="button" id="american_button_pagamento" onclick="selecionaCartao('american');" escolhido="false"/>
-		</div>
-	</div>
-	
-</div>
-
-<div id="tabFiller" ></div>
-
-</div>
-<div id="botoes_voltar_avancar">
-	<input type="button" id="botao_voltar" value="Voltar" onclick="voltar('{{cidade}}', '{{loja.categoria.nome}}', '{{loja.nome_curto}}');"/>
-	<input type="button" id="botao_avancar" value="Prosseguir" onclick="avancar('{{cidade}}', '{{loja.categoria.nome}}', '{{loja.nome_curto}}');"/>
-</div>
-</div>
-
-<div id="barra_lateral_direita">
-		<div class="barra_banners">
-			<a href="http://www.saporeditalia.com.br" target="_blank">
-				<img class="banner" src="/static/images/Banners/banner_sapore.jpg" />			
-			</a>
-			<a href="http://www.pittsburg.com.br" target="_blank">
-				<img class="banner" src="/static/images/Banners/banner_pittsburg.jpg" />
-			</a>
-			<a href="http://www.fornodepizza.com.br/" target="_blank">
-				<img class="banner" src="/static/images/Banners/banner_forno.png" />
-			</a>
-		</div>
-	</div>
-
-<!-- ========================= end of tabbed-frame div ======================== -->
-{% endblock %}
-
+    {% block conteudo %} <!-- ========================= BEGIN of tabbed-frame div ======================== -->
+    <div class="conteudo">
+        <div class="barra_informacoes_pagamento">
+            <img src="{{loja.imagem}}" class="logo_loja" />
+        </div>
+        <div id="tabFrame">
+            <div id="tabMenuDiv">
+                <div class="tabMenu" id="tabMenu0">
+                    <p id="inside_tabMenu0">
+                        1 &nbsp;&nbsp; Pedido
+                    </p>
+                </div>
+                <div class="tabMenu" id="tabMenu1">
+                    <p id="inside_tabMenu1">
+                        2 &nbsp;&nbsp; Entrega
+                    </p>
+                </div>
+                <div class="tabMenu" id="tabMenu2">
+                    <p id="inside_tabMenu2">
+                        3 &nbsp;&nbsp; Pagamento
+                    </p>
+                </div>
+            </div>
+            <div class="tabPane" id="tabPane0">
+                <div id="listaProdutosDiv">
+                    <table id="tabelaProdutosComprados">
+                        <tr>
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Valor Unit&aacute;rio</th>
+                            <th>Qtde</th>
+                            <th>Valor</th>
+                        </tr>
+                        {% for produto in carrinho.produtos_carrinho.all %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{produto.produto.nome}}</td>
+                            <td>R${{produto.produto.preco|floatformat:2}}</td>
+                            <td>{{produto.quantidade}}</td>
+                            <td>R${{produto.valor|floatformat:2}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <hr/>
+                <div id="subtotal_div">
+                    SUB-TOTAL R$ {{carrinho.total_pago|floatformat:2}}
+                </div>
+                <hr/>
+                <div id="observacoes_div">
+                    &nbsp;&nbsp;&nbsp;Observa&ccedil;&otilde;es                     <textarea id="campo_observacoes_pagamento" cols="35" rows="5" > </textarea>
+                </div>
+            </div>
+            <div class="tabPane" id="tabPane1">
+                <br/>
+                &nbsp;&nbsp;Endere&ccedil;o
+                <hr/>
+                <div id="enderecos_div">
+                    <div id="endereco_div_1">
+                        {{endereco.logradouro}}, {{endereco.numero}} - {{endereco.bairro}}
+                        <br />
+                        {{endereco.cidade}} - CEP: {{endereco.cep}}
+                    </div>
+                </div>
+                <hr/>
+                <div id="subtotal_div">
+                    SUB-TOTAL R$ {{carrinho.total_pago|floatformat:2}}
+                </div>
+            </div>
+            <div class="tabPane" id="tabPane2">
+                <table id="tabelaProdutosComprados">
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Valor Unit&aacute;rio</th>
+                        <th>Qtde</th>
+                        <th>Valor</th>
+                    </tr>
+                    {% for produto in carrinho.produtos_carrinho.all %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{produto.produto}}</td>
+                        <td>R${{produto.produto.preco|floatformat:2}}</td>
+                        <td>{{produto.quantidade}}</td>
+                        <td>R${{produto.valor|floatformat:2}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <hr/>
+                <div id="valor_entrega_div">
+                    ENTREGA R$ {{carrinho.loja.preco_entrega|floatformat:2}}
+                </div>
+                <hr/>
+                <div id="valor_total_div">
+                    TOTAL R$ {{total|floatformat:2}}
+                </div>
+                <hr/>
+                <div id="forma_de_pagamento">
+                    &nbsp;&nbsp;Escolha sua forma de pagamento:
+                    <br/>
+                    <br/>
+                    <div id="botoes_cartoes">
+                        <input type="button" id="cash_button_pagamento" onclick="selecionaCartao('cash');" escolhido="false"/>
+                        <input type="button" id="visa_button_pagamento" onclick="selecionaCartao('visa');" escolhido="false"/>
+                        <input type="button" id="electron_button_pagamento" onclick="selecionaCartao('electron');" escolhido="false"/>
+                        <input type="button" id="hiper_button_pagamento" onclick="selecionaCartao('hiper');" escolhido="false"/>
+                        <input type="button" id="master_button_pagamento" onclick="selecionaCartao('master');" escolhido="false"/>
+                        <input type="button" id="american_button_pagamento" onclick="selecionaCartao('american');" escolhido="false"/>
+                    </div>
+                </div>
+            </div>
+            <div id="tabFiller" ></div>
+        </div>
+        <div id="botoes_voltar_avancar">
+            <input type="button" id="botao_voltar" value="Voltar" onclick="voltar('{{cidade}}', '{{loja.categoria.nome}}', '{{loja.nome_curto}}');"/>
+            <input type="button" id="botao_avancar" value="Prosseguir" onclick="avancar('{{cidade}}', '{{loja.categoria.nome}}', '{{loja.nome_curto}}');"/>
+        </div>
+    </div>
+    <div id="barra_lateral_direita">
+        <div class="barra_banners">
+            <a href="http://www.saporeditalia.com.br" target="_blank"> <img class="banner" src="/static/images/Banners/banner_sapore.jpg" /> </a>
+            <a href="http://www.pittsburg.com.br" target="_blank"> <img class="banner" src="/static/images/Banners/banner_pittsburg.jpg" /> </a>
+            <a href="http://www.fornodepizza.com.br/" target="_blank"> <img class="banner" src="/static/images/Banners/banner_forno.png" /> </a>
+        </div>
+    </div>
+    <!-- ========================= end of tabbed-frame div ======================== -->
+    {% endblock %}
 </body>
-</html>
+</html> 

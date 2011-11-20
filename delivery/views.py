@@ -18,6 +18,13 @@ import utils
 from urllib2 import request_host
 from getpass import getuser
 
+pagamentos = {'cash' : 'Dinheiro',
+              'visa' : 'Visa',
+              'electron' : 'Visa Electron',
+              'master' : 'MasterCard',
+              'hiper' : 'Hipercard',
+              'american' : 'American Express'}
+
 mensagem_email = "Obrigado por se cadastrar no PreguiçaDelivery.\n\n" \
            "Por favor, clique no link http://127.0.0.1:8000/cadastro/%s para ativar" \
            "a sua conta.\n\n" \
@@ -224,7 +231,8 @@ def cadastrar_usuario(request):
                               chave_de_ativacao=chave,
                               expiracao_chave=expira,
                               nascimento=form.cleaned_data['nascimento'],
-                              sexo=form.cleaned_data['sexo'])
+                              sexo=form.cleaned_data['sexo'],
+                              telefone=form.cleaned_data['telefone_contato'])
             request.session['pass'] = form.cleaned_data['senha']
             request.session['conta'] = u
             request.session['usuario_cadastro'] = usuario
@@ -388,6 +396,16 @@ def logout(request):
     authlogout(request)
     return HttpResponseRedirect("/")
 
+def painel_historico(request):
+    usuario = get_usuario(request)
+    if usuario is None:
+        return HttpResponseRedirect("/")
+    dados = template_data(request)
+    dados['endereco'] = EnderecoUsuario.objects.get(usuario=usuario)
+    dados['pedidos'] = Pedido.objects.filter(comprador=usuario)
+    return render_to_response("painel_usuario_historico.html", dados,
+                              context_instance=RequestContext(request)
+                              )
 def painel(request):
     usuario = get_usuario(request)
     if usuario is None:
@@ -408,7 +426,9 @@ def painel(request):
                                   )
     return HttpResponseRedirect("/")
 
-def finalizar_compra(request, cidade, categoria, loja):
+def finalizar_compra(request, pagamento, observacao=""):
+    loja = request.session['loja'].nome_curto
+    cidade = request.session['cidade']
     usuario = get_usuario(request)
     if usuario is None:
         return HttpResponseRedirect("/")
@@ -422,7 +442,9 @@ def finalizar_compra(request, cidade, categoria, loja):
                     loja=request.session['loja'],
                     data_criacao=datetime.datetime.now(),
                     status="ABERTO",
-                    total_pago=carrinho.total_pago)
+                    total_pago=carrinho.total_pago,
+                    pagamento=pagamentos[pagamento],
+                    observacao=observacao)
     pedido.save()
     for produto_carrinho in carrinho.produtos_carrinho.all():
         produto = ProdutosPedido(pedido=pedido,
@@ -433,11 +455,7 @@ def finalizar_compra(request, cidade, categoria, loja):
     utils.enviar_pedido_loja(pedido, Loja.objects.get(nome_curto=loja,
                                                       endereco__cidade=cidade))
     carrinho.delete()
-    dados = template_data(request)
-    dados['pedidos'] = Pedido.objects.filter(comprador=usuario)
-    return render_to_response("painel_usuario_historico.html",
-                              dados,
-                              context_instance=RequestContext(request))
+    return HttpResponseRedirect("/painel/historico/")
 
 def exibir_catalogo(request):
     return render_to_response("catalogo.html")

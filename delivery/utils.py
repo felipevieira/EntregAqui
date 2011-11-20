@@ -39,8 +39,10 @@ def enviar_pedido_loja(pedido, loja):
         mensagem += "Produto: " + produto.produto.nome.encode('utf-8')
         mensagem += " - Quantidade: " + str(produto.quantidade)
         mensagem += " - Valor: R$" + str(produto.valor) + "\n"
-    mensagem += "\nCuto de entrega: R$" + str(loja.preco_entrega)
-    mensagem += "\n\nPreco total: R$" + str(pedido.total_pago)
+    mensagem += "\nObservações:\n" + pedido.observacao.encode('utf-8')
+    mensagem += "\n\nCuto de entrega: R$" + str(loja.preco_entrega)
+    mensagem += "\n\nPreço total: R$" + str(pedido.total_pago)
+    mensagem += "\nForma de pagamento: " + pedido.pagamento.encode('utf-8')
     mensagem += "\n\nLocal de entrega:\n"
     mensagem += endereco.logradouro.encode('utf-8')
     mensagem += ", N" + str(endereco.numero)
@@ -49,7 +51,7 @@ def enviar_pedido_loja(pedido, loja):
         mensagem += "\nComplemento: " + endereco.complemento.encode('utf-8')
     mensagem += "\n" + endereco.cidade.encode('utf-8') + " - CEP: " + str(endereco.cep)
     mensagem += "\nReferencia: " + endereco.referencia.encode('utf-8')
-#    mensagem += "\n\nContato com o comprador: " + str(comprador.telefone)
+    mensagem += "\n\nContato com o comprador: " + comprador.telefone.encode('utf-8')
     mensagem += "\n\nObrigado!"
     email = EmailMessage(assunto, mensagem, to=[loja.email])
     email.send()

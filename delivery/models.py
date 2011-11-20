@@ -11,6 +11,7 @@ class Usuario(CustomUsuario):
     sexo = models.CharField(max_length=9, choices=sexo_choices)
     chave_de_ativacao = models.CharField(max_length=50)
     expiracao_chave = models.DateTimeField()
+    telefone = models.CharField(max_length=15)
     
     def __unicode__(self):
         return self.conta.username
@@ -89,13 +90,14 @@ class Gerente(Funcionario):
 class Pedido(models.Model):
     STATUS_CHOICES = (("ABERTO", "Em Aberto"), ("PEDIDO_REALIZADO", "Pedido Realizado"), ("DESPACHADO", "Saiu para entrega"),
                       ("DESPACHADO", "Despachado"), ("ENTREGUE", "Entregue"))
-    
     comprador = models.ForeignKey(Usuario, related_name='pedidos')
     data_criacao = models.DateTimeField()
     loja = models.ForeignKey(Loja, related_name='Pedidos')
     produtos = models.ManyToManyField(Produto, through='ProdutosPedido')
     status = models.CharField(max_length=30, choices=STATUS_CHOICES)
     total_pago = models.DecimalField(max_digits=10, decimal_places=2)
+    pagamento = models.CharField(max_length=20)
+    observacao = models.TextField(max_length=300)
     
     def __unicode__(self):
         result = ""
